@@ -1,25 +1,24 @@
 #ifndef AMAGOOD_DESK_H
 #define AMAGOOD_DESK_H
+#include <vector>
+///include deck
 
 class Desk
 {
 private:
-    int hp0,hp1;
+    std::vector<int> hp(2);
+    //int hp0,hp1;
     bool isEnd;
     int winLose; //0->p0 wins 1-> p1 wins
-    ///declare:
-    /**
-        p0 deck
-        p1 deck
+    std::vector<Deck> playerDeck(2),hand(2);
+    //Deck playerDeck1,playerDeck2,hand1,hand2;
 
-        p0 hand
-        p1 hand
-    */
+    string name0,name1;
 public:
-    Desk(Deck deck0, Deck deck1, String name0, String name1);
+    Desk(Deck deck0, Deck deck1, string n0, string n1);
     ~Desk();
 
-    Card draw(int num);
+    Card draw(int num,int targetPlayer);
 
     void playerMovement(int playerId);
 
