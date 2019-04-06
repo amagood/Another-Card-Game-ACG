@@ -12,7 +12,7 @@ public:
     Account(std::string &id, std::string &password);
     bool is_same(Account &another);
     bool is_same_id(std::string& other_id);
-    bool login(std::string &password);
+    bool verify(std::string &password);
     void modify_password(std::string &password);
     void modify_money(int money);
     int get_money();

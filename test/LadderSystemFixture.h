@@ -1,0 +1,14 @@
+//
+// Created by jacky on 2019/4/6.
+//
+
+#ifndef ANOTHER_CARD_GAME_ACG_LADDERSYSTEMFIXTURE_H
+#define ANOTHER_CARD_GAME_ACG_LADDERSYSTEMFIXTURE_H
+
+
+class LadderSystemTest {
+
+};
+
+
+#endif //ANOTHER_CARD_GAME_ACG_LADDERSYSTEMTEST_H

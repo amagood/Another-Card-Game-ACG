@@ -23,6 +23,17 @@ TEST_F(AccountFixture, TEST_ACCOUNT_IS_SAME) {
     Account b = Account(id, password2);
     ASSERT_TRUE(a.is_same(b));
 }
+TEST_F(AccountFixture, Account_VERIFIED) {
+    std::string id("id");
+    std::string password("123");
+    std::string password2("12352");
+    Account a = Account(id, password);
+    ASSERT_TRUE(a.verify(password));
+    ASSERT_FALSE(a.verify(password2));
+    a.modify_password(password2);
+    ASSERT_TRUE(a.verify(password2));
+    ASSERT_FALSE(a.verify(password));
+}
 
 class AccountSystemFixture : public ::testing::Test {
 public:
@@ -100,3 +111,4 @@ TEST_F(AccountSystemFixture, TEST_ACCOUNT_MONEY) {
     account_system.modify_money(exist_id, money2);
     EXPECT_EQ(account_system.get_money(exist_id), money+money2);
 }
+

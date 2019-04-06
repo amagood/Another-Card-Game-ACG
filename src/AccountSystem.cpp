@@ -27,7 +27,7 @@ void Account::modify_money(int money) {
 
 AccountSystem::AccountSystem() = default;
 
-bool Account::login(std::string &password) {
+bool Account::verify(std::string &password) {
     // TODO revise with encryption
     return password_ == password;
 }
@@ -37,7 +37,7 @@ bool AccountSystem::login(std::string &id, std::string &password) {
         return false;
     } else {
         Account *account = this->get_account(id);
-        return account->login(password);
+        return account->verify(password);
     }
 }
 bool AccountSystem::create_account(std::string &id, std::string &password) {
