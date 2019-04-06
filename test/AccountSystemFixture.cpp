@@ -27,8 +27,12 @@ TEST_F(AccountFixture, TEST_ACCOUNT_IS_SAME) {
 class AccountSystemFixture : public ::testing::Test {
 public:
     AccountSystem account_system;
+    std::string exist_id = "already_in_id";
+    std::string exist_pwd = "already_in_pwd";
     void SetUp() final {
         account_system = AccountSystem();
+
+        account_system.create_account(exist_id, exist_pwd);
     }
     void TearDown() final {
 
@@ -69,4 +73,16 @@ TEST_F(AccountSystemFixture, TEST_ACCOUNT_SYSTER_LOGIN_WRONG_INFO) {
     ASSERT_FALSE(account_system.login(id, wrong_keyword));
     ASSERT_FALSE(account_system.login(wrong_id, wrong_keyword));
     ASSERT_FALSE(account_system.login(wrong_id, keyword));
+}
+
+TEST_F(AccountSystemFixture, TEST_MODIFIY_PASSWORD) {
+    std::string new_pwd("new_pwd");
+    // wrong old password
+    ASSERT_FALSE(account_system.modify_password(exist_id, new_pwd, exist_pwd));
+    // true old password
+    ASSERT_TRUE(account_system.modify_password(exist_id, exist_pwd, new_pwd));
+
+    ASSERT_FALSE(account_system.login(exist_id, exist_pwd));
+
+    ASSERT_TRUE(account_system.login(exist_id, new_pwd));
 }

@@ -7,6 +7,10 @@ Account::Account(std::string &id, std::string &password) {
     id_ = id;
     password_ = password;
 }
+void Account::modify_password(std::string &new_password){
+    password_ = new_password;
+}
+
 bool Account::is_same_id(std::string &other_id) {
     return this->id_ == other_id;
 }
@@ -45,7 +49,16 @@ bool AccountSystem::exist(std::string &account_id) {
     }
     return false;
 }
+bool AccountSystem::modify_password(std::string &id, std::string &ori_password, std::string &new_password) {
+    if (login(id, ori_password)) {
+        Account *account = get_account(id);
+        account->modify_password(new_password);
+        return true;
+    } else {
+        return false;
+    }
 
+}
 Account* AccountSystem::get_account(std::string id) {
     for (Account &a: account_vector) {
         if(a.is_same_id(id)) {
