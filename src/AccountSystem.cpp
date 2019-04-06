@@ -17,6 +17,13 @@ bool Account::is_same_id(std::string &other_id) {
 bool Account::is_same(Account &other) {
     return this->is_same_id(other.id_);
 }
+int Account::get_money() {
+    return money_;
+}
+void Account::modify_money(int money) {
+    money_ += money;
+}
+
 
 AccountSystem::AccountSystem() = default;
 
@@ -66,4 +73,19 @@ Account* AccountSystem::get_account(std::string id) {
         }
     }
     return nullptr;
+}
+void AccountSystem::modify_money(std::string &id, int money) {
+    Account *account = get_account(id);
+    if (account != nullptr) {
+        account->modify_money(money);
+    }
+}
+
+int AccountSystem::get_money(std::string &id) {
+    Account *account = get_account(id);
+    if (account != nullptr) {
+        return account->get_money();
+    } else {
+        return -1;
+    }
 }

@@ -14,7 +14,10 @@ public:
     bool is_same_id(std::string& other_id);
     bool login(std::string &password);
     void modify_password(std::string &password);
+    void modify_money(int money);
+    int get_money();
 private:
+    int money_ = 0;
     std::string id_;
     std::string password_;
 
@@ -29,6 +32,8 @@ public:
     bool exist(std::string &account_id);
     bool login(std::string &id, std::string &password);
     bool modify_password(std::string &id, std::string &ori_password, std::string &new_password);
+    void modify_money(std::string &id, int money);
+    int get_money(std::string &id);
 private:
     std::vector<Account> account_vector;
     Account* get_account(std::string id);

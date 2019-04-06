@@ -86,3 +86,17 @@ TEST_F(AccountSystemFixture, TEST_MODIFIY_PASSWORD) {
 
     ASSERT_TRUE(account_system.login(exist_id, new_pwd));
 }
+
+
+TEST_F(AccountSystemFixture, TEST_ACCOUNT_MONEY) {
+    int money = 100;
+    int money2 = 33;
+    account_system.modify_money(exist_id, money);
+    EXPECT_EQ(account_system.get_money(exist_id), money);
+    account_system.modify_money(exist_id, money);
+    EXPECT_EQ(account_system.get_money(exist_id), 2 * money);
+    account_system.modify_money(exist_id, -money);
+    EXPECT_EQ(account_system.get_money(exist_id), money);
+    account_system.modify_money(exist_id, money2);
+    EXPECT_EQ(account_system.get_money(exist_id), money+money2);
+}
