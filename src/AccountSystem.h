@@ -9,14 +9,14 @@
 #include <string>
 class Account{
 public:
-    Account(std::string &id, std::string &keyword_);
+    Account(std::string &id, std::string &password);
     bool is_same(Account &another);
     bool is_same_id(std::string& other_id);
     bool login(std::string &password);
 
 private:
     std::string id_;
-    std::string keyword_;
+    std::string password_;
 
 };
 
@@ -25,9 +25,9 @@ class AccountSystem {
 
 public:
     AccountSystem();
-    bool create_account(std::string id, std::string keyword);
-    bool exist(std::string account_id);
-    bool login(std::string id, std::string keyword);
+    bool create_account(std::string &id, std::string &password);
+    bool exist(std::string &account_id);
+    bool login(std::string &id, std::string &password);
 private:
     std::vector<Account> account_vector;
     Account* get_account(std::string id);
