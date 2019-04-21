@@ -16,10 +16,17 @@ public:
     void modify_password(std::string &password);
     void modify_money(int money);
     int get_money();
+    std::string get_name(){return name;}
+    int get_ladder_point(){return ladder_point;}
+    int get_unique_num() { return u_num;}
 private:
+    int u_num = 0; // TODO make it unique, readonly
     int money_ = 0;
+    int ladder_point = 0;
+    std::string name;
     std::string id_;
     std::string password_;
+
 
 };
 

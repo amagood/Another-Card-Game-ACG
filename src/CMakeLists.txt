@@ -1,3 +1,4 @@
-#
-#add_executable(myexe source3.c)
-#target_link_libraries(myexe mylib)
+project(src)
+include_directories(../lib)
+
+add_library(ACGMain ACGMain.cpp Printer.cpp Reader.cpp AccountSystem.cpp Router.cpp )
