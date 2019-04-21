@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 3.13)
 
 project(Another-Card-Game-ACG)
 set(CMAKE_CXX_STANDARD 14)
+include_directories(lib)
 
 add_subdirectory(lib)
 add_subdirectory(src)
@@ -18,4 +19,5 @@ if (DO_TEST)
 endif(DO_TEST)
 
 add_executable(main main.cpp)
-target_link_libraries(main nlohmann_json ACGMain )
+target_link_libraries(main nlohmann_json)
+target_link_libraries(main  ACGMain)
