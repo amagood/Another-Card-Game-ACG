@@ -3,14 +3,14 @@
 #include <vector>
 ///include deck
 
-class Desk
+class Desk final
 {
 private:
     std::vector<int> hp(2);
     //int hp0,hp1;
     bool isEnd;
     int winLose; //0->p0 wins 1-> p1 wins
-    std::vector<Deck> playerDeck(2),hand(2);
+    std::vector<Deck> playerDeck(2),hand(2),site(2) /**site : ³õ¦a*/;
     //Deck playerDeck1,playerDeck2,hand1,hand2;
 
     string name0,name1;
