@@ -24,8 +24,14 @@ void Desk::playerMovement(int playerId)
     while(!endMovement)
     {
         string inputAction;
+		
         ///Eat JSON
-        cin << inputAction;
+        //cin >> inputAction;
+		/**
+		json A;
+		A["data"]["deskId"]
+		*/
+		
 
         if()        ///Use Card
         {
