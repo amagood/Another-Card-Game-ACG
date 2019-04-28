@@ -1,8 +1,12 @@
 #include "desk.h"
+#include "src/Reader.h"
+#include "src/Sender.h.h"
 #include <cstdio>
 #include <cstdlib>
 #include <string>
 #include <time.h>
+#include <queue>
+#include "nlohmann/json.hpp"
 ///include deck
 constexpr maxHp = 60;
 
@@ -23,23 +27,26 @@ void Desk::playerMovement(int playerId)
 
     while(!endMovement)
     {
-        string inputAction;
-		
+        nlohmann::json inputAction;
+
         ///Eat JSON
-        //cin >> inputAction;
+        inputAction = ip.popJson(myPopJsonType,myId);
+
 		/**
 		json A;
 		A["data"]["deskId"]
 		*/
-		
 
-        if()        ///Use Card
+
+        if(inputAction["data"]["useOrAttack"]=="useCard" && inputAction["data"]["useOrAttack"]=="use")        ///Use Card
         {
-
+            ///push index'th card from the hand to site
+            site.at(playerId).pushCard( hand.at(playerId).popDeck(inputAction["data"]["selectedCardId"]));
+            //site.at(playerId).
         }
-        else if()  ///Attack
+        else if(inputAction["data"]["useOrAttack"]=="useCard" && inputAction["data"]["useOrAttack"]=="attack")  ///Attack
         {
-
+            site.at(playerId).
         }
         else       ///End
         {
@@ -50,9 +57,13 @@ void Desk::playerMovement(int playerId)
 
 
 }
-Desk::Desk(Deck deck0, Deck deck1, String n0, String n1)
+Desk(Reader *input,Sender *output,int deskId,Deck deck0, Deck deck1, string n0, string n1);
 {
     using namespace std;
+    myId = deskId;
+    ip=input;
+    op=output;
+
     isEnd = false;
     winLose = -1;
     name0 = n0;
