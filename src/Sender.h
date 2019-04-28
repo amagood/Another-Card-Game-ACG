@@ -9,7 +9,7 @@
 #include <deque>
 #include <mutex>
 
-#include "../lib/nlohmann/json.hpp"
+#include "nlohmann/json.hpp"
 using json = nlohmann::json;
 class Sender
 {
