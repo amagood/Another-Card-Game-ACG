@@ -30,12 +30,12 @@ void Reader::read()
     }
 }
 
-json Reader::popJson(int type, int id)
+json Reader::popJson(string type, int id)
 {
     queueMutex->lock();
     for (deque<json>::iterator i = toDeliverQueue->begin(); i != toDeliverQueue->end(); i++)
     {
-        if (j["type"] == type && j["id"] == id)
+        if (j["data"]["eventType"] == type && j["userId"] == id)
         {
             json json_ = *i;
             toDeliverQueue->erase(i);
