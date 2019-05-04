@@ -24,9 +24,8 @@ public:
     Card popDeck(int index);
     //-1 抽一張牌, others just pop by index
 
-    vector<int> getIndexCards(int num, int mode, int sieve);
-    //想從"牌堆頂層"(mode)抽取1(num)張牌
-    //取得num張牌的index, mode=0 (random抽取), mode=1 (從牌堆最前面), sieve=-1 所有牌,others 只有那種type的牌
+    Card &getIndexCards(int mode, int sieve);
+    //取得Card reference, mode=0 (random抽取), mode=1 (從牌堆最前面), mode=-1 (從牌堆最後面), sieve=-1 所有牌,others 只有那種type的牌
 
     int size();
 
