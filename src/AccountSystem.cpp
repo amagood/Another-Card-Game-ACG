@@ -74,13 +74,26 @@ Account* AccountSystem::get_account(std::string id) {
     }
     return nullptr;
 }
+Account* AccountSystem::get_account(int u_num) {
+    for (Account &a: account_vector) {
+        if(a.get_unique_num() == u_num) {
+            return &a;
+        }
+    }
+    return nullptr;
+}
 void AccountSystem::modify_money(std::string &id, int money) {
     Account *account = get_account(id);
     if (account != nullptr) {
         account->modify_money(money);
     }
 }
-
+void AccountSystem::save_account(int u_num) {
+    Account * account = get_account(u_num);
+    // save info
+    // u_num.txt is file name
+    //
+}
 int AccountSystem::get_money(std::string &id) {
     Account *account = get_account(id);
     if (account != nullptr) {
