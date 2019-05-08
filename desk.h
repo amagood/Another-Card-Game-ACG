@@ -21,13 +21,16 @@ private:
     Reader *ip;
     Sender *op;
     string name0,name1;
+	bool playerMovement(int playerId);
+	bool checkDead(int playerId);
+	
 public:
     Desk(Reader *input,Sender *output,int deskId,Deck deck0, Deck deck1, string n0, string n1);
     ~Desk();
 
     Card draw(int num,int targetPlayer);
 
-    void playerMovement(int playerId);
+    
 
     bool isEnd();
     int getWinPlayer();

@@ -22,7 +22,48 @@ Card Desk::draw(int num,int targetPlayer)
     for(int i=0;i<num;i++)
         hand.at(targetPlayer).pushCard(playerDeck.at(targetPlayer).popDeck(-1));
 }
-void Desk::playerMovement(int playerId)
+
+bool Desk::checkDead(int playerId)
+{
+	int indexi=0;
+	for(auto i : site.at(playerId).getDeck())
+	{
+		if(i.hp<=0)//die
+		{
+			if(indexi==0)
+			{
+				winLose=playerId;
+				isEnd=true;
+				return true;
+			}
+			popDeck(indexi);
+			
+		}
+		indexi++;
+	}
+	
+	playerId=otherPlayer(playerId);
+	
+	indexi=0;
+	for(auto i : site.at(playerId).getDeck())
+	{
+		if(i.hp<=0)//die
+		{
+			if(indexi==0)
+			{
+				winLose=playerId;
+				isEnd=true;
+				return true;
+			}
+			popDeck(indexi);
+			
+		}
+		indexi++;
+	}
+	return false;
+}
+
+bool Desk::playerMovement(int playerId)
 {
     using namespace std;
     bool endMovement = false;
@@ -56,12 +97,13 @@ void Desk::playerMovement(int playerId)
         {
             endMovement = true;
         }
-
+		if(checkDead(playerId))
+			return true;
     }
-
+	return false;
 
 }
-Desk(Reader *input,Sender *output,int deskId,Deck deck0, Deck deck1, string n0, string n1);
+Desk::Desk(Reader *input,Sender *output,int deskId,Deck deck0, Deck deck1, string n0, string n1);
 {
     using namespace std;
     myId = deskId;
@@ -93,15 +135,26 @@ Desk(Reader *input,Sender *output,int deskId,Deck deck0, Deck deck1, string n0, 
     {
         /// first player's round
         draw(1,nowPlayer);
-        playerMovement(nowPlayer);
+		if(playerMovement(nowPlayer))
+			return;
+        
         nowPlayer = otherPlayer(nowPlayer);
         ///second player's round
         draw(1,nowPlayer);
-        playerMovement(nowPlayer);
+        if(playerMovement(nowPlayer))
+			return;
         nowPlayer = otherPlayer(nowPlayer);
 
     }
 
 
 
+}
+bool Desk::isEnd()
+{
+	return isEnd;
+}
+void Desk::getWinPlayer()
+{
+	return winLose;
 }
