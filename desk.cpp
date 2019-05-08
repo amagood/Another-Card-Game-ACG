@@ -4,7 +4,9 @@
 #include <cstdio>
 #include <cstdlib>
 #include <string>
+#include <string.h>
 #include <time.h>
+#include <typeinfo>
 #include <queue>
 #include "nlohmann/json.hpp"
 ///include deck
@@ -30,7 +32,7 @@ void Desk::playerMovement(int playerId)
         nlohmann::json inputAction;
 
         ///Eat JSON
-        inputAction = ip.popJson(myPopJsonType,myId);
+        inputAction = ip->popJson(myPopJsonType,myId);
 
 		/**
 		json A;
@@ -41,12 +43,14 @@ void Desk::playerMovement(int playerId)
         if(inputAction["data"]["useOrAttack"]=="useCard" && inputAction["data"]["useOrAttack"]=="use")        ///Use Card
         {
             ///push index'th card from the hand to site
-            site.at(playerId).pushCard( hand.at(playerId).popDeck(inputAction["data"]["selectedCardId"]));
-            //site.at(playerId).
+            site.at(playerId).pushCard( hand.at(playerId).popDeck(inputAction["data"]["selectedCardId"]));   //Not done for magic cards pop
+            site.at(playerId).getIndexCards(0,-1,-1)/*getLastCard*/.use();  
+			if(strcmp(typeid(site.at(playerId).getIndexCards(0,-1,-1)).name(),"5Spell"))  ///if it is a Spell then pop after used from site
+				site.at(playerId).popDeck(site.at(playerId).size()-1);
         }
         else if(inputAction["data"]["useOrAttack"]=="useCard" && inputAction["data"]["useOrAttack"]=="attack")  ///Attack
         {
-            site.at(playerId).
+            site.at(playerId).getIndexCards(inputAction["data"]["selectedCardId"],1,-1).attack(site.at(otherPlayer(playerId)).getIndexCards(inputAction["data"]["targetPlayerId"],1,-1));
         }
         else       ///End
         {

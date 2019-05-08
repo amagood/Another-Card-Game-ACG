@@ -11,7 +11,7 @@ class Desk final
 {
 private:
     std::vector<int> hp(2);
-    constexpr myPopJsonType = 0;
+    static constexpr int myPopJsonType = 0;
     //int hp0,hp1;
     bool isEnd;
     int winLose; //0->p0 wins 1-> p1 wins
