@@ -10,6 +10,7 @@
 class Account{
 public:
     Account(std::string &id, std::string &password);
+
     bool is_same(Account &another);
     bool is_same_id(std::string& other_id);
     bool verify(std::string &password);
@@ -26,7 +27,10 @@ private:
     std::string name;
     std::string id_;
     std::string password_;
-
+    // FIXME should add some interact with card and card list
+    std::vector<int> deck_card_list;
+    std::vector<int> card_list;
+    // FIXME should add history
 
 };
 
@@ -41,9 +45,13 @@ public:
     bool modify_password(std::string &id, std::string &ori_password, std::string &new_password);
     void modify_money(std::string &id, int money);
     int get_money(std::string &id);
+    void load_accounts();
+    void save_account(int u_num);
 private:
     std::vector<Account> account_vector;
     Account* get_account(std::string id);
+    Account* get_account(int u_num);
+
 };
 
 #endif //ANOTHER_CARD_GAME_ACG_ACCOUNTSYSTEM_H
