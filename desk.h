@@ -10,7 +10,7 @@
 class Desk final
 {
 private:
-    std::vector<int> hp(2);
+    //std::vector<int> hp(2);
     static constexpr int myPopJsonType = 0;
     //int hp0,hp1;
     bool isEnd;
@@ -23,6 +23,7 @@ private:
     string name0,name1;
 	bool playerMovement(int playerId);
 	bool checkDead(int playerId);
+	nlohmann::json outputSites();
 	
 public:
     Desk(Reader *input,Sender *output,int deskId,Deck deck0, Deck deck1, string n0, string n1);

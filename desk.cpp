@@ -4,6 +4,9 @@
 #include <cstdio>
 #include <cstdlib>
 #include <string>
+#include <cstdint>
+#include <vector>
+#include <queue>
 #include <string.h>
 #include <time.h>
 #include <typeinfo>
@@ -16,7 +19,68 @@ int otherPlayer(int nowPlayer)
 {
     return (nowPlayer+1)%2;
 }
-
+nlohmann::json outputSites()
+{
+	using namespace std;
+	vector<nlohmann::json> siteJson0,siteJson1,handJson0,handJson1;
+	auto tmp=site.at(0).getDeck();
+	for(auto i : tmp)
+	{
+		nlohmann::json tmp2;
+		tmp2["cardUuid"]=(uint32_t)i.getId();
+		tmp2["attack"]= i.getId();
+		tmp2["hp"]=i.getHp();
+		tmp2["attributes"]=getAttributes();
+		
+		siteJson0.push_back(tmp2);
+	}
+	tmp=site.at(1).getDeck();
+	for(auto i : tmp)
+	{
+		nlohmann::json tmp2;
+		tmp2["cardUuid"]=(uint32_t)i.getId();
+		tmp2["attack"]= i.getId();
+		tmp2["hp"]=i.getHp();
+		tmp2["attributes"]=getAttributes();
+		
+		siteJson1.push_back(tmp2);
+	}
+	tmp=hand.at(0).getDeck();
+	for(auto i : tmp)
+	{
+		nlohmann::json tmp2;
+		tmp2["cardUuid"]=(uint32_t)i.getId();
+		tmp2["attack"]= i.getId();
+		tmp2["hp"]=i.getHp();
+		tmp2["attributes"]=getAttributes();
+		
+		handJson0.push_back(tmp2);
+	}
+	tmp=hand.at(1).getDeck();
+	for(auto i : tmp)
+	{
+		nlohmann::json tmp2;
+		tmp2["cardUuid"]=(uint32_t)i.getId();
+		tmp2["attack"]= i.getId();
+		tmp2["hp"]=i.getHp();
+		tmp2["attributes"]=getAttributes();
+		
+		handJson1.push_back(tmp2);
+	}
+	
+	
+	nlohmann::json outputJson;
+	outputJson["time"]=(time_t) time();
+	outputJson["type"]="gameLogicEngineMessage";
+	outputJson["userId"]=(uint32_t)myId;
+	outputJson["data"]["eventType"]="deskState";
+	outputJson["data"]["userHand0"]=handJson0;
+	outputJson["data"]["userHand1"]=handJson1;
+	outputJson["data"]["userField0"]=siteJson0;
+	outputJson["data"]["userField1"]=siteJson1;
+	
+	return outputJson;
+}
 Card Desk::draw(int num,int targetPlayer)
 {
     for(int i=0;i<num;i++)
@@ -28,7 +92,7 @@ bool Desk::checkDead(int playerId)
 	int indexi=0;
 	for(auto i : site.at(playerId).getDeck())
 	{
-		if(i.hp<=0)//die
+		if(i.getHp()<=0)//die
 		{
 			if(indexi==0)
 			{
@@ -47,7 +111,7 @@ bool Desk::checkDead(int playerId)
 	indexi=0;
 	for(auto i : site.at(playerId).getDeck())
 	{
-		if(i.hp<=0)//die
+		if(i.getHp()<=0)//die
 		{
 			if(indexi==0)
 			{
@@ -97,13 +161,16 @@ bool Desk::playerMovement(int playerId)
         {
             endMovement = true;
         }
+		
+		op->pushJson(outputSites());
+		
 		if(checkDead(playerId))
 			return true;
     }
 	return false;
 
 }
-Desk::Desk(Reader *input,Sender *output,int deskId,Deck deck0, Deck deck1, string n0, string n1);
+Desk::Desk(Reader *input,Sender *output,int deskId,Deck deck0, Deck deck1, string n0, string n1);  //constructor
 {
     using namespace std;
     myId = deskId;
@@ -116,10 +183,12 @@ Desk::Desk(Reader *input,Sender *output,int deskId,Deck deck0, Deck deck1, strin
     name1 = n1;
     playerDeck.at(0) = deck0;
     playerDeck.at(1) = deck1;
-    hp.at(0) = maxHp;
-    hp.at(1) = maxHp;
+    //hp.at(0) = maxHp;
+    //hp.at(1) = maxHp;
     isEnd = false;
-
+	Hero h;
+    site.at(0).pushCard(h);
+	site.at(1).pushCard(h);
     ///who go first?
     srand(time(0));
     int nowPlayer = rand()%2;
