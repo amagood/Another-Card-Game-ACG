@@ -13,7 +13,7 @@
 #include <queue>
 #include "nlohmann/json.hpp"
 ///include deck
-constexpr maxHp = 60;
+
 
 int otherPlayer(int nowPlayer)
 {
@@ -30,7 +30,7 @@ nlohmann::json outputSites()
 		tmp2["cardUuid"]=(uint32_t)i.getId();
 		tmp2["attack"]= i.getId();
 		tmp2["hp"]=i.getHp();
-		tmp2["attributes"]=getAttributes();
+		tmp2["attributes"]=i.getAttributes();
 		
 		siteJson0.push_back(tmp2);
 	}
@@ -41,7 +41,7 @@ nlohmann::json outputSites()
 		tmp2["cardUuid"]=(uint32_t)i.getId();
 		tmp2["attack"]= i.getId();
 		tmp2["hp"]=i.getHp();
-		tmp2["attributes"]=getAttributes();
+		tmp2["attributes"]=i.getAttributes();
 		
 		siteJson1.push_back(tmp2);
 	}
@@ -52,7 +52,7 @@ nlohmann::json outputSites()
 		tmp2["cardUuid"]=(uint32_t)i.getId();
 		tmp2["attack"]= i.getId();
 		tmp2["hp"]=i.getHp();
-		tmp2["attributes"]=getAttributes();
+		tmp2["attributes"]=i.getAttributes();
 		
 		handJson0.push_back(tmp2);
 	}
@@ -63,7 +63,7 @@ nlohmann::json outputSites()
 		tmp2["cardUuid"]=(uint32_t)i.getId();
 		tmp2["attack"]= i.getId();
 		tmp2["hp"]=i.getHp();
-		tmp2["attributes"]=getAttributes();
+		tmp2["attributes"]=i.getAttributes();
 		
 		handJson1.push_back(tmp2);
 	}
