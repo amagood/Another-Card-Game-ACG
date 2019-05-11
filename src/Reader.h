@@ -6,7 +6,6 @@
 #define ANOTHER_CARD_GAME_ACG_READER_H
 
 #include <string>
-
 #include <deque>
 #include <mutex>
 
