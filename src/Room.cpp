@@ -52,7 +52,7 @@ void OneOnOneRoom::startGame(Reader *reader, Sender *sender)
 {
     Player & p0=*_player[0];
     Player & p1=*_player[1];
-    _desk = new Desk(reader, sender, p0.getDeck(), p1.getDeck(), p0.getName(), p1.getName());
+    _desk = new Desk(reader, sender, _ID, p0.getDeck(), p1.getDeck(), p0.getName(), p1.getName());
     while(!_endgame)
     {
         std::this_thread::sleep_for(chrono::seconds(1));
@@ -91,7 +91,7 @@ void LadderRoom::startGame(Reader *reader, Sender *sender)
 {
     Player & p0=*_player[0];
     Player & p1=*_player[1];
-    _desk = new Desk(reader, sender, p0.getDeck(), p1.getDeck(), p0.getName(), p1.getName());
+    _desk = new Desk(reader, sender, _ID, p0.getDeck(), p1.getDeck(), p0.getName(), p1.getName());
     while(!_endgame)
     {
         this_thread::sleep_for(chrono::seconds(1));
@@ -148,13 +148,13 @@ void Arena::enterRoomRandom(uint32_t playerID, RoomMode mode)
         if(_room[mode][i]->addPlayer(player))
             enter=true;
     if(!enter)
-        createRoom(player, mode, getNonRepeatRandomRoomID(mode), getNonRepeatRandomRoomName(mode), "");
+        createRoom(player, mode, getNonRepeatRandomRoomID(), getNonRepeatRandomRoomName(mode), "");
 }
 int Arena::createRoom(uint32_t playerID, RoomMode mode, string name, string password)
 {
     if(!isRoomNameAdmitted(name, mode))
         return -1;
-    int id=getNonRepeatRandomRoomID(mode);
+    int id=getNonRepeatRandomRoomID();
     createRoom(createPlayer(playerID), mode, id, name, password);
     return id;
 }
@@ -198,20 +198,23 @@ void Arena::initArena()
     for(int i=0; i<ROOMMODE_COUNT; i++)
         _room[i].clear();
 }
-int Arena::getNonRepeatRandomRoomID(RoomMode mode)
+int Arena::getNonRepeatRandomRoomID()
 {
     int num=(rand()%numeric_limits<int>::max())/10;
     bool newnum=true;
     while(newnum)
     {
         newnum=false;
-        for(size_t i=0; i<_room[mode].size(); i++)
+        for(int mode=0; mode<ROOMMODE_COUNT; mode++)
         {
-            if(num==_room[mode][i]->getID())
+            for(size_t i=0; i<_room[mode].size(); i++)
             {
-                num=rand()%numeric_limits<int>::max();
-                newnum=true;
-                break;
+                if(num==_room[mode][i]->getID())
+                {
+                    num=rand()%numeric_limits<int>::max();
+                    newnum=true;
+                    break;
+                }
             }
         }
     }
