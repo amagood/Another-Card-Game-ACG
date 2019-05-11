@@ -43,7 +43,7 @@ public:
     bool isGameEnd() const { return _endgame; }
     virtual bool isFull() const =0;
     virtual bool addPlayer(Player* player)=0;
-	virtual void startGame()=0;
+	virtual void startGame(Reader *reader, Sender *sender)=0;
 	virtual void endGame()=0;
 	virtual bool invitePlayer(int id)=0;
     virtual uint32_t getWinnerID()=0;
@@ -63,7 +63,7 @@ public:
     bool isFull() const override { return _player.size()>=MaxPlayerNum; }
     bool addPlayer(Player* player) override;
     bool invitePlayer(int id) override;
-	void startGame() override;
+	void startGame(Reader *reader, Sender *sender) override;
 	void endGame() override;
 	uint32_t getWinnerID() override;
 	uint32_t getLoserID() override;
@@ -78,7 +78,7 @@ public:
     bool isFull() const override { return _player.size()>=MaxPlayerNum; }
     bool addPlayer(Player* player) override;
     bool invitePlayer(int id) override;
-	void startGame() override;
+	void startGame(Reader *reader, Sender *sender) override;
 	void endGame() override;
 	uint32_t getWinnerID() override;
 	uint32_t getLoserID() override;
