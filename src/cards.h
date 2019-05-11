@@ -35,6 +35,7 @@ public:
 class Weapon : public Card
 {
 public:
+	Weapon();
     void usedOnce();
 	virtual void use()=0;
 };
@@ -42,13 +43,14 @@ public:
 class Spell : public Card
 {
 public:
+	Spell();
     virtual void use()=0;
 };
 
 class Minion : public Card
 {
 public:
-
+	Minion();
 
     void attack(Minion &target);
 	virtual void use()=0;
@@ -65,6 +67,7 @@ public:
 
 class Card001 final : public Minion
 {
+public:
 	Card001();
 };
 #endif // CARDS_H_AMAGOOD

@@ -69,13 +69,23 @@ std::string Card::getName()
 	return name;
 }
 
+Weapon::Weapon()
+{
+	
+}
 
 void Weapon::usedOnce()
 {
     hpIncrease(-1);
 }
-
-
+Spell::Spell()
+{
+	
+}
+Minion::Minion()
+{
+	
+}
 void Minion::attack(Minion &target)
 {
 	hpIncrease(-target.getAtk());
