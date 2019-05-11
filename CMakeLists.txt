@@ -10,6 +10,7 @@ if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
 endif()
 
 include_directories(lib)
+include_directories(src/pages)
 
 add_subdirectory(src)
 option (DO_TEST "Running test" N)
@@ -24,5 +25,7 @@ if (DO_TEST)
 #    target_link_libraries(test_main gtest gtest_main)
 endif(DO_TEST)
 
-add_executable(main main.cpp)
+
+
+add_executable(main main.cpp test/FunctionalTest.cpp)
 target_link_libraries(main ACGMain)

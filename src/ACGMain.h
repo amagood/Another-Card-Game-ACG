@@ -17,11 +17,12 @@ private:
     Reader * reader;
     Printer * printer;
     Router * router;
+    void read();
+    void print();
+    void route();
 public:
     ACGMain();
     void run();
-    void read();
-    void print();
 };
 
 

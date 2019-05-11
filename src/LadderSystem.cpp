@@ -4,9 +4,9 @@
 
 #include "LadderSystem.h"
 void LadderSystem::join(Account *account) {
-    int ladder_point = account->get_ladder_point();
-    std::string id = account->get_name();
-    int u_num = account->get_unique_num();
+    int ladder_point = account->getLadderPoint();
+    std::string id = account->getName();
+    int u_num = account->getUniqueNumber();
     participant.push_back(new LadderPlayer(u_num, id, ladder_point));
 }
 void LadderSystem::leave(int remove_id) {

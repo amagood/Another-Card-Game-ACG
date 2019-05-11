@@ -20,6 +20,7 @@ class LadderCalculate {
 
 class LadderPlayer {
 public:
+
     std::string id_;
     int point_;
     int Last_game;
@@ -32,7 +33,8 @@ public:
 
 class LadderSystem {
 public:
-    std::vector<LadderPlayer *> &participant;
+    LadderSystem(){};
+    std::vector<LadderPlayer *> participant;
     void join(Account *account);
     void match();
     void leave(int remove_id);

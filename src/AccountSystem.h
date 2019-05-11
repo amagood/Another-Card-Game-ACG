@@ -5,28 +5,43 @@
 #ifndef ANOTHER_CARD_GAME_ACG_ACCOUNTSYSTEM_H
 #define ANOTHER_CARD_GAME_ACG_ACCOUNTSYSTEM_H
 
+#include <cstdint>
+
 #include <vector>
 #include <string>
+#include <queue>
+#include <mutex>
+
+#include <nlohmann/json.hpp>
+
 class Account{
 public:
     Account(std::string &id, std::string &password);
 
-    bool is_same(Account &another);
-    bool is_same_id(std::string& other_id);
+    bool isSame(Account &another);
+    bool isIDSame(std::string &other_id);
     bool verify(std::string &password);
-    void modify_password(std::string &password);
-    void modify_money(int money);
-    int get_money();
-    std::string get_name(){return name;}
-    int get_ladder_point(){return ladder_point;}
-    int get_unique_num() { return u_num;}
+    void modifyPassword(std::string &password);
+    void modifyMoney(int money);
+    int getMoney();
+    std::string getName(){return name_;}
+    int getLadderPoint(){return ladderPoint_;}
+    uint32_t getUniqueNumber() { return user_id_;}
 private:
-    int u_num = 0; // TODO make it unique, readonly
+    uint32_t user_id_ = 0; // TODO make it unique, readonly
     int money_ = 0;
-    int ladder_point = 0;
-    std::string name;
+    std::string name_;
     std::string id_;
     std::string password_;
+    std::string device_id_;
+
+    uint32_t win_ = 0;
+    uint32_t lose_ = 0;
+
+    int ladderPoint_ = 0;
+    std::string ladderLevel = "copper";
+    uint32_t ladder_win_;
+    uint32_t ladder_lose_;
     // FIXME should add some interact with card and card list
     std::vector<int> deck_card_list;
     std::vector<int> card_list;
@@ -34,24 +49,36 @@ private:
 
 };
 
-
 class AccountSystem {
-
 public:
+
     AccountSystem();
-    bool create_account(std::string &id, std::string &password);
-    bool exist(std::string &account_id);
-    bool login(std::string &id, std::string &password);
-    bool modify_password(std::string &id, std::string &ori_password, std::string &new_password);
-    void modify_money(std::string &id, int money);
-    int get_money(std::string &id);
-    void load_accounts();
-    void save_account(int u_num);
+    bool createAccount(std::string &id, std::string &password);
+    bool exist(std::string &account_name);
+    bool login(std::string &account_name, std::string &password);
+    bool logout(uint32_t user_id_){};
+    bool modifyPassword(std::string &id, std::string &ori_password, std::string &new_password);
+    void modifyMoney(std::string &id, int money);
+    void modifyMoney(uint32_t user_id_, int money);
+    int getMoney(std::string &id);
+    void loadAccounts();
+    void saveAccount(int u_num);
+    void saveAccount();
+    void getAccountInfo(int u_num){};
+    void getCards(int){};
+    void drawCard(int){};
+    void modifyCards(uint32_t user_id_, std::vector<uint32_t> cards, std::vector<uint32_t> deck){};
+    std::string getAccountName(uint32_t user_id_){return "";};
+
+
+
 private:
+
     std::vector<Account> account_vector;
     Account* get_account(std::string id);
     Account* get_account(int u_num);
-
 };
+
+
 
 #endif //ANOTHER_CARD_GAME_ACG_ACCOUNTSYSTEM_H

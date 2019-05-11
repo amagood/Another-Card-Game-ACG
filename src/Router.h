@@ -12,18 +12,27 @@
 
 #include "Reader.h"
 #include "Printer.h"
+#include "AccountSystem.h"
+#include "AccountSystemParser.h"
 
 class Router {
 public:
     Router();
     Reader * buildReader();
     Printer * buildPrinter();
+    AccountSystemParser * accountSystemParser;
+    void setAccountSystem(AccountSystem * accountSystem);
+    void route();
+    void chooseDirection(nlohmann::json j);
     std::mutex readMutex;
     std::mutex printMutex;
+    std::mutex accountSystemMutex;
 
 private:
     std::queue<nlohmann::json> toDeliver;
     std::queue<nlohmann::json> toPrint;
+    std::queue<nlohmann::json> toAccountSystem;
+    AccountSystem * accountSystem_;
 };
 
 
