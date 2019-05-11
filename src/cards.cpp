@@ -1,13 +1,13 @@
 #include "cards.h"
 
-constexpr maxHp = 30;
+constexpr int maxHp = 30;
 Card::Card(int attack,int healthPoint,int mannaRequired,int ID, std::string Name)
 {
     atk=attack;
     hp=healthPoint;
     mp=mannaRequired;
 	ID=id;
-	name=Name
+	name=Name;
 }
 void Card::setAtk(int attack)
 {
