@@ -7,6 +7,7 @@
 #include <cstdlib>
 #include <cstdint>
 #include <chrono>
+#include <thread>
 #include "AccountSystem.h"
 #include "nlohmann/json.hpp"
 #include "Reader.h"
@@ -156,7 +157,7 @@ int Arena::createRoom(uint32_t playerID, RoomMode mode, string name, string pass
     createRoom(createPlayer(playerID), mode, id, name, password);
     return id;
 }
-void inviteFriend(uint32_t playerID, RoomMode mode, int id)
+void Arena::inviteFriend(uint32_t playerID, RoomMode mode, int id)
 {
     Room* room=getRoom(mode, id);
     return room->addPlayer(createPlayer(playerID));
@@ -169,10 +170,10 @@ void Arena::readJson()
     switch((ActionType)getActionType(input["data"]["action"]))
     {
     case GET_ROOMLIST:
-        getRoomList(mode);
+        returnRoomList(mode);
         break;
     case GET_ROOMINFO:
-        getRoomInfo(mode, input["data"]["roomId"]);
+        returnRoomInfo(mode, input["data"]["roomId"]);
         break;
     case CREATE_ROOM:
         returnCreateRoom((uint32_t)input["data"]["userId"], mode, input["data"]["roomName"], input["data"]["roomPassword"]);
@@ -278,8 +279,8 @@ void Arena::freeAllRooms()
 }
 Player* Arena::createPlayer(uint32_t playerID)
 {
-    std::string playerName;
-    Deck & playerDeck;
+    std::string playerName = account->getPlayerName(playerID);
+    Deck & playerDeck = account->getPlayerDeck(playerID);
     return new Player(playerID, playerName, playerDeck);
 }
 void Arena::checkRooms()
@@ -297,12 +298,14 @@ void Arena::checkRooms()
                     _room[mode][i]->endGame();
                     delete _room[mode][i];
                     _room[mode][i] = nullptr;
-                    _room.erase(std::remove(_room.begin(), _room.end(), nullptr), _room.end());
+                    _room[mode].erase(std::remove(_room[mode].begin(), _room[mode].end(), nullptr), _room[mode].end());
                 }
             }
         }
     }
 }
+
+
 void Arena::startGame(RoomMode mode, int id)
 {
     Room* room = getRoom(mode, id);
@@ -310,7 +313,7 @@ void Arena::startGame(RoomMode mode, int id)
     tGame.detach();
 }
 
-void Arena::setJson(json& j)
+void Arena::setJson(json & j)
 {
     j["time"]=time(NULL);
     j["type"]=jsonType;
