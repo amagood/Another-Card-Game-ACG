@@ -13,7 +13,7 @@
 #include "Reader.h"
 #include "Printer.h"
 #include "Sender.h"
-
+#include "ACGFunctions.h"
 
 Room::Room(int id, std::string name, std::string word, Player* player) : _ID(id), _name(name), _password(word)
 {
@@ -55,7 +55,7 @@ void OneOnOneRoom::startGame(Reader *reader, Sender *sender)
     while(!_endgame)
     {
         std::this_thread::sleep_for(std::chrono::seconds(1));
-        _endgame=_desk->end_();
+        _endgame=_desk->isEnd();
     }
 }
 void OneOnOneRoom::endGame()
@@ -93,7 +93,8 @@ void LadderRoom::startGame(Reader *reader, Sender *sender)
     _desk = new Desk(reader, sender, _ID, p0.getDeck(), p1.getDeck(), p0.getName(), p1.getName());
     while(!_endgame)
     {
-        this_thread::sleep_for(chrono::seconds(1));
+        ACGFunction::sleep(1000);
+//        this_thread::sleep_for(std::chrono::seconds(1));
         _endgame=_desk->isEnd();
     }
 }
@@ -124,7 +125,7 @@ Arena::Arena(Reader *in, Sender *out, AccountSystem* acc)
     reader = in;
     sender = out;
     account = acc;
-    thread tCheck(checkRooms());
+    std::thread tCheck(checkRooms());
     tCheck.detach();
 }
 Arena::~Arena()
@@ -221,11 +222,12 @@ int Arena::getNonRepeatRandomRoomID()
 }
 std::string Arena::getRandomString(RoomMode mode)
 {
-    static const string alphanum ="0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+    static const std::string alphanum =
+            "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
     int len=4;
     while(_room[mode].size()>pow(sizeof(alphanum)/2, len)/2)
         len++;
-    string str;
+    std::string str;
     switch(mode)
     {
     case SINGLE_ROOM:
@@ -290,7 +292,7 @@ void Arena::checkRooms()
 {
     while(running)
     {
-        this_thread::sleep_for(chrono::seconds(1));
+        ACGFunction::sleep(1000);
         for(int mode=0; mode<ROOMMODE_COUNT; mode++)
         {
             for(size_t i=0; i<_room[mode].size(); i++)
@@ -312,7 +314,7 @@ void Arena::checkRooms()
 void Arena::startGame(RoomMode mode, int id)
 {
     Room* room = getRoom(mode, id);
-    thread tGame(room->startGame(reader, sender));
+    std::thread tGame(room->startGame(reader, sender));
     tGame.detach();
 }
 
