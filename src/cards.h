@@ -9,6 +9,7 @@ private:
 	std::string name;
     std::string attrib;
 public:
+    Card() = default;
     Card(int attack, int healthPoint,int mannaRequired, int ID, std::string Name);
     void setAtk(int attack);
     void setHp(int healthPoint);
@@ -59,7 +60,7 @@ public:
 //////////////////Cards: ////////////////////////////
 
 //////////////////Minions: //////////////////////////
-class Hero final : public Minion
+class Hero : public Minion
 {
 public:
 	Hero();

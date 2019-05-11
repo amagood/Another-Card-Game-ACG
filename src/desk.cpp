@@ -19,7 +19,7 @@ int otherPlayer(int nowPlayer)
 {
     return (nowPlayer+1)%2;
 }
-nlohmann::json outputSites()
+nlohmann::json Desk::outputSites()
 {
 	using namespace std;
 	vector<nlohmann::json> siteJson0,siteJson1,handJson0,handJson1;
@@ -27,10 +27,10 @@ nlohmann::json outputSites()
 	for(auto i : tmp)
 	{
 		nlohmann::json tmp2;
-		tmp2["cardUuid"]=(uint32_t)i.getId();
-		tmp2["attack"]= i.getId();
-		tmp2["hp"]=i.getHp();
-		tmp2["attributes"]=i.getAttributes();
+		tmp2["cardUuid"]=(uint32_t)i->getId();
+		tmp2["attack"]= i->getId();
+		tmp2["hp"]=i->getHp();
+		tmp2["attributes"]=i->getAttributes();
 		
 		siteJson0.push_back(tmp2);
 	}
@@ -38,10 +38,10 @@ nlohmann::json outputSites()
 	for(auto i : tmp)
 	{
 		nlohmann::json tmp2;
-		tmp2["cardUuid"]=(uint32_t)i.getId();
-		tmp2["attack"]= i.getId();
-		tmp2["hp"]=i.getHp();
-		tmp2["attributes"]=i.getAttributes();
+		tmp2["cardUuid"]=(uint32_t)i->getId();
+		tmp2["attack"]= i->getId();
+		tmp2["hp"]=i->getHp();
+		tmp2["attributes"]=i->getAttributes();
 		
 		siteJson1.push_back(tmp2);
 	}
@@ -49,10 +49,11 @@ nlohmann::json outputSites()
 	for(auto i : tmp)
 	{
 		nlohmann::json tmp2;
-		tmp2["cardUuid"]=(uint32_t)i.getId();
-		tmp2["attack"]= i.getId();
-		tmp2["hp"]=i.getHp();
-		tmp2["attributes"]=i.getAttributes();
+
+		tmp2["cardUuid"]=(uint32_t)i->getId();
+		tmp2["attack"]= i->getId();
+		tmp2["hp"]=i->getHp();
+		tmp2["attributes"]=i->getAttributes();
 		
 		handJson0.push_back(tmp2);
 	}
@@ -60,17 +61,17 @@ nlohmann::json outputSites()
 	for(auto i : tmp)
 	{
 		nlohmann::json tmp2;
-		tmp2["cardUuid"]=(uint32_t)i.getId();
-		tmp2["attack"]= i.getId();
-		tmp2["hp"]=i.getHp();
-		tmp2["attributes"]=i.getAttributes();
+		tmp2["cardUuid"]=(uint32_t)i->getId();
+		tmp2["attack"]= i->getId();
+		tmp2["hp"]=i->getHp();
+		tmp2["attributes"]=i->getAttributes();
 		
 		handJson1.push_back(tmp2);
 	}
 	
 	
 	nlohmann::json outputJson;
-	outputJson["time"]=(time_t) time();
+	outputJson["time"]=(time_t) time(NULL);
 	outputJson["type"]="gameLogicEngineMessage";
 	outputJson["userId"]=(uint32_t)myId;
 	outputJson["data"]["eventType"]="deskState";
@@ -92,15 +93,15 @@ bool Desk::checkDead(int playerId)
 	int indexi=0;
 	for(auto i : site.at(playerId).getDeck())
 	{
-		if(i.getHp()<=0)//die
+		if(i->getHp() <= 0)//die
 		{
-			if(indexi==0)
+			if(indexi == 0)
 			{
-				winLose=playerId;
-				isEnd=true;
+				winLose = playerId;
+				end_ = true;
 				return true;
 			}
-			popDeck(indexi);
+            site.at(playerId).popDeck(indexi);
 			
 		}
 		indexi++;
@@ -111,15 +112,15 @@ bool Desk::checkDead(int playerId)
 	indexi=0;
 	for(auto i : site.at(playerId).getDeck())
 	{
-		if(i.getHp()<=0)//die
+		if(i->getHp()<=0)//die
 		{
 			if(indexi==0)
 			{
 				winLose=playerId;
-				isEnd=true;
+				end_=true;
 				return true;
 			}
-			popDeck(indexi);
+            site.at(playerId).popDeck(indexi);
 			
 		}
 		indexi++;
@@ -137,7 +138,7 @@ bool Desk::playerMovement(int playerId)
         nlohmann::json inputAction;
 
         ///Eat JSON
-        inputAction = ip->popJson(myPopJsonType,myId);
+        inputAction = ip->popJson("desk",myId);
 
 		/**
 		json A;
@@ -149,7 +150,8 @@ bool Desk::playerMovement(int playerId)
         {
             ///push index'th card from the hand to site
             site.at(playerId).pushCard( hand.at(playerId).popDeck(inputAction["data"]["selectedCardId"]));   //Not done for magic cards pop
-            site.at(playerId).getIndexCards(0,-1,-1)/*getLastCard*/.use();  
+            // FIXME please QAQ
+            //site.at(playerId).getIndexCards(0,-1,-1)/*getLastCard*/.use();
 			if(strcmp(typeid(site.at(playerId).getIndexCards(0,-1,-1)).name(),"5Spell"))  ///if it is a Spell then pop after used from site
 				site.at(playerId).popDeck(site.at(playerId).size()-1);
         }
@@ -170,22 +172,26 @@ bool Desk::playerMovement(int playerId)
 	return false;
 
 }
-Desk::Desk(Reader *input,Sender *output,int deskId,Deck deck0, Deck deck1, string n0, string n1);  //constructor
+Desk::Desk(Reader *input,Sender *output,int deskId,
+        Deck deck0, Deck deck1, std::string n0, std::string n1)  //constructor
 {
     using namespace std;
     myId = deskId;
     ip=input;
     op=output;
 
-    isEnd = false;
+    end_ = false;
     winLose = -1;
     name0 = n0;
     name1 = n1;
-    playerDeck.at(0) = deck0;
-    playerDeck.at(1) = deck1;
-    //hp.at(0) = maxHp;
-    //hp.at(1) = maxHp;
-    isEnd = false;
+    playerDeck.push_back(deck0);
+    playerDeck.push_back(deck1);
+    site.push_back(Deck());
+    site.push_back(Deck());
+    hand.push_back(Deck());
+    hand.push_back(Deck());
+
+    end_ = false;
 	Hero h;
     site.at(0).pushCard(h);
 	site.at(1).pushCard(h);
@@ -200,7 +206,7 @@ Desk::Desk(Reader *input,Sender *output,int deskId,Deck deck0, Deck deck1, strin
     /// give lucky coin to second player    (NOT DONE YET)
 
 
-    while(!isEnd)
+    while(!end_)
     {
         /// first player's round
         draw(1,nowPlayer);
@@ -221,7 +227,7 @@ Desk::Desk(Reader *input,Sender *output,int deskId,Deck deck0, Deck deck1, strin
 }
 bool Desk::isEnd()
 {
-	return isEnd;
+	return end_;
 }
 void Desk::getWinPlayer()
 {

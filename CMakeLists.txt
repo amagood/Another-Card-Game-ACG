@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.13)
 project(Another-Card-Game-ACG)
 set(CMAKE_CXX_STANDARD 17)
 set(DO_TEST FALSE)
-set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} ")
+set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -pthread")
 
 if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
     # using GNU

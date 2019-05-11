@@ -2,8 +2,8 @@
 // Created by jacky on 2019/4/21.
 //
 
-#ifndef ANOTHER_CARD_GAME_ACG_READER_H
-#define ANOTHER_CARD_GAME_ACG_READER_H
+#ifndef ANOTHER_CARD_GAME_ACG_SENDER_H
+#define ANOTHER_CARD_GAME_ACG_SENDER_H
 
 #include <string>
 #include <deque>
@@ -23,4 +23,4 @@ private:
     std::mutex *queueMutex;
 };
 
-#endif //ANOTHER_CARD_GAME_ACG_READER_H
+#endif //ANOTHER_CARD_GAME_ACG_SENDER_H

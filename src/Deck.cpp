@@ -23,31 +23,6 @@ void Deck::pushCard(json JSON) //
     //Deck::pushCard(Card_);
 }
 
-vector<Card *> Deck::searchCards(int id = -1)
-{
-    vector<Card *> *temp = new vector<Card *>;
-    if (id == -1)
-    {
-        for (int i = 0; i < deckLinkList.size(); i++)
-        {
-            if (deckLinkList[i].getCardType == id) // ??
-            {
-                temp->push_back(deckLinkList[i]);
-            }
-        }
-    }
-    else
-    {
-        for (int i = 0; i < deckLinkList.size(); i++)
-        {
-            if (deckLinkList[i].getId() == id)
-            {
-                temp->push_back(deckLinkList[i]);
-            }
-        }
-    }
-    return *temp;
-}
 //-1 search by type, others by id
 
 vector<Card *> Deck::getDeck()
@@ -66,13 +41,13 @@ Card *Deck::popDeck(int index = -1)
     }
     else
     {
-        del *(deckLinkList.begin() + index);
+        delete *(deckLinkList.begin() + index);
         deckLinkList.erase(deckLinkList.begin() + index);
     }
 }
 //-1 抽一張牌, others just pop by index
 
-Card *Deck::getIndexCards(int num, int mode = 0, int sieve = -1)
+Card *Deck::getIndexCards(int num, int mode, int sieve)
 {
     if (mode) // mode => 1 or -1
     {
@@ -83,20 +58,24 @@ Card *Deck::getIndexCards(int num, int mode = 0, int sieve = -1)
             {
                 num += (num<0 - num> 0);
             }
+            // TODO fix getCardType
+            /*
             else if (sieve == deckLinkList[i]->getCardType())
             {
                 num += (num<0 - num> 0);
-            }
+            }*/
         }
         return deckLinkList[i];
     }
     else // mode => 0
     {
         int temp = rand() % deckLinkList.size();
+        // TODO fix
+        /*
         while (sieve != deckLinkList[temp]->getCardType() && sieve != -1)
         {
             temp = rand() % deckLinkList.size();
-        }
+        }*/
 
         return deckLinkList[temp];
     }
@@ -113,4 +92,9 @@ void Deck::deckShuffler()
 void Deck::Init()
 {
     srand(time(NULL));
+}
+
+Deck::~Deck()
+{
+    for (int i = 0; i < deckLinkList.size(); i++)  delete (deckLinkList[i]);
 }

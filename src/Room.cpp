@@ -1,5 +1,5 @@
 #include "Room.h"
-#include <math.h>
+#include <cmath>
 #include <ctime>
 #include <vector>
 #include <string>
@@ -55,8 +55,8 @@ void OneOnOneRoom::startGame()
     _desk = new Desk(p0.getDeck(), p1.getDeck(), p0.getName(), p1.getName());
     while(!_endgame)
     {
-        this_thread::sleep_for(chrono::seconds(1));
-        _endgame=_desk->isEnd();
+        std::this_thread::sleep_for(chrono::seconds(1));
+        _endgame=_desk->end_();
     }
 }
 void OneOnOneRoom::endGame()
