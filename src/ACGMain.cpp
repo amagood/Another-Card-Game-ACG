@@ -17,7 +17,7 @@
 
 ACGMain::ACGMain() {
     router = new Router();
-    reader = router->buildReader();
+    //reader = router->buildReader();
     printer = router->buildPrinter();
 
     accountSystemController = new AccountSystemController();
@@ -30,17 +30,17 @@ void ACGMain::print() {
     printer->print();
 }
 void ACGMain::read() {
-    reader->read();
+    //reader->read();
 }
 
 void ACGMain::route() {
     router->route();
 }
 void ACGMain::run() {
-    std::thread read_thread(&ACGMain::read, this);
+    //std::thread read_thread(&ACGMain::read, this);
     std::thread print_thread(&ACGMain::print, this);
     std::thread route_thread(&ACGMain::route, this);
-    read_thread.join();
+    //read_thread.join();
     print_thread.join();
     route_thread.join();
 

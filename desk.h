@@ -1,7 +1,7 @@
 #ifndef AMAGOOD_DESK_H
 #define AMAGOOD_DESK_H
 #include "src/Reader.h"
-#include "src/Sender.h.h"
+#include "src/Sender.h"
 #include <vector>
 #include <queue>
 #include "nlohmann/json.hpp"

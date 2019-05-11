@@ -29,19 +29,16 @@ void Reader::read()
         json json_ = json::parse(line);
 
         queueMutex->lock();
-        toDeliverQueue->push(json_);
+        toDeliverQueue->push_back(json_);
         queueMutex->unlock();
     }
 
 }
 
-json Reader::popJson(string type, int id)
-{
+json Reader::popJson(std::string type, int id) {
     queueMutex->lock();
-    for (deque<json>::iterator i = toDeliverQueue->begin(); i != toDeliverQueue->end(); i++)
-    {
-        if (j["data"]["eventType"] == type && j["userId"] == id)
-        {
+    for (std::deque<json>::iterator i = toDeliverQueue->begin(); i != toDeliverQueue->end(); i++) {
+        if ((*i)["data"]["eventType"] == type && (*i)["userId"] == id) {
             json json_ = *i;
             toDeliverQueue->erase(i);
             queueMutex->unlock();
@@ -49,3 +46,4 @@ json Reader::popJson(string type, int id)
         }
     }
     queueMutex->unlock();
+}

@@ -17,7 +17,7 @@ class Reader
 public:
     Reader(std::deque<nlohmann::json> &toDeliver, std::mutex &mutex);
     void read();
-    json popJson(int type, int id);
+    json popJson(std::string type, int id);
 
 private:
     std::deque<nlohmann::json> *toDeliverQueue;
