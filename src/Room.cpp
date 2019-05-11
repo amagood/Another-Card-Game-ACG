@@ -48,11 +48,11 @@ bool OneOnOneRoom::addPlayer(Player* player)
     _player.push_back(player);
     return true;
 }
-void OneOnOneRoom::startGame()
+void OneOnOneRoom::startGame(Reader *reader, Sender *sender)
 {
     Player & p0=*_player[0];
     Player & p1=*_player[1];
-    _desk = new Desk(p0.getDeck(), p1.getDeck(), p0.getName(), p1.getName());
+    _desk = new Desk(reader, sender, p0.getDeck(), p1.getDeck(), p0.getName(), p1.getName());
     while(!_endgame)
     {
         std::this_thread::sleep_for(chrono::seconds(1));
@@ -87,11 +87,11 @@ bool LadderRoom::addPlayer(Player* player)
     _player.push_back(player);
     return true;
 }
-void LadderRoom::startGame()
+void LadderRoom::startGame(Reader *reader, Sender *sender)
 {
     Player & p0=*_player[0];
     Player & p1=*_player[1];
-    _desk = new Desk(p0.getDeck(), p1.getDeck(), p0.getName(), p1.getName());
+    _desk = new Desk(reader, sender, p0.getDeck(), p1.getDeck(), p0.getName(), p1.getName());
     while(!_endgame)
     {
         this_thread::sleep_for(chrono::seconds(1));
@@ -310,7 +310,7 @@ void Arena::checkRooms()
 void Arena::startGame(RoomMode mode, int id)
 {
     Room* room = getRoom(mode, id);
-    thread tGame(room->startGame());
+    thread tGame(room->startGame(reader, sender));
     tGame.detach();
 }
 
