@@ -49,11 +49,14 @@ public:
 //////////////////Cards: ////////////////////////////
 
 //////////////////Minions: //////////////////////////
-class Hero : public Minion
+class Hero : public Minion final
 {
 	Hero();
 };
 
-
+class Card001 : public Minion final
+{
+	Card001();
+};
 #endif // CARDS_H_AMAGOOD
 

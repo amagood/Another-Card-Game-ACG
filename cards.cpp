@@ -84,4 +84,14 @@ Hero::Hero()
 	atk = 0;
 	hp = maxHp
 	mp = 0;
+	
+}
+
+Card001::Card001()
+{
+	id=1;
+	atk = 1;
+	hp = 2;
+	mp = 1;
+	name = "戰士學徒";
 }
