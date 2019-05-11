@@ -21,7 +21,7 @@ TEST_F(AccountFixture, TEST_ACCOUNT_IS_SAME) {
     std::string password2("12352");
     Account a = Account(id, password);
     Account b = Account(id, password2);
-    ASSERT_TRUE(a.is_same(b));
+    ASSERT_TRUE(a.isSame(b));
 }
 TEST_F(AccountFixture, Account_VERIFIED) {
     std::string id("id");
@@ -30,7 +30,7 @@ TEST_F(AccountFixture, Account_VERIFIED) {
     Account a = Account(id, password);
     ASSERT_TRUE(a.verify(password));
     ASSERT_FALSE(a.verify(password2));
-    a.modify_password(password2);
+    a.modifyPassword(password2);
     ASSERT_TRUE(a.verify(password2));
     ASSERT_FALSE(a.verify(password));
 }
@@ -43,7 +43,7 @@ public:
     void SetUp() final {
         account_system = AccountSystem();
 
-        account_system.create_account(exist_id, exist_pwd);
+        account_system.createAccount(exist_id, exist_pwd);
     }
     void TearDown() final {
 
@@ -54,21 +54,21 @@ public:
 TEST_F(AccountSystemFixture, TEST_CREATE_ACCOUNT) {
     std::string id("account");
     std::string keyword("keyword");
-    ASSERT_TRUE(account_system.create_account(id, keyword));
+    ASSERT_TRUE(account_system.createAccount(id, keyword));
     ASSERT_TRUE(account_system.exist(id));
 }
 TEST_F(AccountSystemFixture, TEST_NOT_TO_CREATE_ACCOUNT_TWICE) {
     std::string id("account");
     std::string keyword("keyword");
-    ASSERT_TRUE(account_system.create_account(id, keyword));
+    ASSERT_TRUE(account_system.createAccount(id, keyword));
     ASSERT_TRUE(account_system.exist(id));
-    ASSERT_FALSE(account_system.create_account(id, keyword));
+    ASSERT_FALSE(account_system.createAccount(id, keyword));
 }
 
 TEST_F(AccountSystemFixture, TEST_ACCOUNT_SYSTER_LOGIN) {
     std::string id("account");
     std::string keyword("keyword");
-    ASSERT_TRUE(account_system.create_account(id, keyword));
+    ASSERT_TRUE(account_system.createAccount(id, keyword));
     ASSERT_TRUE(account_system.login(id, keyword));
 }
 
@@ -79,7 +79,7 @@ TEST_F(AccountSystemFixture, TEST_ACCOUNT_SYSTER_LOGIN_WRONG_INFO) {
     std::string wrong_keyword("wrong_keyword");
     std::string wrong_id("id_not_exist");
 
-    ASSERT_TRUE(account_system.create_account(id, keyword));
+    ASSERT_TRUE(account_system.createAccount(id, keyword));
 
     ASSERT_FALSE(account_system.login(id, wrong_keyword));
     ASSERT_FALSE(account_system.login(wrong_id, wrong_keyword));
@@ -89,9 +89,9 @@ TEST_F(AccountSystemFixture, TEST_ACCOUNT_SYSTER_LOGIN_WRONG_INFO) {
 TEST_F(AccountSystemFixture, TEST_MODIFIY_PASSWORD) {
     std::string new_pwd("new_pwd");
     // wrong old password
-    ASSERT_FALSE(account_system.modify_password(exist_id, new_pwd, exist_pwd));
+    ASSERT_FALSE(account_system.modifyPassword(exist_id, new_pwd, exist_pwd));
     // true old password
-    ASSERT_TRUE(account_system.modify_password(exist_id, exist_pwd, new_pwd));
+    ASSERT_TRUE(account_system.modifyPassword(exist_id, exist_pwd, new_pwd));
 
     ASSERT_FALSE(account_system.login(exist_id, exist_pwd));
 
@@ -102,13 +102,13 @@ TEST_F(AccountSystemFixture, TEST_MODIFIY_PASSWORD) {
 TEST_F(AccountSystemFixture, TEST_ACCOUNT_MONEY) {
     int money = 100;
     int money2 = 33;
-    account_system.modify_money(exist_id, money);
-    EXPECT_EQ(account_system.get_money(exist_id), money);
-    account_system.modify_money(exist_id, money);
-    EXPECT_EQ(account_system.get_money(exist_id), 2 * money);
-    account_system.modify_money(exist_id, -money);
-    EXPECT_EQ(account_system.get_money(exist_id), money);
-    account_system.modify_money(exist_id, money2);
-    EXPECT_EQ(account_system.get_money(exist_id), money+money2);
+    account_system.modifyMoney(exist_id, money);
+    EXPECT_EQ(account_system.getMoney(exist_id), money);
+    account_system.modifyMoney(exist_id, money);
+    EXPECT_EQ(account_system.getMoney(exist_id), 2 * money);
+    account_system.modifyMoney(exist_id, -money);
+    EXPECT_EQ(account_system.getMoney(exist_id), money);
+    account_system.modifyMoney(exist_id, money2);
+    EXPECT_EQ(account_system.getMoney(exist_id), money+money2);
 }
 
