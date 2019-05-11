@@ -57,5 +57,5 @@ Printer* Router::buildPrinter() {
 }
 Reader* Router::buildReader() {
 //    return new Reader(toDeliver, readMutex);
-
+    return nullptr;
 }

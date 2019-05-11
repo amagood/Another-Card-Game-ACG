@@ -1,6 +1,6 @@
 #include "desk.h"
 #include "Reader.h"
-#include "Sender.h.h"
+#include "Sender.h"
 #include <cstdio>
 #include <cstdlib>
 #include <string>
@@ -11,7 +11,7 @@
 #include <time.h>
 #include <typeinfo>
 #include <queue>
-#include "nlohmann/json.hpp"
+#include <nlohmann/json.hpp>
 ///include deck
 
 

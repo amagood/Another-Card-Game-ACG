@@ -6,14 +6,14 @@ class Card
 {
 private:
     int atk,hp,mp,id;
-	String name;
-	String attrib;
+	std::string name;
+    std::string attrib;
 public:
-    Card(int attack,int healthPoint,int mannaRequired,int ID,String Name);
+    Card(int attack, int healthPoint,int mannaRequired, int ID, std::string Name);
     void setAtk(int attack);
     void setHp(int healthPoint);
     void setMp(int mannaRequired);
-    void setAttributes(String s);
+    void setAttributes(std::string s);
 	
     void atkIncrease(int i);
     void hpIncrease(int i);
@@ -22,8 +22,8 @@ public:
     int getHp();
     int getMp();
 	int getId();
-	string getName();
-	string getAttributes();
+    std::string getName();
+    std::string getAttributes();
 	
 	virtual void use()=0;
 
@@ -49,12 +49,12 @@ public:
 //////////////////Cards: ////////////////////////////
 
 //////////////////Minions: //////////////////////////
-class Hero : public Minion final
+class Hero final : public Minion
 {
 	Hero();
 };
 
-class Card001 : public Minion final
+class Card001 final : public Minion
 {
 	Card001();
 };

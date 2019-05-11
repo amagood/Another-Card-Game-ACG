@@ -1,7 +1,7 @@
 #ifndef ANOTHER_CARD_GAME_ACG_READER_H
 #define ANOTHER_CARD_GAME_ACG_READER_H
 
-#include <Card.h>
+#include <cards.h>
 #include <iostream>
 #include <vector>
 #include <ctime>

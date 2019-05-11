@@ -1,7 +1,7 @@
 #include "cards.h"
 
 constexpr maxHp = 30;
-Card::Card(int attack,int healthPoint,int mannaRequired,int ID,string Name)
+Card::Card(int attack,int healthPoint,int mannaRequired,int ID, std::string Name)
 {
     atk=attack;
     hp=healthPoint;
