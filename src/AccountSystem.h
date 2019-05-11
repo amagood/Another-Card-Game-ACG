@@ -22,7 +22,6 @@ public:
     bool isSame(Account &another);
     bool isIDSame(std::string &other_id);
     bool verify(std::string &password);
-
     void modifyPassword(std::string &password);
     void modifyMoney(int money);
     nlohmann::json toJson();
@@ -37,15 +36,12 @@ private:
     uint32_t user_id_ = 0; // TODO make it unique, readonly
     int money_ = 0;
     std::string name_;
-
     std::string id_;
     std::string password_;
     std::string device_id_;
 
-
     uint32_t win_ = 0;
     uint32_t lose_ = 0;
-
 
     int ladderPoint_ = 0;
     std::string ladderLevel = "copper";
