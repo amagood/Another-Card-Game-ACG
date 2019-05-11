@@ -33,10 +33,10 @@ public:
 
 
 private:
-    std::queue<nlohmann::json> toDeliver;
-    std::queue<nlohmann::json> toPrint;
+    std::deque<nlohmann::json> toDeliver;
+    std::deque<nlohmann::json> toPrint;
 
-    std::queue<nlohmann::json> toAccountSystem;
+    std::deque<nlohmann::json> toAccountSystem;
     AccountSystemController * accountSystemController_;
 
 };

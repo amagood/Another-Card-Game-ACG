@@ -34,7 +34,7 @@ void Router::route() {
             continue;
         } else {
             nlohmann::json j = toDeliver.front();
-            toDeliver.pop();
+            toDeliver.pop_front();
             readMutex.unlock();
             chooseDirection(j);
         }
@@ -43,7 +43,7 @@ void Router::route() {
 void Router::chooseDirection(nlohmann::json j) {
     if(j["data"]["eventType"] == "accountSystem") {
         accountSystemMutex.lock();
-        toAccountSystem.push(j);
+        toAccountSystem.push_back(j);
         accountSystemMutex.unlock();
     } else {
         cout << j;
@@ -56,6 +56,5 @@ Printer* Router::buildPrinter() {
     return new Printer(toPrint, printMutex);
 }
 Reader* Router::buildReader() {
-//    return new Reader(toDeliver, readMutex);
-    return nullptr;
+    return new Reader(toDeliver, readMutex);
 }
