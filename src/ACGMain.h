@@ -9,11 +9,10 @@
 #include "Reader.h"
 #include "Printer.h"
 #include "Router.h"
-#include "LadderSystem.h"
+
 class ACGMain {
 private:
-    AccountSystem * accountSystem;
-    LadderSystem * ladderSystem;
+    AccountSystem *accountSystem;
     Reader * reader;
     Printer * printer;
     Router * router;
