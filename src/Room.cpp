@@ -295,7 +295,7 @@ void Arena::checkRooms()
             {
                 if(_room[mode][i]->isGameEnd())
                 {
-                    account->update(_room[mode][i]->getWinnerID(), _room[mode][i]->getLoserID(), gameType);
+                    account->update(_room[mode][i]->getWinnerID(), _room[mode][i]->getLoserID(), (int)mode);
                     _room[mode][i]->endGame();
                     delete _room[mode][i];
                     _room[mode][i] = nullptr;
