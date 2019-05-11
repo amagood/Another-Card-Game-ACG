@@ -19,10 +19,10 @@ ACGMain::ACGMain() {
     router = new Router();
     reader = router->buildReader();
     printer = router->buildPrinter();
-    accountSystem = new AccountSystem();
-    router->setAccountSystem(accountSystem);
+    accountSystemController = new AccountSystemController();
+    router->setAccountSystemController(accountSystemController);
 
-    ladderSystem = new LadderSystem();
+//    ladderSystem = new LadderSystem();
 }
 
 void ACGMain::print() {

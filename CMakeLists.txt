@@ -26,6 +26,7 @@ if (DO_TEST)
 endif(DO_TEST)
 
 
+file(COPY data DESTINATION .)
 
 add_executable(main main.cpp test/FunctionalTest.cpp)
 target_link_libraries(main ACGMain)

@@ -20,8 +20,8 @@ Router::Router() {
     accountSystemParser = new AccountSystemParser();
     accountSystemParser->setIOQueue(toAccountSystem, accountSystemMutex);
 }
-void Router::setAccountSystem(AccountSystem *accountSystem) {
-    accountSystem_= accountSystem;
+void Router::setAccountSystemController(AccountSystemController *accountSystemController) {
+    accountSystemController_ = accountSystemController;
 }
 void Router::route() {
     while(true) {

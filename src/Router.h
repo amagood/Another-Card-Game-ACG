@@ -21,7 +21,7 @@ public:
     Reader * buildReader();
     Printer * buildPrinter();
     AccountSystemParser * accountSystemParser;
-    void setAccountSystem(AccountSystem * accountSystem);
+    void setAccountSystemController(AccountSystemController * accountSystemController);
     void route();
     void chooseDirection(nlohmann::json j);
     std::mutex readMutex;
@@ -32,7 +32,7 @@ private:
     std::queue<nlohmann::json> toDeliver;
     std::queue<nlohmann::json> toPrint;
     std::queue<nlohmann::json> toAccountSystem;
-    AccountSystem * accountSystem_;
+    AccountSystemController * accountSystemController_;
 };
 
 

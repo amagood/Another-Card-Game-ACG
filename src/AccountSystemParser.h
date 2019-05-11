@@ -8,17 +8,18 @@
 #include <queue>
 #include <nlohmann/json.hpp>
 #include "AccountSystem.h"
+#include "AccountSystemController.h"
 
 class AccountSystemParser {
 public:
     void setIOQueue(std::queue<nlohmann::json> &in, std::mutex &in_mutex);
-    void setAccountSystem(AccountSystem & accountSystem);
+    void setAccountSystemController(AccountSystemController * accountSystemController);
     void parse();
 private:
     bool stop_parse = false;
     std::queue<nlohmann::json> * in_json_queue_;
     std::mutex * in_mutex_;
-    AccountSystem * accountSystem_;
+    AccountSystemController * accountSystemController_;
 
 };
 

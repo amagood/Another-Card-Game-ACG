@@ -9,12 +9,12 @@ void AccountSystemParser::setIOQueue(std::queue<nlohmann::json> &in, std::mutex 
     in_json_queue_ = &in;
     in_mutex_ = &in_mutex;
 }
-void AccountSystemParser::setAccountSystem(AccountSystem &accountSystem) {
-    accountSystem_ = &accountSystem;
+void AccountSystemParser::setAccountSystemController(AccountSystemController *accountSystemController) {
+    accountSystemController_ = accountSystemController;
 }
 
 void AccountSystemParser::parse() {
-    if (accountSystem_ == nullptr) {
+    if (accountSystemController_ == nullptr) {
         throw std::runtime_error("AccountSystem is nullptr");
     } else if (in_json_queue_ == nullptr || in_mutex_) {
         throw std::runtime_error("json queue or mutex is nullptr");
@@ -34,36 +34,35 @@ void AccountSystemParser::parse() {
 
         if(func == "getAccountName") {
             std::vector<int> params = data["params"];
-            for (int &userId:params) {
-                accountSystem_->getAccountName(userId);
-            }
+            accountSystemController_->getAccountName(params);
+
         } else if(func == "createAccount") {
             std::vector<std::string> params = data["params"];
-            accountSystem_->createAccount(params[0],params[1]);
+            accountSystemController_->createAccount(params[0], params[1]);
         } else if(func == "login") {
             std::vector<std::string> params = data["params"];
-            accountSystem_->login(params[0], params[1]);
+            accountSystemController_->login(params[0], params[1]);
         } else if (func == "getAccountInfo") {
             std::vector<int> params = data["params"];
-            accountSystem_->getAccountInfo(params[0]);
+            accountSystemController_->getAccountInfo(params[0]);
         } else if (func == "logout") {
             std::vector<int> params = data["params"];
-            accountSystem_->logout(params[0]);
+            accountSystemController_->logout(params[0]);
         } else if (func == "payMoney") {
             std::vector<int> params = data["params"];
-            accountSystem_->modifyMoney(userID, params[0]);
+            accountSystemController_->payMoney(userID, params[0]);
         } else if (func == "drawCards") {
             std::vector<int> params = data["params"];
-            accountSystem_->drawCard(params[0]);
+            accountSystemController_->drawCards(userID, params[0]);
         } else if (func == "getCards") {
             std::vector<int> params = data["params"];
-            accountSystem_->getCards(params[0]);
+            accountSystemController_->getCards(params[0]);
 
         } else if (func == "modifyCards") {
             std::vector<int> params = data["params"];
             std::vector<uint32_t> cards = data["paramsMap"]["cards"];
             std::vector<uint32_t> deck = data["paramsMap"]["deck"];
-            accountSystem_->modifyCards(params[0], cards, deck);
+            accountSystemController_->modifyCards(params[0], cards, deck);
         }
 
     }
