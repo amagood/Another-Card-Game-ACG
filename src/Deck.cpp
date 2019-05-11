@@ -4,6 +4,7 @@
 #include <ctime>
 #include <nlohmann/json.hpp>
 #include <Deck.h>
+#include <typeinfo>
 using json = nlohmann::json;
 using namespace std;
 
@@ -47,39 +48,51 @@ Card *Deck::popDeck(int index = -1)
 }
 //-1 抽一張牌, others just pop by index
 
-Card *Deck::getIndexCards(int num, int mode, int sieve)
+Card *Deck::getIndexCards(int num, int mode, std::type_info sieve)
 {
     if (mode) // mode => 1 or -1
     {
         int i;
         for (i = (num > 0 ? deckLinkList.size() - 1 : 0); (num > 0 ? i >= 0 : i < deckLinkList.size()) && num; i += (num > 0 - num < 0))
         {
-            if (sieve == -1)
+            if (sieve == typeid(*deckLinkList[i]))
             {
                 num += (num<0 - num> 0);
             }
-            // TODO fix getCardType
-            /*
-            else if (sieve == deckLinkList[i]->getCardType())
-            {
-                num += (num<0 - num> 0);
-            }*/
         }
         return deckLinkList[i];
     }
     else // mode => 0
     {
         int temp = rand() % deckLinkList.size();
-        // TODO fix
-        /*
-        while (sieve != deckLinkList[temp]->getCardType() && sieve != -1)
+        // TODO fixed
+        while (sieve == typeid(*deckLinkList[temp]))
         {
             temp = rand() % deckLinkList.size();
-        }*/
+        }
 
         return deckLinkList[temp];
     }
 }
+
+Card *Deck::getIndexCards(int num, int mode)
+{
+    if (mode) // mode => 1 or -1
+    {
+        int i;
+        for (i = (num > 0 ? deckLinkList.size() - 1 : 0); (num > 0 ? i >= 0 : i < deckLinkList.size()) && num; i += (num > 0 - num < 0))
+        {
+            num += (num<0 - num> 0);
+        }
+        return deckLinkList[i];
+    }
+    else // mode => 0
+    {
+        int temp = rand() % deckLinkList.size();
+        return deckLinkList[temp];
+    }
+}
+
 //取得Card reference, mode=0 (random抽取), mode=1 (從牌堆最前面), mode=-1 (從牌堆最後面), sieve=-1 所有牌,others 只有那種type的牌
 
 void Deck::deckShuffler()
