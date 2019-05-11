@@ -6,7 +6,7 @@ Card::Card(int attack,int healthPoint,int mannaRequired,int ID, std::string Name
     atk=attack;
     hp=healthPoint;
     mp=mannaRequired;
-	ID=id;
+	id=ID;
 	name=Name;
 }
 void Card::setAtk(int attack)
@@ -21,15 +21,15 @@ void Card::setMp(int mannaRequired)
 {
     mp=mannaRequired;
 }
-void Card::setAttributes(string s)
+void Card::setAttributes(std::string s)
 {
 	attrib=s;
 }
-void setId(int num)
+void Card::setId(int num)
 {
 	id=num;
 }
-void setName(std::string s)
+void Card::setName(std::string s)
 {
 	name=s;
 }
@@ -60,11 +60,11 @@ int Card::getId()
 {
 	return id;
 }
-string Card::getAttributes()
+std::string Card::getAttributes()
 {
 	return attrib;
 }
-string Card::getName()
+std::string Card::getName()
 {
 	return name;
 }
@@ -78,13 +78,14 @@ void Weapon::usedOnce()
 
 void Minion::attack(Minion &target)
 {
-	hpIncrease(-target.atk);
+	hpIncrease(-target.getAtk());
     target.hpIncrease(-getAtk());
 
     ///both hasn't checked <die>
 }
 
 ////////////////////////Cards ///////////////
+
 Hero::Hero()
 {
 	setId(0);

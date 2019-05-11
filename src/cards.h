@@ -48,6 +48,8 @@ public:
 class Minion : public Card
 {
 public:
+
+
     void attack(Minion &target);
 	virtual void use()=0;
 };
@@ -57,6 +59,7 @@ public:
 //////////////////Minions: //////////////////////////
 class Hero final : public Minion
 {
+public:
 	Hero();
 };
 
