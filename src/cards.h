@@ -24,8 +24,9 @@ public:
 	int getId();
     std::string getName();
     std::string getAttributes();
+	Card *copy();
 	
-	virtual void use()=0;
+	
 
 };
 
@@ -33,17 +34,20 @@ class Weapon : public Card
 {
 public:
     void usedOnce();
+	virtual void use()=0;
 };
 
 class Spell : public Card
 {
-
+public:
+    virtual void use()=0;
 };
 
 class Minion : public Card
 {
 public:
     void attack(Minion &target);
+	virtual void use()=0;
 };
 
 //////////////////Cards: ////////////////////////////
