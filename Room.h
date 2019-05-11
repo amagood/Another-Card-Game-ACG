@@ -117,6 +117,7 @@ private:
     bool isRoomNameAdmitted(std::string name, RoomMode mode);
     Player* createPlayer(uint32_t playerID);
     void checkRooms();
+    void startGame(RoomMode mode, int id);
     void freeAllRooms();
     ///UI
     enum ActionType { GET_ROOMLIST=0, GET_ROOMINFO, CREATE_ROOM, ENTER_ROOM, ENTER_ROOM_RANDOM, INVITE_FRIEND, ACTION_COUNT};
