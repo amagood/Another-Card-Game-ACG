@@ -48,7 +48,9 @@ nlohmann::json Account::toJson() {
 void Account::modifyPassword(std::string &password){
     password_ = password;
 }
-
+std::string Account::getDeviceId() {
+    return device_id_;
+}
 bool Account::isIDSame(std::string &other_id) {
     return this->id_ == other_id;
 }
@@ -98,10 +100,18 @@ bool Account::verify(std::string &password) {
 
 bool AccountSystem::login(std::string &account_name, std::string &password) {
     if (!this->exist(account_name)) {
-        return false;
+        return false; // error account
     } else {
         Account *account = this->get_account(account_name);
-        return account->verify(password);
+        if (!account->verify(password)) {
+            return false;
+        }
+        if (!account->isOnline()) {
+
+            account->login();
+            return true;
+        }
+
     }
 }
 bool AccountSystem::createAccount(std::string &id, std::string &password) {
@@ -175,6 +185,10 @@ int AccountSystem::getMoney(std::string &id) {
     }
 }
 
+std::string AccountSystem::getAccountDeviceId(uint32_t userId) {
+    Account *account = get_account(userId);
+    return account->getDeviceId();
 
+}
 
 #undef SLEEP

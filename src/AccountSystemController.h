@@ -9,18 +9,21 @@
 #include <vector>
 #include <cstdint>
 #include <string>
+
+
 class AccountSystemController {
     AccountSystem * accountSystem;
+
 public:
-    void getAccountName(std::vector<int> userIds){}
-    void createAccount(std::string id, std::string password){}
-    void login(std::string id, std::string password){}
-    void logout(uint32_t userId){}
-    void payMoney(uint32_t userId, int number){}
-    void drawCards(uint32_t userId, int number){}
-    void getCards(uint32_t userId){}
-    void modifyCards(uint32_t userId, std::vector<uint32_t> cards, std::vector<uint32_t> decks){}
-    void getAccountInfo(uint32_t userId){};
+    void getAccountsName(std::vector<uint32_t> userIds);
+    void createAccount(std::string id, std::string password);
+    void login(std::string id, std::string password);
+    void logout(uint32_t userId);
+    void payMoney(uint32_t userId, int number);
+    void drawCards(uint32_t userId, int number);
+    void getCards(uint32_t userId);
+    void modifyCards(uint32_t userId, std::vector<uint32_t> cards, std::vector<uint32_t> decks);
+    void getAccountInfo(uint32_t userId);
 };
 
 

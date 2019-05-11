@@ -33,8 +33,8 @@ void AccountSystemParser::parse() {
         std::string func = data["function"];
 
         if(func == "getAccountName") {
-            std::vector<int> params = data["params"];
-            accountSystemController_->getAccountName(params);
+            U32vec params = data["params"];
+            accountSystemController_->getAccountsName(params);
 
         } else if(func == "createAccount") {
             std::vector<std::string> params = data["params"];
@@ -60,8 +60,8 @@ void AccountSystemParser::parse() {
 
         } else if (func == "modifyCards") {
             std::vector<int> params = data["params"];
-            std::vector<uint32_t> cards = data["paramsMap"]["cards"];
-            std::vector<uint32_t> deck = data["paramsMap"]["deck"];
+            U32vec cards = data["paramsMap"]["cards"];
+            U32vec deck = data["paramsMap"]["deck"];
             accountSystemController_->modifyCards(params[0], cards, deck);
         }
 
