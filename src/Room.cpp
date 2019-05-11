@@ -12,6 +12,7 @@
 #include "nlohmann/json.hpp"
 #include "Reader.h"
 #include "Printer.h"
+#include "Sender.h"
 
 using namespace std;
 
