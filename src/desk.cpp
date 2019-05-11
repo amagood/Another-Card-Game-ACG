@@ -157,7 +157,10 @@ bool Desk::playerMovement(int playerId)
         }
         else if(inputAction["data"]["useOrAttack"]=="useCard" && inputAction["data"]["useOrAttack"]=="attack")  ///Attack
         {
-            site.at(playerId).getIndexCards(inputAction["data"]["selectedCardId"],1,-1).attack(site.at(otherPlayer(playerId)).getIndexCards(inputAction["data"]["targetPlayerId"],1,-1));
+            Minion * me, *target;
+            me = (Minion*)(site.at(playerId).getIndexCards(inputAction["data"]["selectedCardId"],1,-1));
+            target = (Minion*)(site.at(otherPlayer(playerId)).getIndexCards(inputAction["data"]["targetPlayerId"],1,-1));
+            me->attack(*target);
         }
         else       ///End
         {
