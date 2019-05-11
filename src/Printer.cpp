@@ -7,18 +7,18 @@
 #include <iostream>
 
 #include "nlohmann/json.hpp"
-Printer::Printer(std::queue<nlohmann::json> &toPrint, std::mutex &mut) {
-    toPrintQueue = &toPrint;
-    queueMutex = &mut;
+Printer::Printer(std::deque<nlohmann::json> &toPrintDeque, std::mutex &p) {
+    toPrintDeque_ = &toPrintDeque;
+    queueMutex = &p;
 }
 
 void Printer::print() {
     while (true) {
         queueMutex->lock();
-        if(!toPrintQueue->empty()) {
+        if(!toPrintDeque_->empty()) {
 
-            nlohmann::json json_ = toPrintQueue->front();
-            toPrintQueue->pop();
+            nlohmann::json json_ = toPrintDeque_->front();
+            toPrintDeque_->pop_front();
             std::cout << json_.dump();
         }
         queueMutex->unlock();

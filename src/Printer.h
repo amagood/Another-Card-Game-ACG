@@ -10,17 +10,17 @@
 #include <mutex>
 
 
-#include "nlohmann/json.hpp"
+#include <nlohmann/json.hpp>
 
 class Printer {
 
 public:
-    Printer(std::queue<nlohmann::json> &toPrintQueue, std::mutex &p);
+    Printer(std::deque<nlohmann::json> &toPrintDeque, std::mutex &p);
 
     void print();
 
 private:
-    std::queue<nlohmann::json> *toPrintQueue;
+    std::deque<nlohmann::json> *toPrintDeque_;
 
     std::mutex * queueMutex;
 };

@@ -17,7 +17,7 @@
 
 ACGMain::ACGMain() {
     router = new Router();
-    //reader = router->buildReader();
+    reader = router->buildReader();
     printer = router->buildPrinter();
 
     accountSystemController = new AccountSystemController();
