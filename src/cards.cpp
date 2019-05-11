@@ -25,7 +25,14 @@ void Card::setAttributes(string s)
 {
 	attrib=s;
 }
-
+void setId(int num)
+{
+	id=num;
+}
+void setName(std::string s)
+{
+	name=s;
+}
 
 
 void Card::atkIncrease(int i)
@@ -65,14 +72,14 @@ string Card::getName()
 
 void Weapon::usedOnce()
 {
-    hp--;
+    hpIncrease(-1);
 }
 
 
 void Minion::attack(Minion &target)
 {
-    hp-=target.atk;
-    target.hp-=atk;
+	hpIncrease(-target.atk);
+    target.hpIncrease(-getAtk());
 
     ///both hasn't checked <die>
 }
@@ -80,18 +87,18 @@ void Minion::attack(Minion &target)
 ////////////////////////Cards ///////////////
 Hero::Hero()
 {
-	id = 0;
-	atk = 0;
-	hp = maxHp
-	mp = 0;
-	
+	setId(0);
+	setAtk(0);
+	setHp(maxHp);
+	setMp(0);
+	setName("英雄");
 }
 
 Card001::Card001()
 {
-	id=1;
-	atk = 1;
-	hp = 2;
-	mp = 1;
-	name = "戰士學徒";
+	setId(1);
+	setAtk(1);
+	setHp(2);
+	setMp(1);
+	setName("戰士學徒");
 }
