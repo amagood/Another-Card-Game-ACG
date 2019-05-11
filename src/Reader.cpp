@@ -7,6 +7,7 @@
 #include <iostream>
 #include <string>
 #include <mutex>
+
 #include <deque>
 
 #include "nlohmann/json.hpp"
@@ -14,9 +15,11 @@ using json = nlohmann::json;
 
 Reader::Reader(std::deque<nlohmann::json> &toDeliver, std::mutex &mut)
 {
+
     toDeliverQueue = &toDeliver;
     queueMutex = &mut;
 }
+
 
 void Reader::read()
 {
@@ -24,10 +27,12 @@ void Reader::read()
     while (std::getline(std::cin, line))
     {
         json json_ = json::parse(line);
+
         queueMutex->lock();
         toDeliverQueue->push(json_);
         queueMutex->unlock();
     }
+
 }
 
 json Reader::popJson(string type, int id)
@@ -44,4 +49,3 @@ json Reader::popJson(string type, int id)
         }
     }
     queueMutex->unlock();
-}

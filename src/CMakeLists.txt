@@ -1,4 +1,3 @@
-project(src)
-include_directories(../lib)
 
-add_library(ACGMain ACGMain.cpp Printer.cpp Reader.cpp AccountSystem.cpp Router.cpp )
+add_library(ACGMain ACGMain.cpp Printer.cpp Reader.cpp AccountSystem.cpp Router.cpp LadderSystem.cpp AccountSystemParser.cpp AccountSystemController.cpp)
+

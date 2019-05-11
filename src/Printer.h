@@ -9,10 +9,11 @@
 #include <queue>
 #include <mutex>
 
-#include "../lib/nlohmann/json.hpp"
-using json = nlohmann::json;
-class Printer
-{
+
+#include "nlohmann/json.hpp"
+
+class Printer {
+
 public:
     Printer(std::queue<nlohmann::json> &toPrintQueue, std::mutex &p);
 
@@ -20,7 +21,12 @@ public:
 
 private:
     std::queue<nlohmann::json> *toPrintQueue;
-    std::mutex *queueMutex;
+
+    std::mutex * queueMutex;
 };
+
+
+
+
 
 #endif //ANOTHER_CARD_GAME_ACG_PRINTER_H

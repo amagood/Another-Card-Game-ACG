@@ -6,6 +6,7 @@
 #define ANOTHER_CARD_GAME_ACG_READER_H
 
 #include <string>
+
 #include <deque>
 #include <mutex>
 
@@ -22,5 +23,6 @@ private:
     std::deque<nlohmann::json> *toDeliverQueue;
     std::mutex *queueMutex;
 };
+
 
 #endif //ANOTHER_CARD_GAME_ACG_READER_H
