@@ -14,6 +14,8 @@ public:
     void setHp(int healthPoint);
     void setMp(int mannaRequired);
     void setAttributes(std::string s);
+	void setId(int num);
+	void setName(std::string s);
 	
     void atkIncrease(int i);
     void hpIncrease(int i);
