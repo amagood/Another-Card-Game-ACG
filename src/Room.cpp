@@ -343,9 +343,9 @@ void Arena::returnRoomList(RoomMode mode)
 void Arena::returnRoomInfo(RoomMode mode, int roomId)
 {
     Room* room = getRoom(mode, roomId);
-    vector<uint32_t> playerID=room->getPlayers();
-    for(size_t i=0; i<playerID.size(); i++)
-        playerID.push_back(playerID[i]->getID());
+    vector<uint32_t> playerID;
+    for(size_t i=0; i<room->getPlayers().size(); i++)
+        playerID.push_back(room->getPlayers()->getID());
     json j;
     setJson(j);
     j["data"]["action"]="getRoomInfo";
