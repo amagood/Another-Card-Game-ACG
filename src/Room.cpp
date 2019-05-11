@@ -14,9 +14,8 @@
 #include "Printer.h"
 #include "Sender.h"
 
-using namespace std;
 
-Room::Room(int id, string name, string word, Player* player) : _ID(id), _name(name), _password(word)
+Room::Room(int id, std::string name, std::string word, Player* player) : _ID(id), _name(name), _password(word)
 {
     _player.push_back(player);
 }
@@ -55,7 +54,7 @@ void OneOnOneRoom::startGame(Reader *reader, Sender *sender)
     _desk = new Desk(reader, sender, _ID, p0.getDeck(), p1.getDeck(), p0.getName(), p1.getName());
     while(!_endgame)
     {
-        std::this_thread::sleep_for(chrono::seconds(1));
+        std::this_thread::sleep_for(std::chrono::seconds(1));
         _endgame=_desk->end_();
     }
 }
@@ -133,7 +132,7 @@ Arena::~Arena()
     running=false;
     freeAllRooms();
 }
-bool Arena::enterRoom(uint32_t playerID, RoomMode mode, int id, string password)
+bool Arena::enterRoom(uint32_t playerID, RoomMode mode, int id, std::string password)
 {
     Room* room=getRoom(mode, id);
     if(!room->isPasswordCorrect(password))
@@ -150,7 +149,7 @@ void Arena::enterRoomRandom(uint32_t playerID, RoomMode mode)
     if(!enter)
         createRoom(player, mode, getNonRepeatRandomRoomID(), getNonRepeatRandomRoomName(mode), "");
 }
-int Arena::createRoom(uint32_t playerID, RoomMode mode, string name, string password)
+int Arena::createRoom(uint32_t playerID, RoomMode mode, std::string name, std::string password)
 {
     if(!isRoomNameAdmitted(name, mode))
         return -1;
@@ -220,7 +219,7 @@ int Arena::getNonRepeatRandomRoomID()
     }
     return num;
 }
-string Arena::getRandomString(RoomMode mode)
+std::string Arena::getRandomString(RoomMode mode)
 {
     static const string alphanum ="0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
     int len=4;
@@ -246,16 +245,16 @@ string Arena::getRandomString(RoomMode mode)
     str[len] = 0;
     return str;
 }
-bool Arena::isRoomNameAdmitted(string name, RoomMode mode)
+bool Arena::isRoomNameAdmitted(std::string name, RoomMode mode)
 {
     for(size_t i=0; i<_room[mode].size(); i++)
         if(name==_room[mode][i]->getName())
             return false;
     return true;
 }
-string Arena::getNonRepeatRandomRoomName(RoomMode mode)
+std::string Arena::getNonRepeatRandomRoomName(RoomMode mode)
 {
-    string str=getRandomString(mode);
+    std::string str=getRandomString(mode);
     while(!isRoomNameAdmitted(str, mode))
         str=getRandomString(mode);
     return str;
@@ -267,7 +266,7 @@ Room* Arena::getRoom(RoomMode mode, int id)
             return _room[mode][i];
     return nullptr;
 }
-void Arena::createRoom(Player* player, RoomMode mode, int id, string name, string password)
+void Arena::createRoom(Player* player, RoomMode mode, int id, std::string name, std::string password)
 {
     Room* room = Room::createRoom(player, mode, id, name, password);
     _room[mode].push_back(room);
@@ -325,7 +324,7 @@ void Arena::setJson(json & j)
     j["deviceId"]="";
     j["data"]["eventType"]=jsonType;
 }
-int Arena::getActionType(string action)
+int Arena::getActionType(std::string action)
 {
     for(int i=0;i<(int)ActionType.ACTION_COUNT;i++)
         if(action==actionString[i])
@@ -334,7 +333,7 @@ int Arena::getActionType(string action)
 }
 void Arena::returnRoomList(RoomMode mode)
 {
-    vector<int> roomID;
+    std::vector<int> roomID;
     for(size_t i=0; i<_room[mode].size(); i++)
         roomID.push_back(_room[mode][i]->getID());
     json j;
@@ -342,12 +341,12 @@ void Arena::returnRoomList(RoomMode mode)
     j["data"]["action"]="getRoomList";
     j["data"]["roomMode"]=(int)mode;
     j["data"]["roomId"]=roomID;
-    cout << j << endl;
+    std::cout << j << endl;
 }
 void Arena::returnRoomInfo(RoomMode mode, int roomId)
 {
     Room* room = getRoom(mode, roomId);
-    vector<uint32_t> playerID;
+    std::vector<uint32_t> playerID;
     for(size_t i=0; i<room->getPlayers().size(); i++)
         playerID.push_back(room->getPlayers()->getID());
     json j;
@@ -357,9 +356,9 @@ void Arena::returnRoomInfo(RoomMode mode, int roomId)
     j["data"]["roomId"]=roomId;
     j["data"]["roomName"]=room->getName();
     j["data"]["playerId"]=playerID;
-    cout << j << endl;
+    std::cout << j << endl;
 }
-void Arena::returnCreateRoom(int playerID, RoomMode mode, string name, string password)
+void Arena::returnCreateRoom(int playerID, RoomMode mode, std::string name, std::string password)
 {
     int roomId = createRoom(playerID, mode, name, password);
     json j;
@@ -381,7 +380,7 @@ void Arena::returnCreateRoom(int playerID, RoomMode mode, string name, string pa
         j["data"]["roomName"]="";
     }
 }
-void Arena::returnEnterRoom(int playerID, RoomMode mode, int id, string password)
+void Arena::returnEnterRoom(int playerID, RoomMode mode, int id, std::string password)
 {
     bool enter = enterRoom(playerID, mode, id, password);
     json j;
