@@ -6,23 +6,21 @@
 #define ANOTHER_CARD_GAME_ACG_READER_H
 
 #include <string>
-
 #include <deque>
 #include <mutex>
 
 #include "nlohmann/json.hpp"
 using json = nlohmann::json;
-class Reader
+class Sender
 {
 public:
-    Reader(std::deque<nlohmann::json> &toDeliver, std::mutex &mutex);
-    void read();
-    json popJson(int type, int id);
+    Sender(std::deque<json> &toTransfer, std::mutex &mut);
+    void send();
+    void pushJson(json json_);
 
 private:
-    std::deque<nlohmann::json> *toDeliverQueue;
+    std::deque<json> *toTransferQueue;
     std::mutex *queueMutex;
 };
-
 
 #endif //ANOTHER_CARD_GAME_ACG_READER_H

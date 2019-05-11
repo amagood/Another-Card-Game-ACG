@@ -9,6 +9,7 @@
 #include <string>
 #include "AccountSystem.h"
 
+
 enum LadderLevel{
     COPPER = 0, SILVER = 1, GOLD = 2, DIAMOND = 3, GREAT_MASTER = 4
 };
@@ -33,6 +34,7 @@ public:
 
 class LadderSystem {
 public:
+
     LadderSystem(){};
     std::vector<LadderPlayer *> participant;
     void join(Account *account);

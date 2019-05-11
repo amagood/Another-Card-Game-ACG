@@ -3,6 +3,7 @@
 //
 
 #include "LadderSystem.h"
+
 void LadderSystem::join(Account *account) {
     int ladder_point = account->getLadderPoint();
     std::string id = account->getName();
@@ -66,3 +67,4 @@ void LadderSystem::match() {
     // use index1 and index2 id to create game
 
 }
+

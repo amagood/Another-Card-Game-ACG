@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 3.13)
 
 project(Another-Card-Game-ACG)
 set(CMAKE_CXX_STANDARD 14)
+
 set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -Wall")
 
 if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
@@ -11,6 +12,7 @@ endif()
 
 include_directories(lib)
 include_directories(src/pages)
+
 
 add_subdirectory(src)
 option (DO_TEST "Running test" N)
@@ -26,7 +28,9 @@ if (DO_TEST)
 endif(DO_TEST)
 
 
+
 file(COPY data DESTINATION .)
 
 add_executable(main main.cpp test/FunctionalTest.cpp)
 target_link_libraries(main ACGMain)
+

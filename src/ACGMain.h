@@ -5,13 +5,16 @@
 #ifndef ANOTHER_CARD_GAME_ACG_ACGMAIN_H
 #define ANOTHER_CARD_GAME_ACG_ACGMAIN_H
 
+
 #include "AccountSystemController.h"
+
 #include "Reader.h"
 #include "Printer.h"
 #include "Router.h"
 
 class ACGMain {
 private:
+
     AccountSystemController *accountSystemController;
     Reader * reader;
     Printer * printer;
@@ -22,6 +25,7 @@ private:
 public:
     ACGMain();
     void run();
+
 };
 
 

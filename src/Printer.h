@@ -9,9 +9,11 @@
 #include <queue>
 #include <mutex>
 
+
 #include "nlohmann/json.hpp"
 
 class Printer {
+
 public:
     Printer(std::queue<nlohmann::json> &toPrintQueue, std::mutex &p);
 
@@ -19,8 +21,10 @@ public:
 
 private:
     std::queue<nlohmann::json> *toPrintQueue;
+
     std::mutex * queueMutex;
 };
+
 
 
 
