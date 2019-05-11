@@ -110,7 +110,7 @@ private:
     const std::string jsonType="room";
     const int jsonID=123;
     void initArena();
-    int getNonRepeatRandomRoomID(RoomMode mode);
+    int getNonRepeatRandomRoomID();
     std::string getRandomString(RoomMode mode);
     std::string getNonRepeatRandomRoomName(RoomMode mode);
     void createRoom(Player* player, RoomMode mode, int id, std::string name, std::string password);
