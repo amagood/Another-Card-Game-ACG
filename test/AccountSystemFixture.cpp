@@ -46,7 +46,7 @@ public:
         account_system.createAccount(exist_id, exist_pwd);
     }
     void TearDown() final {
-
+//        account_system.deleteAccount()
     }
 
 };
@@ -86,6 +86,20 @@ TEST_F(AccountSystemFixture, TEST_ACCOUNT_SYSTER_LOGIN_WRONG_INFO) {
     ASSERT_FALSE(account_system.login(wrong_id, keyword));
 }
 
+TEST_F(AccountSystemFixture, TestLogOut1) {
+
+
+    account_system.login(exist_id, exist_pwd);
+    ASSERT_TRUE(account_system.logout(exist_id));
+    // don't logout twice
+    ASSERT_FALSE(account_system.logout(exist_id));
+
+    account_system.login(exist_id, exist_pwd);
+    ASSERT_TRUE(account_system.logout(exist_id));
+
+
+}
+
 TEST_F(AccountSystemFixture, TEST_MODIFIY_PASSWORD) {
     std::string new_pwd("new_pwd");
     // wrong old password
@@ -93,10 +107,13 @@ TEST_F(AccountSystemFixture, TEST_MODIFIY_PASSWORD) {
     // true old password
     ASSERT_TRUE(account_system.modifyPassword(exist_id, exist_pwd, new_pwd));
 
+    account_system.logout(exist_id);
+
     ASSERT_FALSE(account_system.login(exist_id, exist_pwd));
 
     ASSERT_TRUE(account_system.login(exist_id, new_pwd));
 }
+
 
 
 TEST_F(AccountSystemFixture, TEST_ACCOUNT_MONEY) {

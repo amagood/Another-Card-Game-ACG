@@ -2,5 +2,5 @@
 add_library(ACGMain ACGMain.cpp Printer.cpp
         Reader.cpp AccountSystem.cpp Router.cpp
         LadderSystem.cpp AccountSystemParser.cpp
-        AccountSystemController.cpp Account.cpp)
+        AccountSystemController.cpp Account.cpp DrawCardSystem.cpp DrawCardSystem.h)
 

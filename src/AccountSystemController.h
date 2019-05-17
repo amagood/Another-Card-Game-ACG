@@ -9,10 +9,11 @@
 #include <vector>
 #include <cstdint>
 #include <string>
-
+#include "DrawCardSystem.h"
 
 class AccountSystemController {
     AccountSystem * accountSystem;
+    DrawCardSystem * drawCardSystem;
 
 public:
     void getAccountsName(std::vector<uint32_t> userIds);

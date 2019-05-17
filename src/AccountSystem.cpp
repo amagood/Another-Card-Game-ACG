@@ -59,7 +59,6 @@ bool AccountSystem::login(std::string &account_name, std::string &password) {
             return false;
         }
         if (!account->isOnline()) {
-
             account->login();
             return true;
         }
@@ -142,5 +141,28 @@ std::string AccountSystem::getAccountDeviceId(uint32_t userId) {
     return account->getDeviceId();
 
 }
+bool AccountSystem::logout(uint32_t user_id_) {
+    Account *account = get_account(user_id_);
+    if(account->isOnline()) {
+        account->left();
+        return true;
+    }
+    return false;
+}
+bool AccountSystem::logout(std::string &account_name) {
+    Account *account = get_account(account_name);
+    if(account->isOnline()) {
+        account->left();
+        return true;
+    }
+    return false;
+}
+bool AccountSystem::addCard(uint32_t userId, uint32_t cardId) {
+    Account *account = get_account(userId);
+    return account->addCard(cardId);
 
+}
+void AccountSystem::load() {
+    // load cardlist
+}
 #undef SLEEP

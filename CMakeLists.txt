@@ -30,7 +30,10 @@ endif(DO_TEST)
 
 
 
-#file(COPY data DESTINATION .)
+file(COPY data DESTINATION .)
+file(COPY test/data DESTINATION test)
+file(COPY test/data/accountlist.json DESTINATION test/accountlist.json)
+file(COPY test/data/cardlist.json DESTINATION test/xardlist.json)
 
 add_executable(main main.cpp test/FunctionalTest.cpp)
 target_link_libraries(main ACGMain)

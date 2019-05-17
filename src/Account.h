@@ -24,41 +24,25 @@ public:
     void modifyMoney(int money);
     nlohmann::json toJson();
     int getMoney();
-    std::string getName(){return name_;}
+    std::string getName();
     std::string getDeviceId();
-    int getLadderPoint(){return ladderPoint_;}
-    uint32_t getUniqueNumber() { return user_id_;}
-    U32vec getDeck (){
-        return deck_card_list;
-    };
-    U32vec getCards (){
-        return card_list;
-    };
-    void setDeck(U32vec deck) {
-        deck_card_list = deck;
-    }
-    void setCards(U32vec cards) {
-        card_list = cards;
-    }
-    void left(){
-        online = false;
-    }
-    void login() {
-        online = true;
-    }
-    bool isOnline() {
-        return online;
-    }
+    int getLadderPoint();
+    uint32_t getUniqueNumber();
+    U32vec getDeck ();
+    U32vec getCards ();
+    bool addCard(uint32_t);
+    void setDeck(U32vec deck);
+    void setCards(U32vec cards);
+    void left();
+    void login();
+    bool isOnline();
 private:
     uint32_t user_id_ = 0; // TODO make it unique, readonly
     int money_ = 0;
-    std::string name_;
     bool online = false;
     std::string id_;
     std::string password_;
     std::string device_id_;
-
-
     uint32_t win_ = 0;
     uint32_t lose_ = 0;
 

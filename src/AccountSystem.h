@@ -24,7 +24,8 @@ public:
     bool createAccount(std::string &id, std::string &password);
     bool exist(std::string &account_name);
     bool login(std::string &account_name, std::string &password);
-    bool logout(uint32_t user_id_){return true;};
+    bool logout(uint32_t user_id_);
+    bool logout(std::string &account_name);
     bool isOnline(uint32_t user_id_) {
         return get_account(user_id_)->isOnline();
     }
@@ -33,6 +34,7 @@ public:
     void modifyMoney(uint32_t user_id_, int money);
     int getMoney(std::string &id);
     void loadAccounts();
+
     void saveAccount(int u_num, nlohmann::json j);
     void updateCards(uint32_t userId, U32vec cards, U32vec deck) {
         get_account(userId)->setDeck(deck);
@@ -43,7 +45,7 @@ public:
     U32vec getCards(uint32_t userId) {
         return get_account(userId)->getCards();
     }
-    void drawCard(int){};
+    bool addCard(uint32_t userId, uint32_t cardId);
     std::string getAccountName(uint32_t user_id_){
         return get_account(user_id_)->getName();
     };
@@ -56,10 +58,12 @@ public:
     std::string getAccountDeviceId(uint32_t uint32);
 
 private:
+    void load();
     void loadAccount(uint32_t userId);
     std::vector<Account> account_vector;
     Account* get_account(std::string id);
     Account* get_account(int u_num);
+
 };
 
 
