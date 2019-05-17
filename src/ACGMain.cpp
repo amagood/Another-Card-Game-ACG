@@ -23,7 +23,6 @@ ACGMain::ACGMain() {
     accountSystemController = new AccountSystemController();
     router->setAccountSystemController(accountSystemController);
 
-//    ladderSystem = new LadderSystem();
 }
 
 void ACGMain::print() {
