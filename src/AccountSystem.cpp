@@ -45,7 +45,7 @@ void AccountSystem::saveAccounts() {
     }
 }
 
-bool Account::verify(std::string &password) {
+bool Account::verify(std::string password) {
     // TODO revise with encryption
     return password_ == password;
 }

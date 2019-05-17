@@ -9,7 +9,8 @@
 #include <string>
 #include <vector>
 
-typedef std::vector<uint32_t> U32vec;
+#include "ACGType.h"
+
 
 class Account{
 public:
@@ -17,10 +18,10 @@ public:
     Account(nlohmann::json json);
 
     bool isSame(Account &another);
-    bool isIDSame(std::string &other_id);
-    bool verify(std::string &password);
+    bool isIDSame(std::string other_id);
+    bool verify(std::string password);
 
-    void modifyPassword(std::string &password);
+    void modifyPassword(std::string password);
     void modifyMoney(int money);
     nlohmann::json toJson();
     int getMoney();

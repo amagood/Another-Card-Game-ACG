@@ -39,13 +39,13 @@ nlohmann::json Account::toJson() {
     return j;
 }
 
-void Account::modifyPassword(std::string &password){
+void Account::modifyPassword(std::string password){
     password_ = password;
 }
 std::string Account::getDeviceId() {
     return device_id_;
 }
-bool Account::isIDSame(std::string &other_id) {
+bool Account::isIDSame(std::string other_id) {
     return this->id_ == other_id;
 }
 bool Account::isSame(Account &another) {
@@ -56,6 +56,9 @@ int Account::getMoney() {
 }
 void Account::modifyMoney(int money) {
     money_ += money;
+    if (money_ < 0) {
+        money_ = 0;
+    }
 }
 std::string Account::getName() {
     return id_;

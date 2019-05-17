@@ -5,6 +5,14 @@
 #include "AccountSystemController.h"
 #include "DrawCardSystem.h"
 
+AccountSystemController::AccountSystemController() {
+    accountSystem = new AccountSystem();
+    drawCardSystem = new DrawCardSystem();
+}
+AccountSystem* AccountSystemController::getAccountSystem() {
+    return accountSystem;
+}
+
 void AccountSystemController::createAccount(std::string id, std::string password) {
     bool success = accountSystem->createAccount(id, password);
 }
@@ -24,8 +32,8 @@ void AccountSystemController::logout(uint32_t userId) {
 void AccountSystemController::payMoney(uint32_t userId, int number) {
     accountSystem->modifyMoney(userId, number);
 }
+
 void AccountSystemController::drawCards(uint32_t userId, int card_amount) {
-    // TODO cards number
     for (int i = 0; i < card_amount; i++) {
         uint32_t cardId = drawCardSystem->drawCard();
         if (!accountSystem->addCard(userId, cardId)) {
@@ -33,7 +41,6 @@ void AccountSystemController::drawCards(uint32_t userId, int card_amount) {
             return;
         }
     }
-
 }
 void AccountSystemController::getCards(uint32_t userId) {
     std::vector<uint32_t> cards = accountSystem->getCards(userId);

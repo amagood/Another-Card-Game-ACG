@@ -10,12 +10,13 @@
 #include <cstdint>
 #include <string>
 #include "DrawCardSystem.h"
-
+#include <mutex>
 class AccountSystemController {
     AccountSystem * accountSystem;
     DrawCardSystem * drawCardSystem;
-
+    std::mutex accountSystemMutex;
 public:
+    AccountSystemController();
     void getAccountsName(std::vector<uint32_t> userIds);
     void createAccount(std::string id, std::string password);
     void login(std::string id, std::string password);
@@ -25,6 +26,7 @@ public:
     void getCards(uint32_t userId);
     void modifyCards(uint32_t userId, std::vector<uint32_t> cards, std::vector<uint32_t> decks);
     void getAccountInfo(uint32_t userId);
+    AccountSystem * getAccountSystem();
 };
 
 

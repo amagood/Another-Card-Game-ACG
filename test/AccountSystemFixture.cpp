@@ -6,34 +6,7 @@
 #include <gmock/gmock.h>
 #include "AccountSystem.h"
 
-class AccountFixture : public ::testing::Test {
-public:
-    void SetUp() final{
-    }
-    void TearDown() final{
 
-    }
-};
-
-TEST_F(AccountFixture, TEST_ACCOUNT_IS_SAME) {
-    std::string id("id");
-    std::string password("123");
-    std::string password2("12352");
-    Account a = Account(id, password);
-    Account b = Account(id, password2);
-    ASSERT_TRUE(a.isSame(b));
-}
-TEST_F(AccountFixture, Account_VERIFIED) {
-    std::string id("id");
-    std::string password("123");
-    std::string password2("12352");
-    Account a = Account(id, password);
-    ASSERT_TRUE(a.verify(password));
-    ASSERT_FALSE(a.verify(password2));
-    a.modifyPassword(password2);
-    ASSERT_TRUE(a.verify(password2));
-    ASSERT_FALSE(a.verify(password));
-}
 
 class AccountSystemFixture : public ::testing::Test {
 public:
