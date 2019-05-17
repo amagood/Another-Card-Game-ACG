@@ -6,7 +6,7 @@
 #include <gmock/gmock.h>
 #include "DrawCardSystem.h"
 
-class CardInfoFixture : public ::testing::Test {
+class DrawCardSystemFixture : public ::testing::Test {
 public:
 
     void SetUp() final{
@@ -17,18 +17,18 @@ public:
     }
 };
 
-TEST_F(CardInfoFixture, TestCreateCardInfo) {
+TEST_F(DrawCardSystemFixture, TestCreateCardInfo) {
     DrawCardSystem * cardInfo = nullptr;
     cardInfo = new DrawCardSystem();
 }
 
-TEST_F(CardInfoFixture, TestDrawCard) {
+TEST_F(DrawCardSystemFixture, TestDrawCard) {
     DrawCardSystem * cardInfo = nullptr;
     cardInfo = new DrawCardSystem();
     ASSERT_GE(cardInfo->drawCard(), 0);
 }
 
-TEST_F(CardInfoFixture, TestDrawCardRandom) {
+TEST_F(DrawCardSystemFixture, TestDrawCardRandom) {
     DrawCardSystem * cardInfo = nullptr;
     cardInfo = new DrawCardSystem();
     bool allSame = true;
