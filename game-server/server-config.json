@@ -1,0 +1,4 @@
+{
+  "socket_server_port": 3456,
+  "game_logic_engine_path": "../game-logic-engine/game-logic-engine.exe"
+}
