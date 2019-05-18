@@ -5,7 +5,7 @@
 #include "AccountSystemParser.h"
 #include "AccountSystem.h"
 
-void AccountSystemParser::setIOQueue(std::deque<nlohmann::json> &in, std::mutex &in_mutex) {
+AccountSystemParser::AccountSystemParser(std::deque<nlohmann::json> &in, std::mutex &in_mutex) {
     in_json_deque_ = &in;
     in_mutex_ = &in_mutex;
 }

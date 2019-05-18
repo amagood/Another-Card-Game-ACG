@@ -12,6 +12,10 @@ AccountSystemController::AccountSystemController() {
 AccountSystem* AccountSystemController::getAccountSystem() {
     return accountSystem;
 }
+std::mutex* AccountSystemController::getAccountSystemMutex() {
+    return &accountSystemMutex;
+}
+
 
 void AccountSystemController::createAccount(std::string id, std::string password) {
     bool success = accountSystem->createAccount(id, password);

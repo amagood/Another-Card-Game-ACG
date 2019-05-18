@@ -12,7 +12,7 @@
 
 class AccountSystemParser {
 public:
-    void setIOQueue(std::deque<nlohmann::json> &in, std::mutex &in_mutex);
+    AccountSystemParser(std::deque<nlohmann::json> &in, std::mutex &in_mutex);
     void setAccountSystemController(AccountSystemController * accountSystemController);
     void parse();
 private:
@@ -20,7 +20,6 @@ private:
     std::deque<nlohmann::json> * in_json_deque_;
     std::mutex * in_mutex_;
     AccountSystemController * accountSystemController_;
-
 };
 
 

@@ -20,25 +20,18 @@
 class Router {
 public:
     Router();
-    Reader * buildReader();
-    Printer * buildPrinter();
-
     AccountSystemParser * accountSystemParser;
-    void setAccountSystemController(AccountSystemController * accountSystemController);
     void route();
+    void run();
     void chooseDirection(nlohmann::json j);
-    std::mutex readMutex;
-    std::mutex printMutex;
-    std::mutex accountSystemMutex;
-
+    void setAccountSystems(AccountSystemController *);
+    std::mutex routeMutex_;
+    std::deque<nlohmann::json> routeDeque_;
 
 private:
-    std::deque<nlohmann::json> toDeliver;
-    std::deque<nlohmann::json> toPrint;
 
+    std::mutex accountSystemMutex;
     std::deque<nlohmann::json> toAccountSystem;
-    AccountSystemController * accountSystemController_;
-
 };
 
 

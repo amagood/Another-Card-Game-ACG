@@ -26,6 +26,7 @@ public:
     void getCards(uint32_t userId);
     void modifyCards(uint32_t userId, std::vector<uint32_t> cards, std::vector<uint32_t> decks);
     void getAccountInfo(uint32_t userId);
+    std::mutex * getAccountSystemMutex();
     AccountSystem * getAccountSystem();
 };
 

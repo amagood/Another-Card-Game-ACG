@@ -11,17 +11,14 @@
 #include "Reader.h"
 #include "Printer.h"
 #include "Router.h"
+#include "ACGIO.h"
 
 class ACGMain {
 private:
-
-    AccountSystemController *accountSystemController;
-    Reader * reader;
-    Printer * printer;
+    ACGIO * acgio;
     Router * router;
-    void read();
-    void print();
-    void route();
+    AccountSystemController * accountSystemController;
+    void acgio_run();
 public:
     ACGMain();
     void run();
