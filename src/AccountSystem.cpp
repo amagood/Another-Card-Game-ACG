@@ -15,54 +15,6 @@
 
 #define SLEEP(ms) std::this_thread::sleep_for(std::chrono::milliseconds(ms))
 
-Account::Account(std::string &id, std::string &password) {
-    id_ = id;
-    password_ = password;
-}
-Account::Account(nlohmann::json j) {
-    user_id_ = j["userId"];
-    name_ = j["name"];
-    password_ = j["password"];
-    win_ = j["win"];
-    lose_ = j["lose"];
-    ladderPoint_ = j["ladderPoint"];
-    std::vector<uint32_t > d = j["deck"];
-    std::vector<uint32_t > c = j["cards"];
-    ladderLevel = j["ladderLevel"];
-    deck_card_list = d;
-    card_list = c;
-}
-nlohmann::json Account::toJson() {
-    nlohmann::json j;
-    j["userId"] = user_id_;
-    j["name"] = name_;
-    j["password"] = password_;
-    j["win"] = win_ ;
-    j["lose"] = lose_;
-    j["ladderPoint"] = ladderPoint_;
-    j["deck"] = deck_card_list;
-    j["cards"] = card_list;
-    j["ladderLevel"] = ladderLevel;
-    return j;
-}
-void Account::modifyPassword(std::string &password){
-    password_ = password;
-}
-std::string Account::getDeviceId() {
-    return device_id_;
-}
-bool Account::isIDSame(std::string &other_id) {
-    return this->id_ == other_id;
-}
-bool Account::isSame(Account &another) {
-    return this->isIDSame(another.id_);
-}
-int Account::getMoney() {
-    return money_;
-}
-void Account::modifyMoney(int money) {
-    money_ += money;
-}
 
 
 AccountSystem::AccountSystem() {
@@ -93,7 +45,7 @@ void AccountSystem::saveAccounts() {
     }
 }
 
-bool Account::verify(std::string &password) {
+bool Account::verify(std::string password) {
     // TODO revise with encryption
     return password_ == password;
 }
@@ -107,7 +59,6 @@ bool AccountSystem::login(std::string &account_name, std::string &password) {
             return false;
         }
         if (!account->isOnline()) {
-
             account->login();
             return true;
         }
@@ -190,5 +141,28 @@ std::string AccountSystem::getAccountDeviceId(uint32_t userId) {
     return account->getDeviceId();
 
 }
+bool AccountSystem::logout(uint32_t user_id_) {
+    Account *account = get_account(user_id_);
+    if(account->isOnline()) {
+        account->left();
+        return true;
+    }
+    return false;
+}
+bool AccountSystem::logout(std::string &account_name) {
+    Account *account = get_account(account_name);
+    if(account->isOnline()) {
+        account->left();
+        return true;
+    }
+    return false;
+}
+bool AccountSystem::addCard(uint32_t userId, uint32_t cardId) {
+    Account *account = get_account(userId);
+    return account->addCard(cardId);
 
+}
+void AccountSystem::load() {
+    // load cardlist
+}
 #undef SLEEP

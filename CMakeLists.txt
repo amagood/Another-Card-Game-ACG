@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.13)
 
 project(Another-Card-Game-ACG)
 set(CMAKE_CXX_STANDARD 17)
-set(DO_TEST FALSE)
+set(DO_TEST TRUE)
 set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -pthread -std=c++17")
 
 if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
@@ -30,8 +30,11 @@ endif(DO_TEST)
 
 
 
-#file(COPY data DESTINATION .)
+file(COPY data DESTINATION .)
+file(COPY test/data DESTINATION test)
+file(COPY test/data/accountlist.json DESTINATION test/accountlist.json)
+file(COPY test/data/cardlist.json DESTINATION test/xardlist.json)
 
-add_executable(main main.cpp test/FunctionalTest.cpp)
+add_executable(main main.cpp)
 target_link_libraries(main ACGMain)
 
