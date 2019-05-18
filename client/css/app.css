@@ -1,0 +1,10 @@
+#app {
+  position: relative;
+  width: 32rem;
+  height: 18rem;
+}
+#app * {
+  box-sizing: border-box;
+}
+
+/*# sourceMappingURL=app.css.map */
