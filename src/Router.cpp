@@ -14,28 +14,26 @@
 #include "nlohmann/json.hpp"
 
 #include "Reader.h"
-#include "Printer.h"
 
 
 #define SLEEP(ms) std::this_thread::sleep_for(std::chrono::milliseconds(ms))
 using std::cout;
-Router::Router() {
-    accountSystemParser = new AccountSystemParser();
-    accountSystemParser->setIOQueue(toAccountSystem, accountSystemMutex);
+Router::Router(){
+    accountSystemParser = new AccountSystemParser(toAccountSystem, accountSystemMutex);
 }
-void Router::setAccountSystemController(AccountSystemController *accountSystemController) {
-    accountSystemController_ = accountSystemController;
+void Router::setAccountSystems(AccountSystemController *accountSystemController) {
+    accountSystemParser->setAccountSystemController(accountSystemController);
 }
+
 void Router::route() {
     while(true) {
-        readMutex.lock();
-        if(toDeliver.empty()) {
-            readMutex.unlock();
-            continue;
+        routeMutex_.lock();
+        if(routeDeque_.empty()) {
+            routeMutex_.unlock();
         } else {
-            nlohmann::json j = toDeliver.front();
-            toDeliver.pop_front();
-            readMutex.unlock();
+            nlohmann::json j = routeDeque_.front();
+            routeDeque_.pop_front();
+            routeMutex_.unlock();
             chooseDirection(j);
         }
     }
@@ -46,15 +44,11 @@ void Router::chooseDirection(nlohmann::json j) {
         toAccountSystem.push_back(j);
         accountSystemMutex.unlock();
     } else {
-        cout << j;
-    }
-    // TODO add other direction
+        // TODO add other direction
+
+   }
 }
 
-
-Printer* Router::buildPrinter() {
-    return new Printer(toPrint, printMutex);
-}
-Reader* Router::buildReader() {
-    return new Reader(toDeliver, readMutex);
+void Router::run() {
+    route();
 }
