@@ -127,6 +127,7 @@ private:
     void returnRoomInfo(RoomMode mode, int roomId);
     void returnCreateRoom(uint32_t playerID, RoomMode mode, std::string name, std::string password);
     void returnEnterRoom(uint32_t playerID, RoomMode mode, int id, std::string password);
+    void start(Room* room, Reader* reader, Sender* sender);
 };
 const std::string Arena::actionString[]={"getRoomList", "getRoomInfo", "createRoom", "enterRoom", "enterRoomRandom", "inviteFriend"};
 #endif // ARENA

@@ -315,7 +315,7 @@ void Arena::checkRooms()
     }
 }
 
-void start(Room* room, Reader* reader, Sender* sender)
+void Arena::start(Room* room, Reader* reader, Sender* sender)
 {
     room->startGame(reader, sender);
 }
@@ -323,7 +323,7 @@ void start(Room* room, Reader* reader, Sender* sender)
 void Arena::startGame(RoomMode mode, int id)
 {
     Room* room = getRoom(mode, id);
-    std::thread tGame(&start, this, room, reader, sender);
+    std::thread tGame(&Arena::start, this, room, reader, sender);
     tGame.detach();
 }
 
