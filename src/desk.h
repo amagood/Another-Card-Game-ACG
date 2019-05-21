@@ -21,15 +21,15 @@ private:
 	bool playerMovement(int playerId);
 	bool checkDead(int playerId);
 	nlohmann::json outputSites();
-	
+
 public:
     Desk(Reader *input,Sender *output,int deskId,Deck deck0, Deck deck1,
             std::string n0, std::string n1);
     ~Desk();
 
-    Card draw(int num,int targetPlayer);
+    void draw(int num,int targetPlayer);
 
-    
+
 
     bool isEnd();
     int getWinPlayer();

@@ -31,7 +31,7 @@ nlohmann::json Desk::outputSites()
 		tmp2["attack"]= i->getId();
 		tmp2["hp"]=i->getHp();
 		tmp2["attributes"]=i->getAttributes();
-		
+
 		siteJson0.push_back(tmp2);
 	}
 	tmp=site.at(1).getDeck();
@@ -42,7 +42,7 @@ nlohmann::json Desk::outputSites()
 		tmp2["attack"]= i->getId();
 		tmp2["hp"]=i->getHp();
 		tmp2["attributes"]=i->getAttributes();
-		
+
 		siteJson1.push_back(tmp2);
 	}
 	tmp=hand.at(0).getDeck();
@@ -54,7 +54,7 @@ nlohmann::json Desk::outputSites()
 		tmp2["attack"]= i->getId();
 		tmp2["hp"]=i->getHp();
 		tmp2["attributes"]=i->getAttributes();
-		
+
 		handJson0.push_back(tmp2);
 	}
 	tmp=hand.at(1).getDeck();
@@ -65,11 +65,11 @@ nlohmann::json Desk::outputSites()
 		tmp2["attack"]= i->getId();
 		tmp2["hp"]=i->getHp();
 		tmp2["attributes"]=i->getAttributes();
-		
+
 		handJson1.push_back(tmp2);
 	}
-	
-	
+
+
 	nlohmann::json outputJson;
 	outputJson["time"]=(time_t) time(NULL);
 	outputJson["type"]="gameLogicEngineMessage";
@@ -79,10 +79,10 @@ nlohmann::json Desk::outputSites()
 	outputJson["data"]["userHand1"]=handJson1;
 	outputJson["data"]["userField0"]=siteJson0;
 	outputJson["data"]["userField1"]=siteJson1;
-	
+
 	return outputJson;
 }
-Card Desk::draw(int num,int targetPlayer)
+void Desk::draw(int num,int targetPlayer)
 {
     for(int i=0;i<num;i++)
         hand.at(targetPlayer).pushCard(playerDeck.at(targetPlayer).popDeck(-1));
@@ -102,13 +102,13 @@ bool Desk::checkDead(int playerId)
 				return true;
 			}
             site.at(playerId).popDeck(indexi);
-			
+
 		}
 		indexi++;
 	}
-	
+
 	playerId=otherPlayer(playerId);
-	
+
 	indexi=0;
 	for(auto i : site.at(playerId).getDeck())
 	{
@@ -121,7 +121,7 @@ bool Desk::checkDead(int playerId)
 				return true;
 			}
             site.at(playerId).popDeck(indexi);
-			
+
 		}
 		indexi++;
 	}
@@ -151,24 +151,24 @@ bool Desk::playerMovement(int playerId)
             ///push index'th card from the hand to site
             site.at(playerId).pushCard( hand.at(playerId).popDeck(inputAction["data"]["selectedCardId"]));   //Not done for magic cards pop
             // FIXME please QAQ
-            //site.at(playerId).getIndexCards(0,-1,-1)/*getLastCard*/.use();
-			if(strcmp(typeid(site.at(playerId).getIndexCards(0,-1,-1)).name(),"5Spell"))  ///if it is a Spell then pop after used from site
+            //site.at(playerId).getIndexCards(0,-1)/*getLastCard*/.use();
+			if(strcmp(typeid(site.at(playerId).getIndexCards(0,-1)).name(),"5Spell"))  ///if it is a Spell then pop after used from site
 				site.at(playerId).popDeck(site.at(playerId).size()-1);
         }
         else if(inputAction["data"]["useOrAttack"]=="useCard" && inputAction["data"]["useOrAttack"]=="attack")  ///Attack
         {
             Minion * me, *target;
-            me = (Minion*)(site.at(playerId).getIndexCards(inputAction["data"]["selectedCardId"],1,-1));
-            target = (Minion*)(site.at(otherPlayer(playerId)).getIndexCards(inputAction["data"]["targetPlayerId"],1,-1));
+            me = (Minion*)(site.at(playerId).getIndexCards(inputAction["data"]["selectedCardId"],1));
+            target = (Minion*)(site.at(otherPlayer(playerId)).getIndexCards(inputAction["data"]["targetPlayerId"],1));
             me->attack(*target);
         }
         else       ///End
         {
             endMovement = true;
         }
-		
+
 		op->pushJson(outputSites());
-		
+
 		if(checkDead(playerId))
 			return true;
     }
@@ -195,9 +195,12 @@ Desk::Desk(Reader *input,Sender *output,int deskId,
     hand.push_back(Deck());
 
     end_ = false;
-	Hero h;
-    site.at(0).pushCard(h);
-	site.at(1).pushCard(h);
+
+
+	site.at(0).pushCard(new Hero);
+	site.at(1).pushCard(new Hero);
+
+
     ///who go first?
     srand(time(0));
     int nowPlayer = rand()%2;
@@ -215,7 +218,7 @@ Desk::Desk(Reader *input,Sender *output,int deskId,
         draw(1,nowPlayer);
 		if(playerMovement(nowPlayer))
 			return;
-        
+
         nowPlayer = otherPlayer(nowPlayer);
         ///second player's round
         draw(1,nowPlayer);
@@ -232,7 +235,7 @@ bool Desk::isEnd()
 {
 	return end_;
 }
-void Desk::getWinPlayer()
+int Desk::getWinPlayer()
 {
 	return winLose;
 }
