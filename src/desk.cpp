@@ -175,10 +175,11 @@ bool Desk::playerMovement(int playerId)
 	return false;
 
 }
-Desk::Desk(Reader *input,Sender *output,int deskId,
-        Deck deck0, Deck deck1, std::string n0, std::string n1)  //constructor
+Desk::Desk(Reader *input, Sender *output, int deskId,
+           U32vec deck0, U32vec deck1, std::string n0, std::string n1)  //constructor
 {
     using namespace std;
+
     myId = deskId;
     ip=input;
     op=output;
@@ -187,8 +188,8 @@ Desk::Desk(Reader *input,Sender *output,int deskId,
     winLose = -1;
     name0 = n0;
     name1 = n1;
-    playerDeck.push_back(deck0);
-    playerDeck.push_back(deck1);
+    playerDeck.push_back(gameBuildingSystem.createDeck(deck0));
+    playerDeck.push_back(gameBuildingSystem.createDeck(deck1));
     site.push_back(Deck());
     site.push_back(Deck());
     hand.push_back(Deck());

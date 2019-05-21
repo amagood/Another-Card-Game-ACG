@@ -27,7 +27,7 @@ void CardInfoSystem::load() {
         card.id = i;
         card.hp = jsonfile[id_]["hp"];
         card.mp = jsonfile[id_]["mp"];
-        card.mp_cost = jsonfile[id_]["mp_cost"];
+        card.atk = jsonfile[id_]["atk"];
         card.name= jsonfile[id_]["name"];
         card.attribute = jsonfile[id_]["attribute"];
         infoCards.insert(std::make_pair(card.id, card));
@@ -50,8 +50,8 @@ int CardInfoSystem::getHp(int id) {
 int CardInfoSystem::getMp(int id) {
     return getInfoCard(id)->mp;
 }
-int CardInfoSystem::getMpCost(int id) {
-    return getInfoCard(id)->mp_cost;
+int CardInfoSystem::getAtk(int id){
+    return getInfoCard(id)->atk;
 }
 std::string CardInfoSystem::getName(int id) {
     return getInfoCard(id)->name;

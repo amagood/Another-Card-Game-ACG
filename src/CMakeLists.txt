@@ -8,5 +8,5 @@ add_library(
         Room.h Room.cpp
 
 
-        )
+        CardFactory.cpp CardFactory.h GameBuildingSystem.cpp GameBuildingSystem.h)
 

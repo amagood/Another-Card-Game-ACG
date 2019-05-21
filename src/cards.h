@@ -11,6 +11,7 @@ protected:
 public:
     Card() = default;
     Card(int attack, int healthPoint,int mannaRequired, int ID, std::string Name);
+    Card(int ID);
     void setAtk(int attack);
     void setHp(int healthPoint);
     void setMp(int mannaRequired);

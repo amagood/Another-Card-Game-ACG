@@ -16,24 +16,28 @@ struct InfoCard {
     int id;
     int hp;
     int mp;
-    int mp_cost;
+    int atk;
     std::string name;
     std::string attribute;
 };
 
 class CardInfoSystem {
-    std::map<uint32_t , InfoCard> infoCards;
-    U32vec cardlist;
+
 public:
     CardInfoSystem();
-    void load();
-    void show();
     InfoCard * getInfoCard(int id);
     int getHp(int id);
     int getMp(int id);
-    int getMpCost(int id);
+    int getAtk(int id);
     std::string getName(int id);
     std::string getAttribute(int id);
+private:
+    static std::map<uint32_t , InfoCard> infoCards;
+    U32vec cardlist;
+    static CardInfoSystem *m_instance;
+    void load();
+    void show();
+
 };
 
 

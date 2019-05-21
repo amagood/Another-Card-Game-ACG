@@ -289,8 +289,7 @@ void Arena::freeAllRooms()
 Player* Arena::createPlayer(uint32_t playerID)
 {
     std::string playerName = account->getAccountName(playerID);
-    /* FIXME */
-    Deck & playerDeck;// = account->getAccountDeck(playerID);
+    U32vec playerDeck = account->getDeck(playerID);
     return new Player(playerID, playerName, playerDeck);
 }
 void Arena::checkRooms()
@@ -339,10 +338,10 @@ void Arena::setJson(json & j)
 }
 int Arena::getActionType(std::string action)
 {
-    for(int i=0;i<(int)ActionType.ACTION_COUNT;i++)
+    for(int i=0;i<(int)ActionType::ACTION_COUNT;i++)
         if(action==actionString[i])
             return i;
-    return (int)ActionType.ACTION_COUNT;
+    return (int)ActionType::ACTION_COUNT;
 }
 void Arena::returnRoomList(RoomMode mode)
 {

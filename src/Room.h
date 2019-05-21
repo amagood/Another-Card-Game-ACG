@@ -15,14 +15,14 @@
 class Player
 {
 public:
-    Player(uint32_t id, std::string name, Deck & deck) : _ID(id), _name(name), _deck(deck){}
+    Player(uint32_t id, std::string name, U32vec deck) : _ID(id), _name(name), _deck(deck){}
     uint32_t getID() const { return _ID; }
     std::string getName() const { return _name; }
-    Deck & getDeck() const { return _deck; }
+    U32vec getDeck() const { return _deck; }
 private:
     uint32_t _ID;
     std::string _name;
-    Deck & _deck;
+    U32vec _deck;
 };
 #endif // PLAYER
 
@@ -54,6 +54,7 @@ protected:
     std::vector<Player*> _player;
     RoomMode _mode;
     bool _endgame=false;
+    Desk* _desk;
 };
 class OneOnOneRoom : public Room
 {
@@ -66,7 +67,7 @@ public:
 	uint32_t getWinnerID() override;
 	uint32_t getLoserID() override;
 private:
-    Desk* _desk;
+
     static constexpr short MaxPlayerNum=2;
 };
 class LadderRoom : public Room

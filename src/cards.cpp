@@ -1,6 +1,14 @@
 #include "cards.h"
-
+#include "CardInfoSystem.h"
 constexpr int maxHp = 30;
+Card::Card(int ID) {
+    InfoCard infoCard = CardInfoSystem::getInstance()->getInfoCard(ID);
+    atk = infoCard.atk;
+    hp = infoCard.hp;
+    mp = infoCard.mp;
+    id = infoCard.id;
+    name = infoCard.name;
+}
 Card::Card(int attack,int healthPoint,int mannaRequired,int ID, std::string Name)
 {
     atk=attack;

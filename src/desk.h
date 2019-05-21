@@ -6,10 +6,13 @@
 #include <vector>
 #include <queue>
 #include <nlohmann/json.hpp>
+#include "ACGType.h"
+#include "GameBuildingSystem.h"
 
 class Desk final
 {
 private:
+    GameBuildingSystem gameBuildingSystem;
     static constexpr int myPopJsonType = 0;
     bool end_;
     int winLose; //0->p0 wins 1-> p1 wins
@@ -18,13 +21,13 @@ private:
     Reader *ip;
     Sender *op;
     std::string name0,name1;
-	bool playerMovement(int playerId);
-	bool checkDead(int playerId);
-	nlohmann::json outputSites();
+    bool playerMovement(int playerId);
+    bool checkDead(int playerId);
+    nlohmann::json outputSites();
 
 public:
-    Desk(Reader *input,Sender *output,int deskId,Deck deck0, Deck deck1,
-            std::string n0, std::string n1);
+    Desk(Reader *input, Sender *output, int deskId, U32vec deck0, U32vec deck1,
+         std::string n0, std::string n1);
     ~Desk();
 
     void draw(int num,int targetPlayer);
