@@ -1,4 +1,4 @@
-#include "Desk.h"
+#include "desk.h"
 #include "Deck.h"
 #include <vector>
 #include <string>
@@ -41,11 +41,10 @@ public:
     RoomMode getRoomMode() const { return _mode; }
     bool isPasswordCorrect(std::string word) const { return _password=="" || _password==word; }
     bool isGameEnd() const { return _endgame; }
+    virtual void startGame(Reader *reader, Sender *sender)=0;
     virtual bool isFull() const =0;
     virtual bool addPlayer(Player* player)=0;
-	virtual void startGame(Reader *reader, Sender *sender)=0;
 	virtual void endGame()=0;
-	virtual bool invitePlayer(int id)=0;
     virtual uint32_t getWinnerID()=0;
     virtual uint32_t getLoserID()=0;
 protected:
@@ -62,7 +61,6 @@ public:
     OneOnOneRoom(int id, std::string name, std::string word, Player* player) : Room(id, name, word, player) { _mode = ONEONONE_ROOM; }
     bool isFull() const override { return _player.size()>=MaxPlayerNum; }
     bool addPlayer(Player* player) override;
-    bool invitePlayer(int id) override;
 	void startGame(Reader *reader, Sender *sender) override;
 	void endGame() override;
 	uint32_t getWinnerID() override;
@@ -77,7 +75,6 @@ public:
     LadderRoom(int id, std::string name, std::string word, Player* player) : Room(id, name, word, player) { _mode = LADDER_ROOM; }
     bool isFull() const override { return _player.size()>=MaxPlayerNum; }
     bool addPlayer(Player* player) override;
-    bool invitePlayer(int id) override;
 	void startGame(Reader *reader, Sender *sender) override;
 	void endGame() override;
 	uint32_t getWinnerID() override;
@@ -99,7 +96,7 @@ public:
     int createRoom(uint32_t playerID, RoomMode mode, std::string name, std::string password);
     bool enterRoom(uint32_t playerID, RoomMode mode, int id, std::string password);
     void enterRoomRandom(uint32_t playerID, RoomMode mode);
-    void inviteFriend(uint32_t playerID, RoomMode mode, int id);
+    bool inviteFriend(uint32_t playerID, RoomMode mode, int id);
     void readJson();
 private:
     Reader *reader;
@@ -121,7 +118,7 @@ private:
     void startGame(RoomMode mode, int id);
     void freeAllRooms();
     ///UI
-    enum ActionType { GET_ROOMLIST=0, GET_ROOMINFO, CREATE_ROOM, ENTER_ROOM, ENTER_ROOM_RANDOM, INVITE_FRIEND, ACTION_COUNT};
+    enum ActionType { GET_ROOMLIST=0, GET_ROOMINFO, CREATE_ROOM, ENTER_ROOM, ENTER_ROOM_RANDOM, INVITE_FRIEND, ACTION_COUNT };
     static const std::string actionString[];
     void setJson(json& j);
     int getActionType(std::string action);
