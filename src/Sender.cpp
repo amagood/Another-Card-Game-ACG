@@ -22,8 +22,8 @@ void Sender::send()
     while (toTransferQueue->size())
     {
         queueMutex->lock();
-        std::cout << toTransferQueue->front() << endl;
-        toTransferQueue->pop_fornt();
+        std::cout << toTransferQueue->front() << std::endl;
+        toTransferQueue->pop_front();
         queueMutex->unlock();
     }
 }
@@ -31,6 +31,6 @@ void Sender::send()
 void Sender::pushJson(json json_)
 {
     queueMutex->lock();
-    toTransferQueue->push(json_);
+    toTransferQueue->push_back(json_);
     queueMutex->unlock();
 }

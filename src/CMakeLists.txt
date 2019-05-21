@@ -1,12 +1,9 @@
 
-add_library(
-        ACGMain ACGMain.cpp Printer.cpp
-        Reader.cpp AccountSystem.cpp Router.cpp
-        LadderSystem.cpp AccountSystemParser.cpp
-        AccountSystemController.cpp Account.cpp DrawCardSystem.cpp DrawCardSystem.h MoneySystem.cpp MoneySystem.h AccountSystemPackage.cpp AccountSystemPackage.h ACGIO.cpp ACGIO.h
-        desk.h desk.cpp Deck.cpp Deck.h
-        Room.h Room.cpp
-
-
-        CardFactory.cpp CardFactory.h GameBuildingSystem.cpp GameBuildingSystem.h)
-
+add_library(ACGMain ACGMain.cpp)
+add_library(ACGIO ACGIO.cpp Printer.cpp Reader.cpp Router.cpp Sender.cpp AccountSystemParser.cpp)
+add_library(AccountSystem AccountSystem.cpp Account.cpp AccountSystemController.cpp
+         AccountSystemPackage.cpp LadderSystem.cpp
+        DrawCardSystem.cpp
+        MoneySystem.cpp)
+add_library(Room Room.cpp)
+add_library(GameSystem CardFactory.cpp GameBuildingSystem.cpp desk.h desk.cpp Deck.cpp cards.cpp)
