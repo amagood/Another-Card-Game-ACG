@@ -1,7 +1,6 @@
 {
   "cardlist" : [0, 1, 2, 3, 4],
   "0" : {
-    "id": 0,
     "hp": 1,
     "mp": 1,
     "mp_cost": 0,
@@ -9,7 +8,6 @@
     "attribute" : "nothing"
   },
   "1" : {
-    "id": 1,
     "hp": 1,
     "mp": 1,
     "mp_cost": 0,
@@ -17,7 +15,6 @@
     "attribute" : "nothing"
   },
   "2" : {
-    "id": 2,
     "hp": 1,
     "mp": 1,
     "mp_cost": 0,
@@ -25,7 +22,6 @@
     "attribute" : "nothing"
   },
   "3" : {
-    "id": 3,
     "hp": 1,
     "mp": 1,
     "mp_cost": 0,
@@ -33,7 +29,6 @@
     "attribute" : "nothing"
   },
   "4" : {
-    "id": 4,
     "hp": 1,
     "mp": 1,
     "mp_cost": 0,

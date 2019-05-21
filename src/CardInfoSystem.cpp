@@ -24,7 +24,7 @@ void CardInfoSystem::load() {
         InfoCard card;
         std::string id_ = std::to_string(i);
 
-        card.id = jsonfile[id_]["id"];
+        card.id = i;
         card.hp = jsonfile[id_]["hp"];
         card.mp = jsonfile[id_]["mp"];
         card.mp_cost = jsonfile[id_]["mp_cost"];
