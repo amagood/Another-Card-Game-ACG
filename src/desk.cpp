@@ -195,10 +195,10 @@ Desk::Desk(Reader *input,Sender *output,int deskId,
     hand.push_back(Deck());
 
     end_ = false;
-    ///FIXME
-	///Hero h;
-	///site.at(0).pushCard(h);
-	///site.at(1).pushCard(h);
+
+
+	site.at(0).pushCard(new Hero);
+	site.at(1).pushCard(new Hero);
 
 
     ///who go first?

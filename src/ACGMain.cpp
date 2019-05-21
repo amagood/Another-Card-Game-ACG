@@ -23,6 +23,7 @@ void ACGMain::run() {
     io_thread.join();
 }
 ACGMain::ACGMain() {
+
     acgio = new ACGIO();
     router = new Router();
     accountSystemController = new AccountSystemController();

@@ -4,7 +4,7 @@
 #include <string>
 class Card
 {
-private:
+protected:
     int atk,hp,mp,id;
 	std::string name;
     std::string attrib;
@@ -17,7 +17,7 @@ public:
     void setAttributes(std::string s);
 	void setId(int num);
 	void setName(std::string s);
-	
+
     void atkIncrease(int i);
     void hpIncrease(int i);
 
@@ -27,9 +27,9 @@ public:
 	int getId();
     std::string getName();
     std::string getAttributes();
-	
+
 	virtual void use()=0;
-	
+
 
 };
 
@@ -38,14 +38,14 @@ class Weapon : public Card
 public:
 	Weapon();
     void usedOnce();
-	
+
 };
 
 class Spell : public Card
 {
 public:
 	Spell();
-    
+
 };
 
 class Minion : public Card
@@ -54,7 +54,7 @@ public:
 	Minion();
 
     void attack(Minion &target);
-	
+
 };
 
 //////////////////Cards: ////////////////////////////
@@ -64,12 +64,14 @@ class Hero : public Minion
 {
 public:
 	Hero();
+	void use(){};
 };
 
 class Card001 final : public Minion
 {
 public:
 	Card001();
+	void use(){};
 };
 #endif // CARDS_H_AMAGOOD
 
