@@ -5,17 +5,17 @@
 #ifndef ANOTHER_CARD_GAME_ACG_DRAWCARDSYSTEM_H
 #define ANOTHER_CARD_GAME_ACG_DRAWCARDSYSTEM_H
 
-
-#include <cstdint>
-#include <vector>
+#include <random>
+#include <CardInfoSystem.h>
 
 class DrawCardSystem {
 public:
     DrawCardSystem();
     uint32_t drawCard();
 private:
-    void load();
-    std::vector<uint32_t> cardpools;
+    U32vec cardpools;
+    std::default_random_engine rd;
+    CardInfoSystem cardInfoSystem;
 };
 
 
