@@ -4,7 +4,6 @@
 
 #include "CardFactory.h"
 
-
 CardFactory::CardFactory() {
     types = new CardIdType();
 }

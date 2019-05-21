@@ -5,12 +5,9 @@
 #include "Reader.h"
 
 #include <iostream>
-#include <string>
-#include <mutex>
 
-#include <deque>
+#include <nlohmann/json.hpp>
 
-#include "nlohmann/json.hpp"
 using json = nlohmann::json;
 
 Reader::Reader(std::deque<nlohmann::json> &toDeliver, std::mutex &mut)

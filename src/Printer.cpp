@@ -6,7 +6,7 @@
 
 #include <iostream>
 
-#include "nlohmann/json.hpp"
+#include <nlohmann/json.hpp>
 Printer::Printer(std::deque<nlohmann::json> &toPrintDeque, std::mutex &p) {
     toPrintDeque_ = &toPrintDeque;
     queueMutex = &p;

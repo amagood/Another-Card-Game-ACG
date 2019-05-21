@@ -1,10 +1,13 @@
+#ifndef ANOTHER_CARD_GAME_ACG_ROOM_H
+#define ANOTHER_CARD_GAME_ACG_ROOM_H
+
+#include <iostream>
+
+#include <nlohmann/json.hpp>
+
 #include "desk.h"
 #include "Deck.h"
-#include <vector>
-#include <string>
-#include <iostream>
 #include "AccountSystem.h"
-#include "nlohmann/json.hpp"
 #include "Reader.h"
 #include "Printer.h"
 #include "Sender.h"
@@ -132,3 +135,4 @@ private:
 const std::string Arena::actionString[]={"getRoomList", "getRoomInfo", "createRoom", "enterRoom", "enterRoomRandom", "inviteFriend"};
 #endif // ARENA
 
+#endif // ANOTHER_CARD_GAME_ACG_ROOM_H

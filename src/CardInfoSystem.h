@@ -5,13 +5,11 @@
 #ifndef ANOTHER_CARD_GAME_ACG_CARDINFOSYSTEM_H
 #define ANOTHER_CARD_GAME_ACG_CARDINFOSYSTEM_H
 
-#include <cstdint>
-
 #include <string>
-#include <vector>
 #include <map>
 
 #include "ACGType.h"
+
 struct InfoCard {
     int id;
     int hp;
@@ -31,10 +29,10 @@ public:
     int getAtk(int id);
     std::string getName(int id);
     std::string getAttribute(int id);
+    U32vec getCardPool();
 private:
-    static std::map<uint32_t , InfoCard> infoCards;
+    std::map<uint32_t , InfoCard> infoCards;
     U32vec cardlist;
-    static CardInfoSystem *m_instance;
     void load();
     void show();
 

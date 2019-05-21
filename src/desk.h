@@ -1,13 +1,14 @@
 #ifndef AMAGOOD_DESK_H
 #define AMAGOOD_DESK_H
+
+#include <nlohmann/json.hpp>
+
+#include "ACGType.h"
+#include "GameBuildingSystem.h"
 #include "Reader.h"
 #include "Sender.h"
 #include "Deck.h"
-#include <vector>
-#include <queue>
-#include <nlohmann/json.hpp>
-#include "ACGType.h"
-#include "GameBuildingSystem.h"
+
 
 class Desk final
 {
@@ -26,7 +27,7 @@ private:
     nlohmann::json outputSites();
 
 public:
-    Desk(Reader *input, Sender *output, int deskId, U32vec deck0, U32vec deck1,
+    Desk(Reader *input, Sender *output, int deskId, U32vec cardID0s, U32vec cardID1s,
          std::string n0, std::string n1);
     ~Desk();
 

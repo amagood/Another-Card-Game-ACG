@@ -6,16 +6,14 @@
 #define ANOTHER_CARD_GAME_ACG_ACCOUNTSYSTEM_H
 
 #include "Account.h"
-#include <cstdint>
 
-#include <vector>
 #include <string>
 #include <queue>
 #include <mutex>
 
 #include <nlohmann/json.hpp>
 
-
+#include "ACGType.h"
 
 class AccountSystem {
 public:

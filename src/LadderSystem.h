@@ -5,10 +5,7 @@
 #ifndef ANOTHER_CARD_GAME_ACG_LADDERSYSTEM_H
 #define ANOTHER_CARD_GAME_ACG_LADDERSYSTEM_H
 
-#include <vector>
-#include <string>
 #include "AccountSystem.h"
-
 
 enum LadderLevel{
     COPPER = 0, SILVER = 1, GOLD = 2, DIAMOND = 3, GREAT_MASTER = 4

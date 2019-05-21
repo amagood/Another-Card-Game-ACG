@@ -4,17 +4,14 @@
 
 #include "AccountSystem.h"
 
-#include <nlohmann/json.hpp>
-
 #include <stdexcept>
 #include <chrono>
 #include <thread>
-#include <string>
-#include <vector>
 #include <fstream>
 
-#define SLEEP(ms) std::this_thread::sleep_for(std::chrono::milliseconds(ms))
+#include <nlohmann/json.hpp>
 
+#define SLEEP(ms) std::this_thread::sleep_for(std::chrono::milliseconds(ms))
 
 
 AccountSystem::AccountSystem() {

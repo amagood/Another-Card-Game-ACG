@@ -5,16 +5,16 @@
 #ifndef ANOTHER_CARD_GAME_ACG_CARDFACTORY_H
 #define ANOTHER_CARD_GAME_ACG_CARDFACTORY_H
 
-#include <cards.h>
-#include <set>
+#include "cards.h"
+#include "ACGType.h"
 
 class CardFactory;
 
 class CardIdType {
     friend CardFactory;
-    std::set<uint32_t> minionIds;
-    std::set<uint32_t> weaponIds;
-    std::set<uint32_t> spellIds;
+    U32set minionIds;
+    U32set weaponIds;
+    U32set spellIds;
     CardIdType() {
         minionIds.insert(0);
         minionIds.insert(1);

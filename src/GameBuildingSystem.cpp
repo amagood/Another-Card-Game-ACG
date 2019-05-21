@@ -9,9 +9,9 @@ GameBuildingSystem::GameBuildingSystem() {
     cardFactory = new CardFactory();
     cardInfoSystem = new CardInfoSystem();
 }
-Deck GameBuildingSystem::createDeck(U32vec cardlist) {
+Deck GameBuildingSystem::U32VecToDeck(U32vec cardIDs) {
     Deck deck;
-    for (uint32_t id: cardlist) {
+    for (uint32_t id: cardIDs) {
         Card * card = cardFactory->createCard(id);
         deck.pushCard(card);
     }

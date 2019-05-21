@@ -5,12 +5,11 @@
 #ifndef ANOTHER_CARD_GAME_ACG_ACCOUNTSYSTEMCONTROLLER_H
 #define ANOTHER_CARD_GAME_ACG_ACCOUNTSYSTEMCONTROLLER_H
 
-#include "AccountSystem.h"
-#include <vector>
-#include <cstdint>
-#include <string>
-#include "DrawCardSystem.h"
 #include <mutex>
+
+#include "AccountSystem.h"
+#include "DrawCardSystem.h"
+
 class AccountSystemController {
     AccountSystem * accountSystem;
     DrawCardSystem * drawCardSystem;

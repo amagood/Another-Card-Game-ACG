@@ -9,6 +9,7 @@
 #include "CardFactory.h"
 #include "Deck.h"
 #include "ACGType.h"
+
 class GameBuildingSystem {
 
 
@@ -16,7 +17,7 @@ class GameBuildingSystem {
     CardFactory * cardFactory = new CardFactory();
 public:
     GameBuildingSystem();
-    Deck createDeck(U32vec cardlist);
+    Deck U32VecToDeck(U32vec cardIDs);
 
 };
 

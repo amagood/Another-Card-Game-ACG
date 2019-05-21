@@ -2,6 +2,7 @@
 #define CARDS_H_AMAGOOD
 
 #include <string>
+
 class Card
 {
 protected:

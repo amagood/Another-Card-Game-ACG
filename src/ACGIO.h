@@ -5,11 +5,12 @@
 #ifndef ANOTHER_CARD_GAME_ACG_ACGIO_H
 #define ANOTHER_CARD_GAME_ACG_ACGIO_H
 
+#include <nlohmann/json.hpp>
+
 #include "Reader.h"
 #include "Sender.h"
 #include "Printer.h"
 #include "Router.h"
-#include <nlohmann/json.hpp>
 
 class ACGIO {
     Reader * reader;

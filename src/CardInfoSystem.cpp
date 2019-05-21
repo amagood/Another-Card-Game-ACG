@@ -3,14 +3,19 @@
 //
 
 #include "CardInfoSystem.h"
-#include <fstream>
-#include <nlohmann/json.hpp>
-#include "ACGType.h"
+
 #include <iostream>
+#include <fstream>
+
+#include <nlohmann/json.hpp>
+
 CardInfoSystem::CardInfoSystem() {
     load();
 }
 
+U32vec CardInfoSystem::getCardPool() {
+    return cardlist;
+}
 void CardInfoSystem::load() {
     std::string filename = "data/cardlist.json";
     std::ifstream file(filename);
