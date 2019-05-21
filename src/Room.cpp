@@ -343,7 +343,7 @@ void Arena::returnRoomList(RoomMode mode)
     j["data"]["action"]="getRoomList";
     j["data"]["roomMode"]=(int)mode;
     j["data"]["roomId"]=roomID;
-    std::cout << j << endl;
+    std::cout << j <<std::endl;
 }
 void Arena::returnRoomInfo(RoomMode mode, int roomId)
 {
@@ -358,7 +358,7 @@ void Arena::returnRoomInfo(RoomMode mode, int roomId)
     j["data"]["roomId"]=roomId;
     j["data"]["roomName"]=room->getName();
     j["data"]["playerId"]=playerID;
-    std::cout << j << endl;
+    std::cout << j << std::endl;
 }
 void Arena::returnCreateRoom(int playerID, RoomMode mode, std::string name, std::string password)
 {

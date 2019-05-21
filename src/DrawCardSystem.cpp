@@ -18,7 +18,9 @@ void DrawCardSystem::load() {
     nlohmann::json jsonfile;
     std::ifstream file("data/cardlist.json");
     jsonfile << file;
-    cardpools = (std::vector<uint32_t >)jsonfile["cardlist"];
+    ///FIXME
+    ///cardpools = (std::vector<uint32_t >)jsonfile["cardlist"];
+
 }
 uint32_t DrawCardSystem::drawCard() {
     uint32_t number = rand() % cardpools.size();
