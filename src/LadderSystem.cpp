@@ -10,9 +10,9 @@ void LadderSystem::join(Account *account) {
     int u_num = account->getUniqueNumber();
     participant.push_back(new LadderPlayer(u_num, id, ladder_point));
 }
-void LadderSystem::leave(int remove_id) {
+void LadderSystem::leave(uint32_t remove_id) {
     int index = -1;
-    for (int i = 0; i < participant.size(); i++) {
+    for (uint32_t i = 0; i < participant.size(); i++) {
         if (participant.at(i)->u_id_ == remove_id) {
             index = i;
         }
@@ -55,7 +55,7 @@ void LadderSystem::match() {
     int index2 = 1;
     int point2 = participant.at(1)->point_;
 
-    for (int i = 2; i < participant.size(); i++) {
+    for (uint32_t i = 2; i < participant.size(); i++) {
         if(participant.at(i)->Last_game == lastgame1) {
             continue;
         } else if (abs(participant.at(i)->point_ - point1) < abs(point2 - point1))  {

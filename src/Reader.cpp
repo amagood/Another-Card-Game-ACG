@@ -43,4 +43,5 @@ json Reader::popJson(std::string type, int id) {
         }
     }
     queueMutex->unlock();
+    // FIXME you should return something like empty json or NULL
 }

@@ -19,10 +19,10 @@ AccountSystem::AccountSystem() {
 }
 
 void AccountSystem::loadAccounts() {
-    nlohmann::json jsonfile;
     std::ifstream file("data/accountlist.json");
-    jsonfile << file;
-    std::vector<uint32_t> userIds = jsonfile["accountlist"];
+    nlohmann::json json_;
+    file >> json_;
+    std::vector<uint32_t> userIds = json_["accountlist"];
     for ( uint32_t userId :userIds ) {
         loadAccount(userId);
     }
@@ -31,9 +31,9 @@ void AccountSystem::loadAccount(uint32_t userId) {
     std::string dir = "data/account/";
     std::string filename = std::to_string(userId) + ".json";
     std::ifstream file(dir + filename);
-    nlohmann::json jsonfile;
-    jsonfile << file;
-    account_vector.push_back(Account(jsonfile));
+    nlohmann::json json_;
+    file >> json_;
+    account_vector.push_back(Account(json_));
 }
 void AccountSystem::saveAccounts() {
     for (Account &account : account_vector) {
@@ -61,6 +61,7 @@ bool AccountSystem::login(std::string &account_name, std::string &password) {
         }
 
     }
+    return false;
 }
 bool AccountSystem::createAccount(std::string &id, std::string &password) {
     // test is exist
@@ -97,7 +98,7 @@ Account* AccountSystem::get_account(std::string id) {
     }
     return nullptr;
 }
-Account* AccountSystem::get_account(int u_num) {
+Account* AccountSystem::get_account(uint32_t u_num) {
     for (Account &a: account_vector) {
         if(a.getUniqueNumber() == u_num) {
             return &a;
@@ -121,8 +122,8 @@ void AccountSystem::saveAccount(int userId, nlohmann::json j) {
     std::string dir = "data/account/";
     std::string filename = std::to_string(userId) + ".json";
     std::ofstream file(dir + filename);
-    nlohmann::json jsonfile;
-    file << jsonfile;
+    nlohmann::json json_;
+    file << json_;
 }
 int AccountSystem::getMoney(std::string &id) {
     Account *account = get_account(id);

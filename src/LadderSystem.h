@@ -18,13 +18,13 @@ class LadderCalculate {
 
 class LadderPlayer {
 public:
-
+    uint32_t u_id_;
     std::string id_;
     int point_;
     int Last_game;
     LadderLevel level;
-    int u_id_;
-    LadderPlayer(int u_id, std::string name, int point) : u_id_(u_id), id_(name), point_(point) {
+
+    LadderPlayer(uint32_t u_id, std::string name, int point) : u_id_(u_id), id_(name), point_(point) {
         level = LadderCalculate::get_level(point);
     }
 };
@@ -36,7 +36,7 @@ public:
     std::vector<LadderPlayer *> participant;
     void join(Account *account);
     void match();
-    void leave(int remove_id);
+    void leave(uint32_t remove_id);
 private:
 
 };

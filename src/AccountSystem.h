@@ -39,7 +39,7 @@ public:
         get_account(userId)->setCards(cards);
     }
     void saveAccounts();
-    void getAccountInfo(int u_num){};
+    void getAccountInfo(uint32_t u_num){};
     U32vec getCards(uint32_t userId) {
         return get_account(userId)->getCards();
     }
@@ -60,7 +60,7 @@ private:
     void loadAccount(uint32_t userId);
     std::vector<Account> account_vector;
     Account* get_account(std::string id);
-    Account* get_account(int u_num);
+    Account* get_account(uint32_t u_num);
 
 };
 

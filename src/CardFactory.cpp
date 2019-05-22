@@ -16,4 +16,5 @@ Card* CardFactory::createCard(int cardId) {
     } else if (types->weaponIds.find(cardId) != types->weaponIds.end()) {
         //
     }
+    return nullptr;
 }
