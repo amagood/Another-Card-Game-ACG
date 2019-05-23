@@ -5,12 +5,9 @@
 #include "Reader.h"
 
 #include <iostream>
-#include <string>
-#include <mutex>
 
-#include <deque>
+#include <nlohmann/json.hpp>
 
-#include "nlohmann/json.hpp"
 using json = nlohmann::json;
 
 Reader::Reader(std::deque<nlohmann::json> &toDeliver, std::mutex &mut)
@@ -46,4 +43,5 @@ json Reader::popJson(std::string type, int id) {
         }
     }
     queueMutex->unlock();
+    // FIXME you should return something like empty json or NULL
 }

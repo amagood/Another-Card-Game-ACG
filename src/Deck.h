@@ -1,11 +1,11 @@
 #ifndef ANOTHER_CARD_GAME_ACG_DECK_H
 #define ANOTHER_CARD_GAME_ACG_DECK_H
 
-#include <cards.h>
-#include <iostream>
 #include <vector>
-#include <ctime>
-#include "nlohmann/json.hpp"
+
+#include <nlohmann/json.hpp>
+
+#include "cards.h"
 
 class Deck
 {

@@ -1,18 +1,14 @@
 #include "desk.h"
+
+#include <cstdint>
+#include <queue>
+#include <typeinfo>
+
+#include <nlohmann/json.hpp>
+
 #include "Reader.h"
 #include "Sender.h"
-#include <cstdio>
-#include <cstdlib>
-#include <string>
-#include <cstdint>
-#include <vector>
-#include <queue>
-#include <string.h>
-#include <time.h>
-#include <typeinfo>
-#include <queue>
-#include <nlohmann/json.hpp>
-///include deck
+#include "Deck.h"
 
 
 int otherPlayer(int nowPlayer)
@@ -175,10 +171,11 @@ bool Desk::playerMovement(int playerId)
 	return false;
 
 }
-Desk::Desk(Reader *input,Sender *output,int deskId,
-        Deck deck0, Deck deck1, std::string n0, std::string n1)  //constructor
+Desk::Desk(Reader *input, Sender *output, int deskId,
+           U32vec cardID0s, U32vec cardID1s, std::string n0, std::string n1)  //constructor
 {
     using namespace std;
+
     myId = deskId;
     ip=input;
     op=output;
@@ -187,8 +184,8 @@ Desk::Desk(Reader *input,Sender *output,int deskId,
     winLose = -1;
     name0 = n0;
     name1 = n1;
-    playerDeck.push_back(deck0);
-    playerDeck.push_back(deck1);
+    playerDeck.push_back(gameBuildingSystem.U32VecToDeck(cardID0s));
+    playerDeck.push_back(gameBuildingSystem.U32VecToDeck(cardID1s));
     site.push_back(Deck());
     site.push_back(Deck());
     hand.push_back(Deck());

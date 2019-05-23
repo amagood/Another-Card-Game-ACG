@@ -10,10 +10,8 @@
 
 #include <nlohmann/json.hpp>
 
-#include "Printer.h"
-#include "Reader.h"
-#include "Router.h"
 #include "AccountSystemController.h"
+
 void ACGMain::acgio_run(){
     acgio->run();
 }
@@ -23,12 +21,9 @@ void ACGMain::run() {
     io_thread.join();
 }
 ACGMain::ACGMain() {
-
     acgio = new ACGIO();
     router = new Router();
     accountSystemController = new AccountSystemController();
     router->setAccountSystems(accountSystemController);
     acgio->setRouter(router);
-
-
 }

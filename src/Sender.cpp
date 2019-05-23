@@ -5,10 +5,7 @@
 #include "Sender.h"
 
 #include <iostream>
-#include <mutex>
-#include <deque>
 
-#include "nlohmann/json.hpp"
 using json = nlohmann::json;
 
 Sender::Sender(std::deque<nlohmann::json> &toTransfer, std::mutex &mut)
@@ -22,8 +19,8 @@ void Sender::send()
     while (toTransferQueue->size())
     {
         queueMutex->lock();
-        std::cout << toTransferQueue->front() << endl;
-        toTransferQueue->pop_fornt();
+        std::cout << toTransferQueue->front() << std::endl;
+        toTransferQueue->pop_front();
         queueMutex->unlock();
     }
 }
@@ -31,6 +28,6 @@ void Sender::send()
 void Sender::pushJson(json json_)
 {
     queueMutex->lock();
-    toTransferQueue->push(json_);
+    toTransferQueue->push_back(json_);
     queueMutex->unlock();
 }

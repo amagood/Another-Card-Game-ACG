@@ -3,6 +3,7 @@
 //
 
 #include "AccountSystemParser.h"
+
 #include "AccountSystem.h"
 
 AccountSystemParser::AccountSystemParser(std::deque<nlohmann::json> &in, std::mutex &in_mutex) {

@@ -5,11 +5,12 @@
 #ifndef ANOTHER_CARD_GAME_ACG_READER_H
 #define ANOTHER_CARD_GAME_ACG_READER_H
 
-#include <string>
+
 #include <deque>
 #include <mutex>
 
 #include <nlohmann/json.hpp>
+
 using json = nlohmann::json;
 class Reader
 {

@@ -1,6 +1,9 @@
 #include "cards.h"
 
+#include "CardInfoSystem.h"
+
 constexpr int maxHp = 30;
+
 Card::Card(int attack,int healthPoint,int mannaRequired,int ID, std::string Name)
 {
     atk=attack;

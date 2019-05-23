@@ -2,6 +2,7 @@
 #define CARDS_H_AMAGOOD
 
 #include <string>
+
 class Card
 {
 protected:
@@ -11,6 +12,7 @@ protected:
 public:
     Card() = default;
     Card(int attack, int healthPoint,int mannaRequired, int ID, std::string Name);
+
     void setAtk(int attack);
     void setHp(int healthPoint);
     void setMp(int mannaRequired);

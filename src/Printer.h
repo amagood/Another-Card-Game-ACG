@@ -5,10 +5,8 @@
 #ifndef ANOTHER_CARD_GAME_ACG_PRINTER_H
 #define ANOTHER_CARD_GAME_ACG_PRINTER_H
 
-#include <string>
-#include <queue>
 #include <mutex>
-
+#include <deque>
 
 #include <nlohmann/json.hpp>
 

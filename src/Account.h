@@ -5,9 +5,8 @@
 #ifndef ANOTHER_CARD_GAME_ACG_ACCOUNT_H
 #define ANOTHER_CARD_GAME_ACG_ACCOUNT_H
 
+
 #include <nlohmann/json.hpp>
-#include <string>
-#include <vector>
 
 #include "ACGType.h"
 

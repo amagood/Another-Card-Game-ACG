@@ -1,10 +1,10 @@
-#include <cards.h>
+#include "Deck.h"
+
 #include <iostream>
 #include <vector>
-#include <ctime>
+
 #include <nlohmann/json.hpp>
-#include <Deck.h>
-#include <typeinfo>
+
 using json = nlohmann::json;
 using namespace std;
 
@@ -45,6 +45,7 @@ Card *Deck::popDeck(int index = -1)
         delete *(deckLinkList.begin() + index);
         deckLinkList.erase(deckLinkList.begin() + index);
     }
+    return nullptr;
 }
 //-1 抽一張牌, others just pop by index
 
@@ -52,12 +53,12 @@ Card *Deck::getIndexCards(int num, int mode, std::type_info sieve)
 {
     if (mode) // mode => 1 or -1
     {
-        int i;
-        for (i = (num > 0 ? deckLinkList.size() - 1 : 0); (num > 0 ? i >= 0 : i < deckLinkList.size()) && num; i += (num > 0 - num < 0))
+        uint32_t i;
+        for (i = (num > 0 ? deckLinkList.size() - 1 : 0); (num > 0 ? i >= 0 : i < deckLinkList.size()) && num; i += ((num > 0) - (num < 0)))
         {
             if (sieve == typeid(*deckLinkList[i]))
             {
-                num += (num<0 - num> 0);
+                num += ((num < 0) - (num> 0));
             }
         }
         return deckLinkList[i];
@@ -79,10 +80,10 @@ Card *Deck::getIndexCards(int num, int mode)
 {
     if (mode) // mode => 1 or -1
     {
-        int i;
-        for (i = (num > 0 ? deckLinkList.size() - 1 : 0); (num > 0 ? i >= 0 : i < deckLinkList.size()) && num; i += (num > 0 - num < 0))
+        uint32_t i;
+        for (i = (num > 0 ? deckLinkList.size() - 1 : 0); (num > 0 ? i >= 0 : i < deckLinkList.size()) && num; i += ((num > 0) - (num < 0)))
         {
-            num += (num<0 - num> 0);
+            num += ((num<0) - (num> 0));
         }
         return deckLinkList[i];
     }
@@ -98,7 +99,7 @@ Card *Deck::getIndexCards(int num, int mode)
 void Deck::deckShuffler()
 {
     Deck::Init();
-    for (int i = 0; i < deckLinkList.size(); i++)
+    for (uint32_t i = 0; i < deckLinkList.size(); i++)
         swap(deckLinkList[i], deckLinkList[i + rand() % (deckLinkList.size() - i)]);
 }
 
@@ -109,5 +110,7 @@ void Deck::Init()
 
 Deck::~Deck()
 {
-    for (int i = 0; i < deckLinkList.size(); i++)  delete (deckLinkList[i]);
+    for (uint32_t i = 0; i < deckLinkList.size(); i++)  {
+        delete (deckLinkList[i]);
+    }
 }
