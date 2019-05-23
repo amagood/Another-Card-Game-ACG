@@ -5,9 +5,9 @@
 #include "src/ACGMain.h"
 
 
-int main(int argc, char* argv[]){
+int main(){
 
-    ACGMain mainProgram = ACGMain();
-    mainProgram.run();
+    //ACGMain mainProgram = ACGMain();
+    //mainProgram.run();
     return 0;
 }

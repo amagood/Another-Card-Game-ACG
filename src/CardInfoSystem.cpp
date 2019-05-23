@@ -21,7 +21,9 @@ void CardInfoSystem::load() {
     std::ifstream file(filename);
     nlohmann::json json_;
     file >> json_;
-    cardlist = (std::vector<uint32_t >)json_["cardlist"];
+    for (uint32_t i : json_["cardlist"]) {
+        cardlist.push_back(i);
+    }
     std::cout << cardlist.size();
 
 
