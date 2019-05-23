@@ -31,7 +31,7 @@ public:
     std::string getAttributes();
 
 	virtual void use()=0;
-
+    virtual ~Card(){};
 
 };
 
@@ -40,14 +40,14 @@ class Weapon : public Card
 public:
 	Weapon();
     void usedOnce();
-
+    virtual ~Weapon(){};
 };
 
 class Spell : public Card
 {
 public:
 	Spell();
-
+    virtual ~Spell(){};
 };
 
 class Minion : public Card
@@ -56,7 +56,7 @@ public:
 	Minion();
 
     void attack(Minion &target);
-
+    virtual ~Minion(){};
 };
 
 //////////////////Cards: ////////////////////////////
