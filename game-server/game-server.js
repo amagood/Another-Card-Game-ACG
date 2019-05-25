@@ -2,7 +2,6 @@ const readline = require('readline');
 const socketIo = require('socket.io');
 const {spawn} = require('child_process');
 const printf = require('printf');
-//const wingston = require('winston');
 const colors = require('colors');
 
 colors.setTheme({
@@ -35,7 +34,7 @@ let gameLogicEngine = null;
 
 // exit this console
 function commandQuit(input, rl) {
-  logger.info(`Quit Game server...`)
+  logger.info(`Quit Game server...`);
   rl.close();
   process.exit();
 }
@@ -51,13 +50,13 @@ function commandHelp() {
   const commands = gameServer.commandLine.commands;
   const formatString = `  ${`%-20s`.bold}  ${`%-5s`.yellow.bold}  %s`;
   logger.log(printf(formatString, 'command', 'alias', 'description').bold);
-  logger.log('------------------------------------------------------------');
+  logger.log(`------------------------------------------------------------`);
 
   Object.keys(commands).sort().forEach((command) => {
     logger.log(printf(formatString,
                       command,
                       commands[command].alias || '',
-                      commands[command].description));
+                      commands[command].description || ''));
   });
 }
 
@@ -126,18 +125,19 @@ function commandSendMessage(input) {
     if (gameLogicEngine) {
       gameLogicEngine.send(message);
     } else {
-      console.error(`Game Logic Engine isn't running.`);
+      logger.error(`Game Logic Engine isn't running.`);
     }
   } else if (target === 'c') {
     if (clientSide) {
       const id = message.split(' ')[0];
-      const data = message.substr(message.indexOf(' ') + 1);
+      const data = JSON.parse(message.substr(message.indexOf(' ') + 1));
       clientSide.send(id, data);
+      logger.debug(`${id}, ${data}`);
     } else {
-      console.error(`Client Side Server isn't running.`);
+      logger.error(`Client Side Server isn't running.`);
     }
   } else {
-    console.error(`unknow target.`);
+    logger.error(`unknow target.`);
   }
 }
 
@@ -161,20 +161,24 @@ class Logger {
   }
 
   error(str) {
-    this.console.error('ERROR'.bgRed.bold + ' ' + str.toString().error.bold);
+    this.console.error(`${`ERROR`.inverse} ${str.toString()}`.error.bold);
   }
 
   info(str) {
-    this.console.info('INFO'.bgGreen.bold + ' ' + str.toString().info.bold);
+    this.console.info(`${`INFO`.inverse} ${str.toString()}`.info.bold);
   }
 
   debug(str) {
-    this.console.debug('DEBUG'.bgCyan.bold + ' ' + str.toString().debug.bold);
+    this.console.debug(`${`DEBUG`.inverse} ${str.toString()}`.debug.bold);
+  }
+
+  dir(obj) {
+    this.console.dir(obj);
   }
 }
 
 class CommandLine {
-  constructor(options) {
+  constructor() {
     
     // commands and their handler
     this.commands = {
@@ -236,7 +240,7 @@ class CommandLine {
     this.rl = readline.createInterface({
       input: process.stdin,
       output: process.stdout,
-      prompt: 'ACG>'.gray,
+      prompt: 'ACG>'.prompt,
       completer: (input) => {
         const keyWords = Object.keys(this.commands).sort();
         const hits = keyWords.filter((key) => key.startsWith(input));
@@ -257,7 +261,7 @@ class CommandLine {
       const command = input.split(' ')[0];
 
       // make alias
-      let aliases = {};
+      const aliases = {};
       for (const fullName in this.commands) {
         if (this.commands[fullName].alias)
           aliases[this.commands[fullName].alias] = fullName;
