@@ -37,5 +37,5 @@ file(COPY test/data/cardlist.json DESTINATION test/xardlist.json)
 
 add_executable(main main.cpp)
 target_link_libraries(main ACGMain ACGIO AccountSystem Room)
-#target_link_libraries(main ACGMain AccountSystem Room GameSystem ACGIO)
+target_link_libraries(main ACGMain AccountSystem Room GameSystem ACGIO)
 

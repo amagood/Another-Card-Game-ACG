@@ -21,7 +21,7 @@ public:
     bool verify(std::string password);
 
     void modifyPassword(std::string password);
-    void modifyMoney(int money);
+    bool modifyMoney(int money);
     nlohmann::json toJson();
     int getMoney();
     std::string getName();

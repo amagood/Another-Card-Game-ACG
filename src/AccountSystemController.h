@@ -13,22 +13,21 @@
 class AccountSystemController {
     AccountSystem * accountSystem;
     DrawCardSystem * drawCardSystem;
-    std::mutex accountSystemMutex;
 public:
     AccountSystemController(AccountSystem *);
     nlohmann::json run(nlohmann::json &);
-    void getAccountsName(std::vector<uint32_t> userIds);
-    void createAccount(std::string id, std::string password);
-    void login(std::string id, std::string password);
-    void logout(uint32_t userId);
-    void payMoney(uint32_t userId, int number);
-    void drawCards(uint32_t userId, int number);
-    void getCards(uint32_t userId);
-    void modifyCards(uint32_t userId, std::vector<uint32_t> cards, std::vector<uint32_t> decks);
-    void getAccountInfo(uint32_t userId);
-    std::mutex * getAccountSystemMutex();
-    AccountSystem * getAccountSystem();
+//    void getAccountsName(std::vector<uint32_t> userIds);
+//    void createAccount(std::string id, std::string password);
+//    void login(std::string id, std::string password);
+//    void logout(uint32_t userId);
+//    void payMoney(uint32_t userId, int number);
+//    void drawCards(uint32_t userId, int number);
+//    void getCards(uint32_t userId);
+//    void modifyCards(uint32_t userId, std::vector<uint32_t> cards, std::vector<uint32_t> decks);
+//    void getAccountInfo(uint32_t userId);
 };
+
+
 
 
 #endif //ANOTHER_CARD_GAME_ACG_ACCOUNTSYSTEMCONTROLLER_H
