@@ -5,5 +5,5 @@ add_library(AccountSystem AccountSystem.cpp Account.cpp AccountSystemController.
         LadderSystem.cpp
         DrawCardSystem.cpp CardInfoSystem.cpp
         MoneySystem.cpp)
-add_library(Room Room.cpp)
+add_library(Room Room.cpp ArenaController.cpp ArenaController.h)
 add_library(GameSystem CardFactory.cpp GameBuildingSystem.cpp desk.cpp Deck.cpp cards.cpp)
