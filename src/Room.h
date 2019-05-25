@@ -36,7 +36,7 @@ class Room
 {
 public:
     Room(int id, std::string name, std::string word, Player* player);
-    virtual ~Room();
+    virtual ~Room()=0;
     static Room* createRoom(Player* player, RoomMode mode, int id, std::string name, std::string password);
     int getID() const { return _ID; }
     std::string getName() const { return _name; }
@@ -62,7 +62,7 @@ protected:
 class OneOnOneRoom : public Room
 {
 public:
-    ~OneOnOneRoom(); // TODO
+    ~OneOnOneRoom() override; // TODO
     OneOnOneRoom(int id, std::string name, std::string word, Player* player) : Room(id, name, word, player) { _mode = ONEONONE_ROOM; }
     bool isFull() const override { return _player.size()>=MaxPlayerNum; }
     bool addPlayer(Player* player) override;
@@ -78,7 +78,7 @@ class LadderRoom : public Room
 {
 public:
     LadderRoom(int id, std::string name, std::string word, Player* player) : Room(id, name, word, player) { _mode = LADDER_ROOM; }
-    ~LadderRoom();//TODO
+    ~LadderRoom() override;//TODO
     bool isFull() const override { return _player.size()>=MaxPlayerNum; }
     bool addPlayer(Player* player) override;
 	void startGame(Reader *reader, Sender *sender) override;

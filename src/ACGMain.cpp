@@ -10,20 +10,26 @@
 
 #include <nlohmann/json.hpp>
 
+#include "Room.h"
+#include "AccountSystem.h"
 #include "AccountSystemController.h"
 
 void ACGMain::acgio_run(){
-    acgio->run();
+    //acgio->run();
 }
 
 void ACGMain::run() {
-    std::thread io_thread(&ACGMain::acgio_run, this);
-    io_thread.join();
+    //std::thread io_thread(&ACGMain::acgio_run, this);
+    //io_thread.join();
 }
 ACGMain::ACGMain() {
-    acgio = new ACGIO();
+    Reader reader = Reader();
+    Sender sender = Sender();
+    AccountSystem accountSystem = AccountSystem();
+    Arena arena = Arena(&reader, &sender, &accountSystem);
+    /*acgio = new ACGIO();
     router = new Router();
     accountSystemController = new AccountSystemController();
     router->setAccountSystems(accountSystemController);
-    acgio->setRouter(router);
+    acgio->setRouter(router);*/
 }

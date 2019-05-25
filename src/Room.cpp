@@ -18,11 +18,6 @@ Room::Room(int id, std::string name, std::string word, Player* player) : _ID(id)
 {
     _player.push_back(player);
 }
-Room::~Room()
-{
-    _player.clear();
-    _player.shrink_to_fit();
-}
 Room* Room::createRoom(Player* player, RoomMode mode, int id, std::string name, std::string password)
 {
     switch(mode)
@@ -42,6 +37,13 @@ Room* Room::createRoom(Player* player, RoomMode mode, int id, std::string name, 
 
 
 constexpr short OneOnOneRoom::MaxPlayerNum;
+OneOnOneRoom::~OneOnOneRoom()
+{
+    for(Player* p : _player)
+        delete p;
+    _player.clear();
+    _player.shrink_to_fit();
+}
 bool OneOnOneRoom::addPlayer(Player* player)
 {
     if(isFull())
@@ -77,6 +79,13 @@ uint32_t OneOnOneRoom::getLoserID()
 
 
 constexpr short LadderRoom::MaxPlayerNum;
+LadderRoom::~LadderRoom()
+{
+    for(Player* p : _player)
+        delete p;
+    _player.clear();
+    _player.shrink_to_fit();
+}
 bool LadderRoom::addPlayer(Player* player)
 {
     if(isFull())

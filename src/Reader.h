@@ -15,13 +15,14 @@ using json = nlohmann::json;
 class Reader
 {
 public:
+    Reader()=default;
     Reader(std::deque<nlohmann::json> &toDeliver, std::mutex &mutex);
     void read();
     json popJson(std::string type, int id);
 
 private:
-    std::deque<nlohmann::json> *toDeliverQueue;
-    std::mutex *queueMutex;
+    std::deque<nlohmann::json> toDeliverQueue;
+    //std::mutex *queueMutex;
 };
 
 
