@@ -5,25 +5,9 @@
 #ifndef ANOTHER_CARD_GAME_ACG_READER_H
 #define ANOTHER_CARD_GAME_ACG_READER_H
 
-
-#include <deque>
-#include <mutex>
-
-#include <nlohmann/json.hpp>
-
-using json = nlohmann::json;
-class Reader
-{
+class Reader {
 public:
-    Reader()=default;
-    Reader(std::deque<nlohmann::json> &toDeliver, std::mutex &mutex);
-    void read();
-    json popJson(std::string type, int id);
-
-private:
-    std::deque<nlohmann::json> toDeliverQueue;
-    //std::mutex *queueMutex;
+    static nlohmann::json read();
 };
-
 
 #endif //ANOTHER_CARD_GAME_ACG_READER_H

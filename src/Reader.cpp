@@ -2,47 +2,19 @@
 // Created by jacky on 2019/4/21.
 //
 
-#include "Reader.h"
-
 #include <iostream>
-
 #include <nlohmann/json.hpp>
+#include <Reader.h>
 
-using json = nlohmann::json;
-
-Reader::Reader(std::deque<nlohmann::json> &toDeliver, std::mutex &mut)
+nlohmann::json Reader::read()
 {
 
-    //toDeliverQueue = toDeliver;
-    //queueMutex = &mut;
-}
-
-
-void Reader::read()
-{
     std::string line;
-    while (std::getline(std::cin, line))
-    {
-        json json_ = json::parse(line);
-
-        //queueMutex->lock();
-        toDeliverQueue.push_back(json_);
-        //queueMutex->unlock();
+    std::getline(std::cin, line);
+    try {
+        return nlohmann::json::parse(line);
     }
-
-}
-
-json Reader::popJson(std::string type, int id) {
-    //queueMutex->lock();
-    for (std::deque<json>::iterator i = toDeliverQueue.begin(); i != toDeliverQueue.end(); i++) {
-        if ((*i)["data"]["eventType"] == type && (*i)["userId"] == id) {
-            json json_ = *i;
-            toDeliverQueue.erase(i);
-            //queueMutex->unlock();
-            return json_;
-        }
+    catch(nlohmann::json::parse_error &e) {
+        return nlohmann::json();
     }
-    //queueMutex->unlock();
-    return NULL;
-    //TODO
 }
