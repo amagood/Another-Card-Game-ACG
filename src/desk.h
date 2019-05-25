@@ -6,7 +6,6 @@
 #include "ACGType.h"
 #include "GameBuildingSystem.h"
 #include "Reader.h"
-#include "Sender.h"
 #include "Deck.h"
 
 

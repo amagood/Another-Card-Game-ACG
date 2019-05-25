@@ -6,9 +6,7 @@
 
 #include <nlohmann/json.hpp>
 
-#include "Reader.h"
-#include "Sender.h"
-#include "Deck.h"
+=#include "Deck.h"
 
 
 int otherPlayer(int nowPlayer)

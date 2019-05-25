@@ -4,22 +4,22 @@
 
 #include "Router.h"
 
+#include <nlohmann/json.hpp>
+
 #include "AccountSystem.h"
 #include "ArenaController.h"
 #include "AccountSystemController.h"
-
 
 Router::Router() {
     accountSystem = new AccountSystem();
     accountSystemController = new AccountSystemController(accountSystem);
     arenaController = new ArenaController(accountSystem);
-};
+}
 
 nlohmann::json Router::run(nlohmann::json &j) {
     if (j["data"]["eventType"] == "accountSystem") {
-        accountSystemController->run(j);
+        return accountSystemController->run(j);
     } else {
-        arenaController->run(j);
+        return arenaController->run(j);
     }
-
-};
+}
