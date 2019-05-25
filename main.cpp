@@ -7,7 +7,7 @@
 
 int main(){
 
-    //ACGMain mainProgram = ACGMain();
-    //mainProgram.run();
+    ACGMain mainProgram = ACGMain();
+    mainProgram.run();
     return 0;
 }
