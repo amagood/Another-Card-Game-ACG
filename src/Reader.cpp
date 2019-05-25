@@ -3,8 +3,7 @@
 //
 
 #include <iostream>
-#include <nlohmann/json.hpp>
-#include <Reader.h>
+#include "Reader.h"
 
 nlohmann::json Reader::read()
 {

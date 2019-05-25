@@ -15,7 +15,8 @@ class AccountSystemController {
     DrawCardSystem * drawCardSystem;
     std::mutex accountSystemMutex;
 public:
-    AccountSystemController();
+    AccountSystemController(AccountSystem *);
+    nlohmann::json run(nlohmann::json &);
     void getAccountsName(std::vector<uint32_t> userIds);
     void createAccount(std::string id, std::string password);
     void login(std::string id, std::string password);

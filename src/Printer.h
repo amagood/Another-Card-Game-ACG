@@ -9,7 +9,7 @@
 
 class Printer {
 public:
-    void print(nlohmann::json &j);
+    static void print(nlohmann::json &j);
 };
 
 #endif //ANOTHER_CARD_GAME_ACG_PRINTER_H

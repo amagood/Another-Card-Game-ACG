@@ -5,9 +5,12 @@
 #include "AccountSystemController.h"
 
 #include "DrawCardSystem.h"
+nlohmann::json AccountSystemController::run(nlohmann::json &j) {
 
-AccountSystemController::AccountSystemController() {
-    accountSystem = new AccountSystem();
+}
+
+AccountSystemController::AccountSystemController(AccountSystem * accountSystem1) {
+    accountSystem = accountSystem1;
     drawCardSystem = new DrawCardSystem();
 }
 AccountSystem* AccountSystemController::getAccountSystem() {

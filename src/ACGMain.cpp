@@ -3,33 +3,22 @@
 //
 
 #include "ACGMain.h"
-
-#include <mutex>
-#include <iostream>
-#include <thread>
-
-#include <nlohmann/json.hpp>
-
-#include "Room.h"
-#include "AccountSystem.h"
-#include "AccountSystemController.h"
-
-void ACGMain::acgio_run(){
-    //acgio->run();
-}
+#include "Reader.h"
+#include "Router.h"
+#include "Printer.h"
 
 void ACGMain::run() {
-    //std::thread io_thread(&ACGMain::acgio_run, this);
-    //io_thread.join();
+
+    while(isEnd) {
+        nlohmann::json json = Reader::read();
+        if (json.empty()) {
+            continue;
+        } else {
+            nlohmann::json out_json = router->run(json);
+            Printer::print(json);
+        }
+    }
 }
 ACGMain::ACGMain() {
-    Reader reader = Reader();
-    Sender sender = Sender();
-    AccountSystem accountSystem = AccountSystem();
-    Arena arena = Arena(&reader, &sender, &accountSystem);
-    /*acgio = new ACGIO();
     router = new Router();
-    accountSystemController = new AccountSystemController();
-    router->setAccountSystems(accountSystemController);
-    acgio->setRouter(router);*/
 }

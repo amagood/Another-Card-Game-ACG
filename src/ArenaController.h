@@ -8,7 +8,8 @@
 #include <nlohmann/json.hpp>
 class AccountSystem;
 class ArenaController {
-    ArenaController();
+public:
+    ArenaController(AccountSystem *);
     nlohmann::json run(nlohmann::json &);
 };
 
