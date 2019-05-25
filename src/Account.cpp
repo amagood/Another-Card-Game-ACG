@@ -54,10 +54,12 @@ bool Account::isSame(Account &another) {
 int Account::getMoney() {
     return money_;
 }
-void Account::modifyMoney(int money) {
-    money_ += money;
-    if (money_ < 0) {
-        money_ = 0;
+bool Account::modifyMoney(int money) {
+    if (money < 0) {
+        return false;
+    } else {
+        money_ += money;
+        return true;
     }
 }
 std::string Account::getName() {

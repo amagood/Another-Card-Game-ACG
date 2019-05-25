@@ -28,8 +28,8 @@ public:
         return get_account(user_id_)->isOnline();
     }
     bool modifyPassword(std::string &id, std::string &ori_password, std::string &new_password);
-    void modifyMoney(std::string &id, int money);
-    void modifyMoney(uint32_t user_id_, int money);
+    bool modifyMoney(std::string &id, int money);
+    bool modifyMoney(uint32_t user_id_, int money);
     int getMoney(std::string &id);
     void loadAccounts();
 
@@ -39,6 +39,7 @@ public:
         get_account(userId)->setCards(cards);
     }
     void saveAccounts();
+    void modifyCards(uint32_t id, U32vec, U32vec);
     void getAccountInfo(uint32_t u_num){};
     U32vec getCards(uint32_t userId) {
         return get_account(userId)->getCards();

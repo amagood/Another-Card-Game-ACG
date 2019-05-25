@@ -4,9 +4,7 @@
 
 #include "src/ACGMain.h"
 
-
 int main(){
-
     ACGMain mainProgram = ACGMain();
     mainProgram.run();
     return 0;

@@ -17,7 +17,11 @@
 AccountSystem::AccountSystem() {
     loadAccounts();
 }
-
+void AccountSystem::modifyCards(uint32_t id, U32vec cards, U32vec deck) {
+    Account * acc = get_account(id);
+    acc->setCards(cards);
+    acc->setCards(deck);
+}
 void AccountSystem::loadAccounts() {
     std::ifstream file("data/accountlist.json");
     nlohmann::json json_;
@@ -106,16 +110,20 @@ Account* AccountSystem::get_account(uint32_t u_num) {
     }
     return nullptr;
 }
-void AccountSystem::modifyMoney(std::string &id, int money) {
+bool AccountSystem::modifyMoney(std::string &id, int money) {
     Account *account = get_account(id);
     if (account != nullptr) {
-        account->modifyMoney(money);
+        return account->modifyMoney(money);
+    } else {
+        return false;
     }
 }
-void AccountSystem::modifyMoney(uint32_t user_id_, int money) {
+bool AccountSystem::modifyMoney(uint32_t user_id_, int money) {
     Account *account = get_account(user_id_);
     if (account != nullptr) {
-        account->modifyMoney(money);
+        return account->modifyMoney(money);
+    } else {
+        return false;
     }
 }
 void AccountSystem::saveAccount(int userId, nlohmann::json j) {
