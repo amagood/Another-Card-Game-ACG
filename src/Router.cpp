@@ -4,44 +4,22 @@
 
 #include "Router.h"
 
-#include <chrono>
-#include <thread>
-#include <iostream>
+#include "AccountSystem.h"
+#include "ArenaController.h"
+#include "AccountSystemController.h"
 
 
-#define SLEEP(ms) std::this_thread::sleep_for(std::chrono::milliseconds(ms))
-using std::cout;
-Router::Router(){
-    accountSystemParser = new AccountSystemParser(toAccountSystem, accountSystemMutex);
-}
-void Router::setAccountSystems(AccountSystemController *accountSystemController) {
-    accountSystemParser->setAccountSystemController(accountSystemController);
-}
+Router::Router() {
+    accountSystem = new AccountSystem();
+    accountSystemController = new AccountSystemController(accountSystem);
+    arenaController = new ArenaController(accountSystem);
+};
 
-void Router::route() {
-    while(true) {
-        routeMutex_.lock();
-        if(routeDeque_.empty()) {
-            routeMutex_.unlock();
-        } else {
-            nlohmann::json j = routeDeque_.front();
-            routeDeque_.pop_front();
-            routeMutex_.unlock();
-            chooseDirection(j);
-        }
-    }
-}
-void Router::chooseDirection(nlohmann::json j) {
-    if(j["data"]["eventType"] == "accountSystem") {
-        accountSystemMutex.lock();
-        toAccountSystem.push_back(j);
-        accountSystemMutex.unlock();
+nlohmann::json Router::run(nlohmann::json &j) {
+    if (j["data"]["eventType"] == "accountSystem") {
+        accountSystemController->run(j);
     } else {
-        // TODO add other direction
+        arenaController->run(j);
+    }
 
-   }
-}
-
-void Router::run() {
-    route();
-}
+};

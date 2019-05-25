@@ -7,28 +7,17 @@
 
 #include <nlohmann/json.hpp>
 
-#include "Reader.h"
-#include "Printer.h"
-#include "AccountSystem.h"
-#include "AccountSystemParser.h"
-
+class AccountSystem;
+class AccountSystemController;
+class ArenaController;
 
 class Router {
 public:
     Router();
-    AccountSystemParser * accountSystemParser;
-    void route();
-    void run();
-    void chooseDirection(nlohmann::json j);
-    void setAccountSystems(AccountSystemController *);
-    std::mutex routeMutex_;
-    std::deque<nlohmann::json> routeDeque_;
-
+    nlohmann::json run(nlohmann::json& j);
 private:
-
-    std::mutex accountSystemMutex;
-    std::deque<nlohmann::json> toAccountSystem;
+    AccountSystemController * accountSystemController;
+    ArenaController * arenaController;
+    AccountSystem * accountSystem;
 };
-
-
 #endif //ANOTHER_CARD_GAME_ACG_ROUTER_H
