@@ -14,9 +14,9 @@
 
 class ACGMain {
 private:
-    /*ACGIO * acgio;
+    ACGIO * acgio;
     Router * router;
-    AccountSystemController * accountSystemController;*/
+    AccountSystemController * accountSystemController;
     void acgio_run();
 public:
     ACGMain();

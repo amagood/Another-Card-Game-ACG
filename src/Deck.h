@@ -2,9 +2,8 @@
 #define ANOTHER_CARD_GAME_ACG_DECK_H
 
 #include <vector>
-
+#include <ctime>
 #include <nlohmann/json.hpp>
-
 #include "cards.h"
 
 class Deck
@@ -12,14 +11,14 @@ class Deck
 public:
     Deck(){};
     void pushCard(Card *C);
-    void pushCard(nlohmann::json JSON);
+    void pushCard();
 
     //-1 search by type, others by id
 
     std::vector<Card *> getDeck();
     //取得整副牌
 
-    Card *popDeck(int index);
+    Card *popDeck(int index = -1);
     //-1 抽一張牌, others just pop by index
 
     Card *getIndexCards(int num, int mode, std::type_info sieve);

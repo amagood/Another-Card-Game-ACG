@@ -1,10 +1,5 @@
 #include "Deck.h"
 
-#include <iostream>
-#include <vector>
-#include <ctime>
-#include <nlohmann/json.hpp>
-
 using json = nlohmann::json;
 using namespace std;
 
@@ -17,7 +12,7 @@ void Deck::pushCard(Card *C)
 {
     deckLinkList.push_back(C);
 }
-void Deck::pushCard(json JSON) //
+void Deck::pushCard() //TODO use factory
 {
     //Card Card_;
 
@@ -32,7 +27,7 @@ vector<Card *> Deck::getDeck()
 }
 //取得整副牌
 
-Card *Deck::popDeck(int index = -1)
+Card *Deck::popDeck(int index)
 {
     if (index == -1)
     {
@@ -66,12 +61,10 @@ Card *Deck::getIndexCards(int num, int mode, std::type_info sieve)
     else // mode => 0
     {
         int temp = rand() % deckLinkList.size();
-        // TODO fixed
         while (sieve == typeid(*deckLinkList[temp]))
         {
             temp = rand() % deckLinkList.size();
         }
-
         return deckLinkList[temp];
     }
 }

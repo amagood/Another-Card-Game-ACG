@@ -141,7 +141,7 @@ bool Desk::playerMovement(int playerId)
 		A["data"]["deskId"]
 		*/
 
-
+		//is important here
         if(inputAction["data"]["useOrAttack"]=="useCard" && inputAction["data"]["useOrAttack"]=="use")        ///Use Card
         {
             ///push index'th card from the hand to site
