@@ -25,6 +25,9 @@ void ACGMain::run() {
 ACGMain::ACGMain() {
     Reader reader = Reader();
     Sender sender = Sender();
+    std::thread tReader;
+    std::thread tSender;
+
     AccountSystem accountSystem = AccountSystem();
     Arena arena = Arena(&reader, &sender, &accountSystem);
     /*acgio = new ACGIO();

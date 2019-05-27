@@ -29,7 +29,7 @@ private:
 public:
     Desk(Reader *input, Sender *output, int deskId, U32vec cardID0s, U32vec cardID1s,
          std::string n0, std::string n1);
-    ~Desk();
+    ~Desk() {};
 
     void draw(int num,int targetPlayer);
 
