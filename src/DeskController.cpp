@@ -4,7 +4,7 @@
 
 #include "DeskController.h"
 
-DeskController::DeskController(Deck &player1, Deck &player2){
+void DeskController::run(Deck &player1, Deck &player2){
     PD[0] = player1; //Deck copy method ?!
     PD[1] = player2;
     initPlate();
