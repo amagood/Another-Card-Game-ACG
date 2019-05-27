@@ -4,6 +4,6 @@ add_library(ACGIO ACGIO.cpp Printer.cpp Reader.cpp Router.cpp Sender.cpp Account
 add_library(AccountSystem AccountSystem.cpp Account.cpp AccountSystemController.cpp
         LadderSystem.cpp
         DrawCardSystem.cpp CardInfoSystem.cpp
-        MoneySystem.cpp ArenaController.cpp ArenaController.h Arena.cpp Arena.h)
+        MoneySystem.cpp)
 add_library(Room Room.cpp)
-add_library(GameSystem CardFactory.cpp GameBuildingSystem.cpp desk.cpp Deck.cpp cards.cpp)
+add_library(GameSystem CardFactory.cpp GameBuildingSystem.cpp desk.cpp Deck.cpp cards.cpp NDesk.cpp NDesk.h DeskController.cpp DeskController.h)
