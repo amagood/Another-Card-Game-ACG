@@ -2,6 +2,8 @@
 #define ANOTHER_CARD_GAME_ACG_ARENA_H
 
 #include <iostream>
+#include <vector>
+#include <string>
 
 #include <nlohmann/json.hpp>
 
@@ -19,6 +21,8 @@ public:
     void enterRoomRandom(uint32_t playerID, RoomMode mode);
     bool inviteFriend(uint32_t playerID, RoomMode mode, uint32_t id);
     void startGame(RoomMode mode, uint32_t id);
+    std::vector<std::string> getRoomList(RoomMode mode);
+    std::vector<std::string> getRoomInfo(RoomMode mode, uint32_t id);
 
 private:
     AccountSystem* _account;

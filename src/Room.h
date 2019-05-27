@@ -2,15 +2,14 @@
 #define ANOTHER_CARD_GAME_ACG_ROOM_H
 
 #include <iostream>
+#include <vector>
+#include <string>
 
 #include <nlohmann/json.hpp>
 
-#include "desk.h"
 #include "Deck.h"
 #include "AccountSystem.h"
-#include "Reader.h"
-#include "Printer.h"
-#include "Sender.h"
+#include "DeskController.h"
 
 enum RoomMode { SINGLE_ROOM=0, ONEONONE_ROOM, LADDER_ROOM, ROOMMODE_COUNT};
 class Room
@@ -38,7 +37,6 @@ protected:
     U32vec _player;
     RoomMode _mode;
     bool _endgame=false;
-    //DeskController deskController;
 };
 
 
