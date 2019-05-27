@@ -14,16 +14,15 @@
 
 class DeskController { //分析json 傳遞指令
 public:
-    DeskController(Deck &player1, Deck &player2);//先攻放 1,後攻放 2
+    DeskController(Deck &player1, Deck &player2);//前端玩家與排組的順序要對應!!!
     nlohmann::json getJson(nlohmann::json json_);
     int winer_and_endgame(); //return value = 0 還沒人贏, 1 贏家先攻者, -1 贏家後攻者(不支援平手)
 private:
     void initPlate();
     nlohmann::json package();
+    nlohmann::json Card2Json(Card *temp);
     NDesk desk_;
     plate plate_;
     Deck PD[2];
 };
-
-
 #endif //ANOTHER_CARD_GAME_ACG_DESKCONTROLLER_H

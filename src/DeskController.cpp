@@ -9,8 +9,6 @@ DeskController::DeskController(Deck &player1, Deck &player2){
     PD[1] = player2;
     initPlate();
     //ready for server json to play game
-
-    //TODO pur Hero to index 0 in BF? (No???)
 }
 
 nlohmann::json DeskController::getJson(nlohmann::json json_){
@@ -32,13 +30,25 @@ nlohmann::json DeskController::getJson(nlohmann::json json_){
             Main= plate_.hand[plate_.whosTurn][(int)json_["data"]["selectedCardId"]/10];
         }
 
-        if((int)json_["data"]["targetCardId"]%10 < 2){
+        if((int)json_["data"]["targetCardId"]/10 < 2){
             int side = (plate_.whosTurn + (int)json_["data"]["targetCardId"]%10) % 2;
             Card * target = plate_.BF[side][(int)json_["data"]["targetCardId"]/10];
             desk_.playerMovement(plate_, PD[plate_.whosTurn], json_["data"]["useOrAttack"], Main, target);
         }
-        else{
-            desk_.playerMovement(plate_, PD[plate_.whosTurn], json_["data"]["useOrAttack"], Main);
+        else{ //全場或頭
+            if((int)json_["data"]["targetCardId"]/10 == 3){ //頭
+                //實體化生物(Hero)
+                Hero *temp = new Hero();
+                //設定血量
+                temp->setHp(plate_.playerHp[!plate_.whosTurn]);
+                //playerMovement
+                desk_.playerMovement(plate_, PD[plate_.whosTurn], json_["data"]["useOrAttack"], Main, temp);
+                //寫回血量
+                plate_.playerHp[!plate_.whosTurn] = temp->getHp();
+            }
+            else{
+                desk_.playerMovement(plate_, PD[plate_.whosTurn], json_["data"]["useOrAttack"], Main);
+            }
         }
     }
     else{
@@ -64,7 +74,32 @@ int DeskController::winer_and_endgame() {
     return (plate_.playerHp[0] < 0) - (plate_.playerHp[1] < 0);
 }
 
-nlohmann::json DeskController::package(){ //auto plate -> json
+nlohmann::json DeskController::Card2Json(Card *temp){
+    nlohmann::json tmp;
+    tmp["CardId"] = temp->getId();
+    tmp["CardCost"] = temp->getMp();
+    tmp["CardHealth"] = temp->getHp();
+    tmp["CardATK"] = temp->getAtk();
+    tmp["attributes"] = temp->getAttributes(); //???
+    return tmp;
+}
 
+nlohmann::json DeskController::package(){ //auto plate -> json
+    nlohmann::json Pack;
+    std::vector <nlohmann::json> output;
+
+    for(int j=0;j<2;j++){
+        output.clear();
+        for(int i=0;i < ((int)plate_.hand[j].size());i++)
+            output.push_back(Card2Json(plate_.hand[j][i]));
+        Pack["userHand" + std::to_string(j)] = output;
+        output.clear();
+        for(int i=0;i < ((int)plate_.BF[j].size());i++)
+            output.push_back(Card2Json(plate_.BF[j][i]));
+        Pack["userField" + std::to_string(j)] = output;
+    }
+    Pack["HP0"] = plate_.playerHp[0];
+    Pack["HP1"] = plate_.playerHp[1];
+    return Pack;
 }
 
