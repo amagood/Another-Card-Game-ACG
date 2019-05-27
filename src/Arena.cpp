@@ -1,10 +1,12 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <thread>
 
 #include <nlohmann/json.hpp>
 
 #include "AccountSystem.h"
+#include "ACGFunctions.h"
 #include "Router.h"
 #include "Room.h"
 #include "Arena.h"
@@ -13,6 +15,8 @@
 Arena::Arena()
 {
     _initArena();
+    std::thread tCheck(&Arena::_checkRooms, this);
+    tCheck.detach();
 }
 Arena::~Arena()
 {
@@ -53,10 +57,8 @@ bool Arena::inviteFriend(uint32_t playerID, RoomMode mode, uint32_t id)
 void Arena::startGame(RoomMode mode, uint32_t id)
 {
     Room* room = _getRoom(mode, id);
-    std::vector<Deck&> deck;
-    //for(uint32_t player : room->getPlayers())
-    //    deck.push_back(_account->getAccountDeck(player));
-    room->startGame(deck);
+    std::thread tGame(&Arena::_startGame, this, room);
+    tGame.detach();
 }
 void Arena::getRoomList(RoomMode mode, U32vec idList, std::vector<std::string> nameList)
 {
@@ -181,4 +183,35 @@ std::string Arena::_getRandomString(RoomMode mode)
         str += alphanum[rand() % (alphanum.size() - 1)];
     str[len] = 0;
     return str;
+}
+
+void Arena::_startGame(Room* room)
+{
+    std::vector<Deck&> deck;
+    //for(uint32_t player : room->getPlayers())
+    //    deck.push_back(_account->getAccountDeck(player));
+    room->startGame(deck);
+}
+
+void Arena::_checkRooms()
+{
+    while(_running)
+    {
+        ACGFunction::sleep(1000);
+        for(int mode=0; mode<ROOMMODE_COUNT; mode++)
+        {
+            for(size_t i=0; i<_room[mode].size(); i++)
+            {
+                if(_room[mode][i]->isGameEnd())
+                {
+                    // FIXME
+                    //account->update(_room[mode][i]->getWinnerID(), _room[mode][i]->getLoserID(), (int)mode);
+                    _room[mode][i]->endGame();
+                    delete _room[mode][i];
+                    _room[mode][i] = nullptr;
+                    _room[mode].erase(std::remove(_room[mode].begin(), _room[mode].end(), nullptr), _room[mode].end());
+                }
+            }
+        }
+    }
 }

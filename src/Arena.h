@@ -25,7 +25,7 @@ public:
     void startGame(RoomMode mode, uint32_t id);
     void getRoomList(RoomMode mode, U32vec idList, std::vector<std::string> nameList);
     void getRoomInfo(RoomMode mode, uint32_t id, std::string name, U32vec player);
-    ArenaAction getAction(const std::string& action);
+    static ArenaAction getAction(const std::string& action);
     nlohmann::json controlDesk(RoomMode mode, uint32_t id, nlohmann::json json);
 
 private:
@@ -41,6 +41,8 @@ private:
     Room* _getRoom(RoomMode mode, uint32_t id);
     std::string _getRandomString(RoomMode mode);
     std::string _getNonRepeatRandomRoomName(RoomMode mode);
+    void _startGame(Room* room);
+    void _checkRooms();
 };
 const char* Arena::_arenaActionString[] = {"getRoomList", "getRoomInfo", "createRoom", "enterRoom", "enterRoomRandom", "inviteFriend", "startGame"};
 #endif //ANOTHER_CARD_GAME_ACG_ARENA_H
