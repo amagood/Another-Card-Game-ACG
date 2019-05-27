@@ -8,8 +8,7 @@
 
 #include <nlohmann/json.hpp>
 
-#include "AccountSystem.h"
-#include "ACGFunctions.h"
+#include "Router.h"
 
 Room::Room(uint32_t id, const std::string& name, const std::string& password, uint32_t playerid) : _ID(id), _name(name), _password(password)
 {
@@ -47,7 +46,7 @@ bool OneOnOneRoom::addPlayer(uint32_t playerid)
 }
 void OneOnOneRoom::startGame(std::vector<Deck&> deck)
 {
-    //deskController = DeskController(deck[0], deck[1]);
+    DeskController deskController = DeskController(deck[0], deck[1]);
     deck.clear();
     deck.shrink_to_fit();
 }
@@ -74,7 +73,7 @@ bool LadderRoom::addPlayer(uint32_t playerid)
 }
 void LadderRoom::startGame(std::vector<Deck&> deck)
 {
-    //deskController = DeskController(deck[0], deck[1]);
+    DeskController deskController = DeskController(deck[0], deck[1]);
     deck.clear();
     deck.shrink_to_fit();
 }

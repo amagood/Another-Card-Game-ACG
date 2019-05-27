@@ -1,4 +1,6 @@
 #include <iostream>
+#include <vector>
+#include <string>
 
 #include <nlohmann/json.hpp>
 
@@ -46,6 +48,14 @@ bool Arena::inviteFriend(uint32_t playerID, RoomMode mode, uint32_t id)
 {
     Room* room=_getRoom(mode, id);
     return room->addPlayer(playerID);
+}
+std::vector<std::string> Arena::getRoomList(RoomMode mode)
+{
+
+}
+std::vector<std::string> Arena::getRoomInfo(RoomMode mode, uint32_t id)
+{
+
 }
 
 
