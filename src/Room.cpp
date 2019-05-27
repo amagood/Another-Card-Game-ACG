@@ -19,6 +19,20 @@ Room::~Room()
     _player.clear();
     _player.shrink_to_fit();
 }
+nlohmann::json Room::deskAction(nlohmann::json json)
+{
+
+}
+RoomMode Room::getMode(const std::string& mode)
+{
+    for(int i=0;i<(int)RoomMode::ROOMMODE_COUNT;i++)
+    {
+        std::string str(_roomModeString[i]);
+        if(mode==str)
+            return (RoomMode)i;
+    }
+    return RoomMode::ROOMMODE_COUNT;
+}
 Room* Room::createRoom(uint32_t player, RoomMode mode, uint32_t id, const std::string& name, const std::string& password)
 {
     switch(mode)
