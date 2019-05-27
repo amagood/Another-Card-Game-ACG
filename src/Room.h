@@ -17,6 +17,8 @@ class Room
 public:
     Room(uint32_t id, const std::string& name, const std::string& password, uint32_t playerid);
     ~Room();//TODO
+    static nlohmann::json deskAction(nlohmann::json json);
+    static RoomMode getMode(const std::string& mode);
     static Room* createRoom(uint32_t player, RoomMode mode, uint32_t id, const std::string& name, const std::string& password);
     int getID() const { return _ID; }
     std::string getName() const { return _name; }
@@ -37,7 +39,10 @@ protected:
     U32vec _player;
     RoomMode _mode;
     bool _endgame=false;
+private:
+    static const char* _roomModeString[];
 };
+const char* Room::_roomModeString[] = {"SingleRoom", "OneOnOneRoom", "LadderRoom"};
 
 
 class OneOnOneRoom : public Room

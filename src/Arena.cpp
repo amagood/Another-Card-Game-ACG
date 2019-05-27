@@ -20,7 +20,7 @@ Arena::~Arena()
     _delAllRooms();
 }
 
-int Arena::createRoom(uint32_t playerID, RoomMode mode, const std::string& name, const std::string& password)
+uint32_t Arena::createRoom(uint32_t playerID, RoomMode mode, const std::string& name, const std::string& password)
 {
     if(!_isRoomNameAdmitted(name, mode))
         return -1;
@@ -35,32 +35,62 @@ bool Arena::enterRoom(uint32_t playerID, RoomMode mode, uint32_t id, const std::
         return false;
     return room->addPlayer(playerID);
 }
-void Arena::enterRoomRandom(uint32_t playerID, RoomMode mode)
+uint32_t Arena::enterRoomRandom(uint32_t playerID, RoomMode mode)
 {
     bool enter=false;
     for(size_t i=0; i<_room[mode].size(); i++)
         if(_room[mode][i]->addPlayer(playerID))
-            enter=true;
-    if(!enter)
-        _createRoom(playerID, mode, _getNonRepeatRandomRoomID(), _getNonRepeatRandomRoomName(mode));
+            return _room[mode][i]->getID();
+    uint32_t id = _getNonRepeatRandomRoomID();
+    _createRoom(playerID, mode, id, _getNonRepeatRandomRoomName(mode));
+    return id;
 }
 bool Arena::inviteFriend(uint32_t playerID, RoomMode mode, uint32_t id)
 {
     Room* room=_getRoom(mode, id);
     return room->addPlayer(playerID);
 }
-std::vector<std::string> Arena::getRoomList(RoomMode mode)
+void Arena::startGame(RoomMode mode, uint32_t id)
 {
-
+    Room* room = _getRoom(mode, id);
+    std::vector<Deck&> deck;
+    //for(uint32_t player : room->getPlayers())
+    //    deck.push_back(_account->getAccountDeck(player));
+    room->startGame(deck);
 }
-std::vector<std::string> Arena::getRoomInfo(RoomMode mode, uint32_t id)
+void Arena::getRoomList(RoomMode mode, U32vec idList, std::vector<std::string> nameList)
 {
-
+    for(auto room : _room[mode])
+    {
+        idList.push_back(room->getID());
+        nameList.push_back(room->getName());
+    }
+}
+void Arena::getRoomInfo(RoomMode mode, uint32_t id, std::string name, U32vec player)
+{
+    Room* room = _getRoom(mode, id);
+    name = room->getName();
+    player = room->getPlayers();
+}
+ArenaAction Arena::getAction(const std::string& action)
+{
+    for(int i=0;i<(int)ArenaAction::ACTION_COUNT;i++)
+    {
+        std::string str(_arenaActionString[i]);
+        if(action==str)
+            return (ArenaAction)i;
+    }
+    return ArenaAction::ACTION_COUNT;
+}
+nlohmann::json Arena::controlDesk(RoomMode mode, uint32_t id, nlohmann::json json)
+{
+    Room* room = _getRoom(mode, id);
+    return room->deskAction(json);
 }
 
 
 
-
+///private
 void Arena::_initArena()
 {
     for(int mode=0; mode<ROOMMODE_COUNT; mode++)
@@ -152,14 +182,3 @@ std::string Arena::_getRandomString(RoomMode mode)
     str[len] = 0;
     return str;
 }
-
-void Arena::startGame(RoomMode mode, uint32_t id)
-{
-    Room* room = _getRoom(mode, id);
-    std::vector<Deck&> deck;
-    //for(uint32_t player : room->getPlayers())
-    //    deck.push_back(_account->getAccountDeck(player));
-    room->startGame(deck);
-}
-
-
