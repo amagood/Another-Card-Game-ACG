@@ -11,15 +11,12 @@
 #include "Arena.h"
 
 
-Arena::Arena()
+Arena::Arena(AccountSystem* account) : _account(account)
 {
     _initArena();
-    std::thread tCheck(&Arena::_checkRooms, this);
-    tCheck.detach();
 }
 Arena::~Arena()
 {
-    _running=false;
     _delAllRooms();
 }
 
@@ -40,7 +37,6 @@ bool Arena::enterRoom(uint32_t playerID, RoomMode mode, uint32_t id, const std::
 }
 uint32_t Arena::enterRoomRandom(uint32_t playerID, RoomMode mode)
 {
-    bool enter=false;
     for(size_t i=0; i<_room[mode].size(); i++)
         if(_room[mode][i]->addPlayer(playerID))
             return _room[mode][i]->getID();
@@ -56,8 +52,10 @@ bool Arena::inviteFriend(uint32_t playerID, RoomMode mode, uint32_t id)
 void Arena::startGame(RoomMode mode, uint32_t id)
 {
     Room* room = _getRoom(mode, id);
-    std::thread tGame(&Arena::_startGame, this, room);
-    tGame.detach();
+    std::vector<U32vec> deck;
+    for(uint32_t player : room->getPlayers())
+        deck.push_back(_account->getDeck(player));
+    room->startGame(deck);
 }
 void Arena::getRoomList(RoomMode mode, U32vec idList, std::vector<std::string> nameList)
 {
@@ -86,7 +84,15 @@ ArenaAction Arena::getAction(const std::string& action)
 nlohmann::json Arena::controlDesk(RoomMode mode, uint32_t id, nlohmann::json json)
 {
     Room* room = _getRoom(mode, id);
-    return room->deskAction(json);
+    nlohmann::json result = room->deskAction(json);
+    //TODO
+    /*if(end){
+        room->endGame();
+        uint32_t winner = room->getWinnerID(), loser = room->getLoserID();
+        _account.update(winner, loser);
+        delete room;
+    }*/
+    return result;
 }
 
 
@@ -184,33 +190,3 @@ std::string Arena::_getRandomString(RoomMode mode)
     return str;
 }
 
-void Arena::_startGame(Room* room)
-{
-    std::vector<Deck&> deck;
-    //for(uint32_t player : room->getPlayers())
-    //    deck.push_back(_account->getAccountDeck(player));
-    room->startGame(deck);
-}
-
-void Arena::_checkRooms()
-{
-    while(_running)
-    {
-        ACGFunction::sleep(1000);
-        for(int mode=0; mode<ROOMMODE_COUNT; mode++)
-        {
-            for(size_t i=0; i<_room[mode].size(); i++)
-            {
-                if(_room[mode][i]->isGameEnd())
-                {
-                    // FIXME
-                    //account->update(_room[mode][i]->getWinnerID(), _room[mode][i]->getLoserID(), (int)mode);
-                    _room[mode][i]->endGame();
-                    delete _room[mode][i];
-                    _room[mode][i] = nullptr;
-                    _room[mode].erase(std::remove(_room[mode].begin(), _room[mode].end(), nullptr), _room[mode].end());
-                }
-            }
-        }
-    }
-}

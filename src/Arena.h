@@ -16,7 +16,10 @@ enum ArenaAction { GET_ROOMLIST=0, GET_ROOMINFO, CREATE_ROOM, ENTER_ROOM, ENTER_
 class Arena
 {
 public:
+    Arena(AccountSystem* account);
+
     Arena();
+
     ~Arena();
     uint32_t createRoom(uint32_t playerID, RoomMode mode, const std::string& name, const std::string& password="");
     bool enterRoom(uint32_t playerID, RoomMode mode, uint32_t id, const std::string& password);
@@ -31,7 +34,6 @@ public:
 private:
     AccountSystem* _account;
     std::vector<Room*> _room[ROOMMODE_COUNT];
-    bool _running=true;
     static const char* _arenaActionString[];
     void _initArena();
     void _delAllRooms();
@@ -41,8 +43,6 @@ private:
     Room* _getRoom(RoomMode mode, uint32_t id);
     std::string _getRandomString(RoomMode mode);
     std::string _getNonRepeatRandomRoomName(RoomMode mode);
-    void _startGame(Room* room);
-    void _checkRooms();
 };
 const char* Arena::_arenaActionString[] = {"getRoomList", "getRoomInfo", "createRoom", "enterRoom", "enterRoomRandom", "inviteFriend", "startGame"};
 #endif //ANOTHER_CARD_GAME_ACG_ARENA_H
