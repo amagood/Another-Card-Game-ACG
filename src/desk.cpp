@@ -6,8 +6,6 @@
 
 #include <nlohmann/json.hpp>
 
-#include "Reader.h"
-#include "Sender.h"
 #include "Deck.h"
 
 
@@ -171,14 +169,12 @@ bool Desk::playerMovement(int playerId)
 	return false;
 
 }
-Desk::Desk(Reader *input, Sender *output, int deskId,
+Desk::Desk(int deskId,
            U32vec cardID0s, U32vec cardID1s, std::string n0, std::string n1)  //constructor
 {
     using namespace std;
 
     myId = deskId;
-    ip=input;
-    op=output;
 
     end_ = false;
     winLose = -1;
