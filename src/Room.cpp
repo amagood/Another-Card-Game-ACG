@@ -51,10 +51,7 @@ Room* Room::createRoom(uint32_t player, RoomMode mode, uint32_t id, const std::s
 }
 void Room::endGame()
 {
-    if(_deskController.winer_and_endgame()==1)
-        _winner = 0;
-    else if(_deskController.winer_and_endgame()==-1)
-        _winner = 1;
+    _winner = _deskController.winer_and_endgame();
     _loser = (_winner+1)&1;
 }
 
