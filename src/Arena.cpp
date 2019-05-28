@@ -7,7 +7,6 @@
 
 #include "AccountSystem.h"
 #include "ACGFunctions.h"
-#include "Router.h"
 #include "Room.h"
 #include "Arena.h"
 
