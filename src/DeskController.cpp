@@ -4,9 +4,16 @@
 
 #include "DeskController.h"
 
-void DeskController::run(Deck &player1, Deck &player2){
-    PD[0] = player1; //Deck copy method ?!
-    PD[1] = player2;
+void DeskController::run(U32vec &player1, U32vec &player2){
+    CardFactory CF_;//Deck method & Cards factory
+    while(!player1.empty()){
+        PD[0].pushCard(CF_.createCard(player1[0]));
+        player1.erase(player1.begin());
+    }
+    while(!player2.empty()){
+        PD[1].pushCard(CF_.createCard(player2[0]));
+        player1.erase(player2.begin());
+    }
     initPlate();
     //ready for server json to play game
 }
@@ -71,7 +78,7 @@ void DeskController::initPlate(){
 }
 
 int DeskController::winer_and_endgame() {
-    return (plate_.playerHp[0] < 0) - (plate_.playerHp[1] < 0);
+    return  (plate_.playerHp[0] > 0) && (plate_.playerHp[1] <= 0) ? 0 : (plate_.playerHp[0] <= 0) && (plate_.playerHp[1] > 0) ? 1 : -1;
 }
 
 nlohmann::json DeskController::Card2Json(Card *temp){
