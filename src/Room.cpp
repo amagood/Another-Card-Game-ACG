@@ -49,6 +49,14 @@ Room* Room::createRoom(uint32_t player, RoomMode mode, uint32_t id, const std::s
     }
     return nullptr;
 }
+void Room::endGame()
+{
+    if(_deskController.winer_and_endgame()==1)
+        _winner = 0;
+    else if(_deskController.winer_and_endgame()==-1)
+        _winner = 1;
+    _loser = (_winner+1)&1;
+}
 
 
 
@@ -65,10 +73,6 @@ void OneOnOneRoom::startGame(std::vector<U32vec> deck)
     deck.clear();
     deck.shrink_to_fit();
 }
-void OneOnOneRoom::endGame()
-{
-
-}
 
 
 constexpr short OneOnOneRoom::MaxPlayerNum;
@@ -83,10 +87,6 @@ void LadderRoom::startGame(std::vector<U32vec> deck)
     _deskController.run(deck[0], deck[1]);
     deck.clear();
     deck.shrink_to_fit();
-}
-void LadderRoom::endGame()
-{
-
 }
 int LadderRoom::getWinnerScore()
 {

@@ -87,8 +87,7 @@ nlohmann::json Arena::controlDesk(RoomMode mode, uint32_t id, nlohmann::json jso
     Room* room = _getRoom(mode, id);
     nlohmann::json result = room->deskAction(json);
     //TODO
-    /*if(end){
-        room->endGame();
+    /*if(room->isEnd()){
         uint32_t winner = room->getWinnerID(), loser = room->getLoserID();
         _account.update(winner, loser);
         delete room;

@@ -24,13 +24,14 @@ public:
     std::string getName() const { return _name; }
     U32vec getPlayers() const { return _player; }
     RoomMode getRoomMode() const { return _mode; }
+    bool isEnd() { return _deskController.winer_and_endgame()==0; };
     bool isPasswordCorrect(const std::string& word) const { return _password=="" || _password==word; }
     virtual void startGame(std::vector<U32vec> deck)=0;
     virtual bool isFull() const =0;
     virtual bool addPlayer(uint32_t playerid)=0;
-    virtual void endGame()=0;
-    uint32_t getWinnerID() { return 0;}//_deskController.getWinnerID(); }
-    uint32_t getLoserID() { return 0;}//_deskController.getWinnerID(); };
+    void endGame();
+    uint32_t getWinnerID() { return _player[_winner];}
+    uint32_t getLoserID() { return _player[_loser];}
 protected:
     uint32_t _ID;
     std::string _name;
@@ -38,6 +39,8 @@ protected:
     U32vec _player;
     RoomMode _mode;
     DeskController _deskController;
+    short _winner;
+    short _loser;
 
 private:
     static const char* _roomModeString[];
@@ -52,7 +55,7 @@ public:
     bool isFull() const override { return _player.size()>=MaxPlayerNum; }
     bool addPlayer(uint32_t playerid) override;
     void startGame(std::vector<U32vec> deck) override;
-    void endGame() override;
+    //void endGame() override;
 private:
     static constexpr short MaxPlayerNum=2;
 };
@@ -65,7 +68,7 @@ public:
     bool isFull() const override { return _player.size()>=MaxPlayerNum; }
     bool addPlayer(uint32_t playerid) override;
     void startGame(std::vector<U32vec> deck) override;
-    void endGame() override;
+    //void endGame() override;
 private:
     static constexpr short MaxPlayerNum=2;
     int getWinnerScore();
