@@ -12,7 +12,7 @@
 class ArenaController
 {
 public:
-    ArenaController(AccountSystem * acc) : account(acc) { arena = Arena(); }
+    ArenaController(AccountSystem * acc);
     nlohmann::json run(nlohmann::json json);
 private:
     AccountSystem * account;

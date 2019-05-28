@@ -6,6 +6,11 @@
 #include "ArenaController.h"
 #include "Arena.h"
 
+
+ArenaController::ArenaController(AccountSystem *acc) : account(acc)
+{
+    arena = Arena(acc);
+}
 nlohmann::json ArenaController::run(nlohmann::json json)
 {
     nlohmann::json result;
