@@ -2,6 +2,7 @@
 #define CARDS_H_AMAGOOD
 
 #include <string>
+#include <desk.h>
 
 class Card
 {
@@ -30,7 +31,7 @@ public:
     std::string getName();
     std::string getAttributes();
 
-	virtual void use()=0;
+	virtual void use(Desk *d,Card *target)=0;
     virtual ~Card(){};
 
 };
@@ -66,14 +67,28 @@ class Hero : public Minion
 {
 public:
 	Hero();
-	void use(){};
+    void use(Desk *d,Card *target){};
 };
 
 class Card001 final : public Minion
 {
 public:
 	Card001();
-	void use(){};
+    void use(Desk *d,Card *target){};
+};
+
+class Card002 final : public Minion
+{
+public:
+    Card002();
+    void use(Desk *d,Card *target);
+};
+
+class Card003 final : public Minion
+{
+public:
+    Card003();
+    void use(Desk *d,Card *target);
 };
 #endif // CARDS_H_AMAGOOD
 

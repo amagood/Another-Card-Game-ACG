@@ -1,6 +1,10 @@
+#include <cstdlib>
+#include <ctime>
 #include "cards.h"
-
+#include <desk.h>
 #include "CardInfoSystem.h"
+#include <Deck.h>
+#include <vector>
 
 constexpr int maxHp = 30;
 
@@ -110,9 +114,43 @@ Hero::Hero()
 
 Card001::Card001()
 {
-	setId(1);
-	setAtk(1);
-	setHp(2);
-	setMp(1);
-	setName("戰士學徒");
+    setId(1);
+    setAtk(1);
+    setHp(2);
+    setMp(1);
+    setName("戰士學徒");
+}
+Card002::Card002()
+{
+    setId(2);
+    setAtk(6);
+    setHp(6);
+    setMp(10);
+    setName("神");
+    setAttributes("對隨機目標造成一點傷害，次數等同於攻擊力");
+}
+Card002::use(Desk *d, Card *card)
+{
+    int targetPlayer = (1+(d->getPlayerId()))%2;
+    vector<Card *> deck=d->getPlayerDeck().at(targetPlayer).getDeck();
+    atkIncrease(d.getGodHpAtk());
+    hpIncrease(d.getGodHpAtk());
+
+    for(int i=0;i<atk;i++)
+    {
+        deck.at(rand()%deck.size()).hpIncrease(-1).
+    }
+}
+Card003::Card003()
+{
+    setId(3);
+    setAtk(2);
+    setHp(3);
+    setMp(2);
+    setName("招邪者");
+    setAttributes("你的【神】獲得+1/+1  只要他不在場上");
+}
+Card003::use(Desk *d,Card *card)
+{
+    d->setGodHpAtk(d.getGodHpAtk()+1);
 }
