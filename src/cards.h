@@ -10,6 +10,7 @@ protected:
     int atk,hp,mp,id;
 	std::string name;
     std::string attrib;
+    Desk *holdDesk;
 public:
     Card() = default;
     Card(int attack, int healthPoint,int mannaRequired, int ID, std::string Name);
@@ -41,7 +42,8 @@ class Weapon : public Card
 public:
 	Weapon();
     void usedOnce();
-    virtual ~Weapon(){};
+    void use(Desk *d,Card *target);
+    virtual ~Weapon();
 };
 
 class Spell : public Card
@@ -89,6 +91,13 @@ class Card003 final : public Minion
 public:
     Card003();
     void use(Desk *d,Card *target);
+};
+
+/////////////////weapons/////////////////
+class Card201 final : public Weapon
+{
+public:
+    Card201();
 };
 #endif // CARDS_H_AMAGOOD
 

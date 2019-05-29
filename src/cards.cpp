@@ -78,12 +78,24 @@ std::string Card::getName()
 
 Weapon::Weapon()
 {
-	
-}
 
+}
+Weapon::use(Desk *d,Card *target)
+{
+    holdDesk=d;
+    int playerId=d->getPlayerId();
+    std::vector<Card *> deck=d->getPlayerDeck().at(playerId).getDeck();
+    deck->at(0).atkIncrease(atk);
+}
 void Weapon::usedOnce()
 {
     hpIncrease(-1);
+}
+Weapon :: ~Weapon()
+{
+    int playerId=holdDesk->getPlayerId();
+    std::vector<Card *> deck=holdDesk->getPlayerDeck().at(playerId).getDeck();
+    deck->at(0).atkIncrease(atk*(-1));
 }
 Spell::Spell()
 {
@@ -103,6 +115,7 @@ void Minion::attack(Minion &target)
 
 ////////////////////////Cards ///////////////
 
+////////////////////////minions//////////////////
 Hero::Hero()
 {
 	setId(0);
@@ -132,13 +145,13 @@ Card002::Card002()
 Card002::use(Desk *d, Card *card)
 {
     int targetPlayer = (1+(d->getPlayerId()))%2;
-    vector<Card *> deck=d->getPlayerDeck().at(targetPlayer).getDeck();
-    atkIncrease(d.getGodHpAtk());
-    hpIncrease(d.getGodHpAtk());
+    std::vector<Card *> deck=d->getPlayerDeck().at(targetPlayer).getDeck();
+    atkIncrease(d->getGodHpAtk());
+    hpIncrease(d->getGodHpAtk());
 
     for(int i=0;i<atk;i++)
     {
-        deck.at(rand()%deck.size()).hpIncrease(-1).
+        deck->at(rand()%deck.size()).hpIncrease(-1).
     }
 }
 Card003::Card003()
@@ -153,4 +166,16 @@ Card003::Card003()
 Card003::use(Desk *d,Card *card)
 {
     d->setGodHpAtk(d.getGodHpAtk()+1);
+}
+
+
+
+//////////////////////////////weapons///////////////////
+Card201 :: Card201()
+{
+    setId(201);
+    setAtk(1);
+    setHp(2);
+    setMp(1);
+    setName("小木棒");
 }
