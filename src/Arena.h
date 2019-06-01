@@ -18,7 +18,6 @@ class Arena
 public:
     Arena(AccountSystem* account);
 
-    Arena();
 
     ~Arena();
     uint32_t createRoom(uint32_t playerID, RoomMode mode, const std::string& name, const std::string& password="");
@@ -44,5 +43,4 @@ private:
     std::string _getRandomString(RoomMode mode);
     std::string _getNonRepeatRandomRoomName(RoomMode mode);
 };
-const char* Arena::_arenaActionString[] = {"getRoomList", "getRoomInfo", "createRoom", "enterRoom", "enterRoomRandom", "inviteFriend", "startGame"};
 #endif //ANOTHER_CARD_GAME_ACG_ARENA_H

@@ -7,9 +7,9 @@
 #include "Arena.h"
 
 
-ArenaController::ArenaController(AccountSystem *acc) : account(acc)
+ArenaController::ArenaController(AccountSystem *acc) : account(acc) , arena(Arena(acc))
 {
-    arena = Arena(acc);
+
 }
 nlohmann::json ArenaController::run(nlohmann::json json)
 {

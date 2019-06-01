@@ -8,22 +8,18 @@
 #include <vector>
 #include "cards.h"
 #include "Deck.h"
-struct plate
-{
-    std::vector<Card *> BF[2],hand[2]; //battlefield
-    int playerHp[2];
-    bool whosTurn;
-};
+#include <plate.h>
+
 
 class NDesk{ //執行指令
 public:
     NDesk();//constructor(....)
 
-    void playerMovement(plate &state, Deck &deck, std::string action, Card *Main, Card *target = NULL);
+    void playerMovement(Plate &state, Deck &deck, std::string action, Card *Main, Card *target = NULL);
 
-    void refreshBF(plate &state);
+    void refreshBF(Plate &state);
 
-    void draw(plate &state, Deck &deck);
+    void draw(Plate &state, Deck &deck);
 private:
 
     void use(std::vector<Card *> Cards[2],bool t);

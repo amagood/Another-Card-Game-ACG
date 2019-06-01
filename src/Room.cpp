@@ -8,7 +8,10 @@
 
 #include <nlohmann/json.hpp>
 
-#include "Router.h"
+
+
+const char* Room::_roomModeString[] = {"SingleRoom", "OneOnOneRoom", "LadderRoom"};
+
 
 Room::Room(uint32_t id, const std::string& name, const std::string& password, uint32_t playerid) : _ID(id), _name(name), _password(password)
 {

@@ -23,7 +23,7 @@ private:
     nlohmann::json package();
     nlohmann::json Card2Json(Card *temp);
     NDesk desk_;
-    plate plate_;
+    Plate plate_;
     Deck PD[2];
 };
 #endif //ANOTHER_CARD_GAME_ACG_DESKCONTROLLER_H

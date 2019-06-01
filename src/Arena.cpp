@@ -10,6 +10,9 @@
 #include "Room.h"
 #include "Arena.h"
 
+const char* Arena::_arenaActionString[] = {"getRoomList", "getRoomInfo", "createRoom", "enterRoom", "enterRoomRandom", "inviteFriend", "startGame"};
+
+
 
 Arena::Arena(AccountSystem* account) : _account(account)
 {

@@ -2,7 +2,7 @@
 #define CARDS_H_AMAGOOD
 
 #include <string>
-#include <desk.h>
+#include <plate.h>
 
 /**
      struct plate

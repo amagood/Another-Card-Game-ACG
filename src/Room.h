@@ -45,7 +45,6 @@ protected:
 private:
     static const char* _roomModeString[];
 };
-const char* Room::_roomModeString[] = {"SingleRoom", "OneOnOneRoom", "LadderRoom"};
 
 
 class OneOnOneRoom : public Room
