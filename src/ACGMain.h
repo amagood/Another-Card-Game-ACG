@@ -11,7 +11,7 @@ class Router;
 class ACGMain {
 private:
     Router *router;;
-    bool isEnd = false;
+    bool isNotEnd = true;
 public:
     ACGMain();
     void run();

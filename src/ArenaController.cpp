@@ -5,13 +5,17 @@
 #include "AccountSystem.h"
 #include "ArenaController.h"
 #include "Arena.h"
+#include "debug.h"
 
-
-nlohmann::json ArenaController::run(nlohmann::json json)
+nlohmann::json ArenaController::run(nlohmann::json j)
 {
+    error(123123123);
+
+    nlohmann::json json = j["data"];
     nlohmann::json data;
     nlohmann::json result;
     RoomMode mode = (RoomMode)json["roomMode"];
+    error(arena.getAction(json["action"]));
     switch(arena.getAction(json["action"]))
     {
         case GET_ROOMLIST:{
@@ -20,6 +24,7 @@ nlohmann::json ArenaController::run(nlohmann::json json)
             arena.getRoomList(mode, idList, nameList);
             data["idList"] = idList;
             data["nameList"] = nameList;
+            error("I am in")
         }break;
         case GET_ROOMINFO:{
             std::string name;

@@ -6,14 +6,17 @@
 #include "Reader.h"
 #include "Router.h"
 #include "Printer.h"
-
+#include <iostream>
 void ACGMain::run() {
 
-    while(isEnd) {
+    while(isNotEnd) {
         nlohmann::json json = Reader::read();
         if (json.empty()) {
+
+            std::cout << "123" << std::endl;
             continue;
         } else {
+            std::cout << "eat successful" << std::endl;
             nlohmann::json out_json = router->run(json);
             Printer::print(json);
         }

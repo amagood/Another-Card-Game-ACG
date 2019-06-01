@@ -4,7 +4,7 @@
 
 #include <iostream>
 #include "Reader.h"
-
+#include "debug.h"
 nlohmann::json Reader::read()
 {
 
@@ -14,6 +14,7 @@ nlohmann::json Reader::read()
         return nlohmann::json::parse(line);
     }
     catch(nlohmann::json::parse_error &e) {
+        error("parse error");
         return nlohmann::json();
     }
 }
