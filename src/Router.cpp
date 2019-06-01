@@ -16,15 +16,18 @@ Router::Router() {
     accountSystemController = new AccountSystemController(accountSystem);
     arenaController = new ArenaController(accountSystem);
 }
-
+void Router::end() {
+    accountSystem->saveAccounts();
+}
 nlohmann::json Router::run(nlohmann::json &j) {
     if (j["data"]["eventType"] == "accountSystem") {
         return accountSystemController->run(j);
     } else if (j["data"]["eventType"] == "room"){
-        error("goto arena")
-        return arenaController->run(j);
+        error("goto arena");
+        j["data"] = arenaController->run(j["data"])["data"];
+        return j;
     } else {
-        error("empty")
+        error("empty");
         return nlohmann::json();
     }
 }

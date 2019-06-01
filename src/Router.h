@@ -15,6 +15,7 @@ class Router {
 public:
     Router();
     nlohmann::json run(nlohmann::json& j);
+    void end();
 private:
     AccountSystemController * accountSystemController;
     ArenaController * arenaController;

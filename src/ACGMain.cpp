@@ -7,20 +7,27 @@
 #include "Router.h"
 #include "Printer.h"
 #include <iostream>
+#include "debug.h"
 void ACGMain::run() {
 
     while(isNotEnd) {
         nlohmann::json json = Reader::read();
-        if (json.empty()) {
 
-            std::cout << "123" << std::endl;
+        if (json.empty()) {
+            error("json is empty");
             continue;
         } else {
-            std::cout << "eat successful" << std::endl;
+            error("eat successful");
+            if (json["data"]["eventType"] == "ENDING") {
+                isNotEnd = false;
+                router->end();
+                break;
+            }
             nlohmann::json out_json = router->run(json);
             Printer::print(out_json);
         }
     }
+
 }
 ACGMain::ACGMain() {
     router = new Router();
