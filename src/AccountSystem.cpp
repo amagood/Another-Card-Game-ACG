@@ -26,7 +26,9 @@ void AccountSystem::loadAccounts() {
     std::ifstream file("data/accountlist.json");
     nlohmann::json json_;
     file >> json_;
+    lastId = json_["accountIdLast"];
     std::vector<uint32_t> userIds = json_["accountlist"];
+
     for ( uint32_t userId :userIds ) {
         loadAccount(userId);
     }
@@ -40,10 +42,20 @@ void AccountSystem::loadAccount(uint32_t userId) {
     account_vector.push_back(Account(json_));
 }
 void AccountSystem::saveAccounts() {
+    std::ofstream file("data/accountlist.json");
+    nlohmann::json json_({});
+
+
+    json_["accountIdLast"] = lastId;
+    std::vector<uint32_t> uids;
     for (Account &account : account_vector) {
+        uids.push_back(account.getUniqueNumber());
         nlohmann::json j = account.toJson();
         saveAccount(account.getUniqueNumber(), j);
     }
+    json_["accountlist"] = uids;
+    file << json_;
+
 }
 
 bool Account::verify(std::string password) {
@@ -72,7 +84,8 @@ bool AccountSystem::createAccount(std::string &id, std::string &password) {
     if (this->exist(id)) {
         return false;
     }
-    this->account_vector.emplace_back(Account(id, password));
+    this->account_vector.emplace_back(Account(id, password, lastId));
+    lastId ++;
     return true;
 }
 
@@ -129,9 +142,9 @@ bool AccountSystem::modifyMoney(uint32_t user_id_, int money) {
 void AccountSystem::saveAccount(int userId, nlohmann::json j) {
     std::string dir = "data/account/";
     std::string filename = std::to_string(userId) + ".json";
+    error(j);
     std::ofstream file(dir + filename);
-    nlohmann::json json_;
-    file << json_;
+    file << j;
 }
 int AccountSystem::getMoney(std::string &id) {
     Account *account = get_account(id);
@@ -142,11 +155,6 @@ int AccountSystem::getMoney(std::string &id) {
     }
 }
 
-std::string AccountSystem::getAccountDeviceId(uint32_t userId) {
-    Account *account = get_account(userId);
-    return account->getDeviceId();
-
-}
 bool AccountSystem::logout(uint32_t user_id_) {
     Account *account = get_account(user_id_);
     if(account->isOnline()) {
@@ -171,4 +179,16 @@ bool AccountSystem::addCard(uint32_t userId, uint32_t cardId) {
 void AccountSystem::load() {
     // load cardlist
 }
+
+uint32_t AccountSystem::getUUId(std::string &account_name) {
+    Account * a = get_account(account_name);
+
+    return a->getUUID();
+}
+
+bool AccountSystem::uuidExist(uint32_t i) {
+    Account * a = get_account(i);
+    return a != nullptr;
+}
+
 #undef SLEEP

@@ -3,7 +3,7 @@
 //
 
 #include "AccountSystemController.h"
-
+#include "debug.h"
 #include "DrawCardSystem.h"
 #include "ACGType.h"
 U32vec paramsToU32vec(nlohmann::json &j) {
@@ -22,38 +22,48 @@ StrVec paramsToStrVec(nlohmann::json &j) {
 }
 
 nlohmann::json AccountSystemController::run(nlohmann::json &j) {
-
+    error("AccountSystemController Run");
     uint32_t userID = j["userId"];
     nlohmann::json data = j["data"];
     std::string func = data["function"];
-    data["returnValue"] = nlohmann::json();
+    data["returnValue"] = nlohmann::json({});
     bool success = false;
 
     if(func == "getAccountName") {
+        error("AccountSystemController getAccountName");
         U32vec params = paramsToU32vec(j);
         StrVec names;
         for (uint32_t i : params) {
-            data["returnValue"][std::to_string(i)] = accountSystem->getAccountName(i);
+            if (accountSystem->uuidExist(i)) {
+                data["returnValue"][std::to_string(i)] = accountSystem->getAccountName(i);
+                success = true;
+            }
         }
-        success = true;
+
     } else if(func == "createAccount") {
+        error("AccountSystemController create account");
         StrVec params = paramsToStrVec(j);
         success = accountSystem->createAccount(params[0], params[1]);
     } else if(func == "login") {
+        error("AccountSystemController login");
         StrVec params = paramsToStrVec(j);
         success = accountSystem->login(params[0], params[1]);
+    } else if (func == "logout") {
+        error("AccountSystemController log out");
+        U32vec params = paramsToU32vec(j);
+        success = accountSystem->logout(params[0]);
     } else if (func == "getAccountInfo") {
+        error("AccountSystemController get info");
         // TODO
         U32vec params = paramsToU32vec(j);
         accountSystem->getAccountInfo(params[0]);
         success = true;
-    } else if (func == "logout") {
-        U32vec params = paramsToU32vec(j);
-        success = accountSystem->logout(params[0]);
     } else if (func == "payMoney") {
+        error("AccountSystemController pay money");
         U32vec params = paramsToU32vec(j);
         success = accountSystem->modifyMoney(userID, params[0]);
     } else if (func == "drawCards") {
+        error("AccountSystemController draw cards");
         U32vec params = paramsToU32vec(j);
         uint32_t times = params[0] / 100;
         U32vec cardlist;
@@ -80,6 +90,7 @@ nlohmann::json AccountSystemController::run(nlohmann::json &j) {
         success = true;
 
     } else if (func == "getCards") {
+        error("AccountSystemController getCards");
         U32vec params = paramsToU32vec(j);
         U32vec cards = accountSystem->getCards(params[0]);
         U32vec deck = accountSystem->getDeck(params[0]);
@@ -89,17 +100,20 @@ nlohmann::json AccountSystemController::run(nlohmann::json &j) {
         data["returnValue"]["cards"] = cards;
         success = true;
     } else if (func == "modifyCards") {
+        error("AccountSystemController modify cards");
         U32vec params = paramsToU32vec(j);
         U32vec cards = data["paramsMap"]["cards"];
         U32vec deck = data["paramsMap"]["deck"];
         accountSystem->modifyCards(params[0], cards, deck);
     }
-    j["data"] = data;
     if(success) {
         data["returnValue"]["0"] = "1";
     } else {
         data["returnValue"]["0"] = "0";
     }
+
+    j["data"] = data;
+
     return j;
 }
 

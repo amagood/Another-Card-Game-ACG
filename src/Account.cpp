@@ -4,9 +4,10 @@
 
 #include "Account.h"
 
-Account::Account(std::string &id, std::string &password) {
+Account::Account(std::string &id, std::string &password, uint32_t uuid) {
     id_ = id;
     password_ = password;
+    user_id_ = uuid;
 }
 Account::Account(nlohmann::json j) {
     user_id_ = j["userId"];

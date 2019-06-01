@@ -14,13 +14,14 @@
 #include <nlohmann/json.hpp>
 
 #include "ACGType.h"
-
+#include "debug.h"
 class AccountSystem {
 public:
-
+    uint32_t getUUId(std::string &account_name);
     AccountSystem();
     bool createAccount(std::string &id, std::string &password);
     bool exist(std::string &account_name);
+    bool uuidExist(uint32_t i);
     bool login(std::string &account_name, std::string &password);
     bool logout(uint32_t user_id_);
     bool logout(std::string &account_name);
@@ -46,6 +47,7 @@ public:
     }
     bool addCard(uint32_t userId, uint32_t cardId);
     std::string getAccountName(uint32_t user_id_){
+        error("get Account Name");
         return get_account(user_id_)->getName();
     };
 
@@ -54,12 +56,12 @@ public:
         return get_account(userId)->getDeck();
     }
 
-    std::string getAccountDeviceId(uint32_t uint32);
 
 private:
     void load();
     void loadAccount(uint32_t userId);
     std::vector<Account> account_vector;
+    uint32_t lastId;
     Account* get_account(std::string id);
     Account* get_account(uint32_t u_num);
 

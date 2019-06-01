@@ -13,7 +13,7 @@
 
 class Account{
 public:
-    Account(std::string &id, std::string &password);
+    Account(std::string &id, std::string &password, uint32_t uuid);
     Account(nlohmann::json json);
 
     bool isSame(Account &another);
@@ -36,6 +36,7 @@ public:
     void left();
     void login();
     bool isOnline();
+    uint32_t getUUID() {return user_id_;}
 private:
     uint32_t user_id_ = 0; // TODO make it unique, readonly
     int money_ = 0;
