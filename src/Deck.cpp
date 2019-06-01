@@ -32,7 +32,7 @@ vector<Card *> Deck::getDeck()
 }
 //取得整副牌
 
-Card *Deck::popDeck(int index = -1)
+Card *Deck::popDeck(int index)
 {
     if (index == -1)
     {

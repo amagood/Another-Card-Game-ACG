@@ -80,13 +80,13 @@ Weapon::Weapon()
 {
 
 }
-Weapon::use(Plate *p,Card *target)
+void Weapon::use(Plate *p,Card *target)
 {
 
     int playerId=p->whosTurn?1:0 ;
 
-    std::vector<Card *> deck=p->hand.at(playerId).getDeck();
-    deck->at(0).atkIncrease(atk);
+    std::vector<Card *> deck=p->hand[playerId];
+    deck.at(0)->atkIncrease(atk);
 }
 void Weapon::usedOnce()
 {
@@ -94,9 +94,12 @@ void Weapon::usedOnce()
 }
 Weapon :: ~Weapon()
 {
+    //FIXME deleted holdDeck
+    /*
     int playerId=holdDesk->getPlayerId();
     std::vector<Card *> deck=holdDesk->getPlayerDeck().at(playerId).getDeck();
     deck->at(0).atkIncrease(atk*(-1));
+    */
 }
 Spell::Spell()
 {
@@ -143,16 +146,16 @@ Card002::Card002()
     setName("神");
     setAttributes("對隨機目標造成一點傷害，次數等同於攻擊力");
 }
-Card002::use(Plate *p, Card *card)
+void Card002::use(Plate *p, Card *card)
 {
     int targetPlayer = (1+(p->whosTurn?1:0))%2;
-    std::vector<Card *> deck=p->hand.at(targetPlayer).getDeck();
-    atkIncrease(p->getGodHpAtk);
-    hpIncrease(p->getGodHpAtk);
+    std::vector<Card *> deck=p->hand[targetPlayer];
+    atkIncrease(p->GodHpAtk);
+    hpIncrease(p->GodHpAtk);
 
     for(int i=0;i<atk;i++)
     {
-        deck->at(rand()%deck.size()).hpIncrease(-1).
+        deck.at(rand()%deck.size())->hpIncrease(-1);
     }
 }
 Card003::Card003()
@@ -164,9 +167,9 @@ Card003::Card003()
     setName("招邪者");
     setAttributes("你的【神】獲得+1/+1  只要他不在場上");
 }
-Card003::use(Plate *p,Card *card)
+void Card003::use(Plate *p,Card *card)
 {
-    p->setGodHpAtk+=1;
+    p->GodHpAtk+=1;
 }
 
 

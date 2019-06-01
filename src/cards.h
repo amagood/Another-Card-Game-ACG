@@ -52,7 +52,7 @@ class Weapon : public Card
 public:
 	Weapon();
     void usedOnce();
-    void use(Plate *p,Card *target);
+    virtual void use(Plate *p,Card *target);
     virtual ~Weapon();
 };
 

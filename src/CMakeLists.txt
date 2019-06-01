@@ -11,5 +11,11 @@ add_library(ACGMain ACGMain.cpp
         ArenaController.cpp Arena.cpp Room.cpp
         #GameSystem
         CardFactory.cpp GameBuildingSystem.cpp
+        DeskController.cpp
+        cards.cpp
+        #desk.cpp
+        NDesk.cpp
+        Deck.cpp
+
         )
 

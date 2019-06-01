@@ -19,7 +19,7 @@ public:
     std::vector<Card *> getDeck();
     //取得整副牌
 
-    Card *popDeck(int index);
+    Card *popDeck(int index=-1);
     //-1 抽一張牌, others just pop by index
 
     Card *getIndexCards(int num, int mode, std::type_info sieve);

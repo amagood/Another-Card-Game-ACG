@@ -67,8 +67,8 @@ nlohmann::json DeskController::getJson(nlohmann::json json_){
 void DeskController::initPlate(){
     //起手五張
     for(int i=0;i<5;i++){
-       plate_.hand[0].push_back(PD[0].popDeck());
-       plate_.hand[1].push_back(PD[1].popDeck());
+       plate_.hand[0].push_back(PD[0].popDeck(-1));
+       plate_.hand[1].push_back(PD[1].popDeck(-1));
     }
     //set player HP
     plate_.playerHp[0] = 30;

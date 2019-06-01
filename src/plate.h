@@ -13,6 +13,7 @@ struct Plate
     std::vector<Card *> BF[2],hand[2]; //battlefield
     int playerHp[2];
     bool whosTurn;
+    int GodHpAtk;
 };
 
 #endif //ANOTHER_CARD_GAME_ACG_PLATE_H
