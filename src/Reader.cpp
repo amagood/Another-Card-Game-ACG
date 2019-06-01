@@ -13,7 +13,7 @@ nlohmann::json Reader::read()
     try {
         return nlohmann::json::parse(line);
     }
-    catch(nlohmann::json::parse_error &e) {
+    catch(nlohmann::json::parse_error &) {
         error("parse error");
         return nlohmann::json();
     }

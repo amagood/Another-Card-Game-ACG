@@ -3,12 +3,7 @@ cmake_minimum_required(VERSION 3.13)
 project(Another-Card-Game-ACG)
 set(CMAKE_CXX_STANDARD 17)
 set(DO_TEST FALSE)
-set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -pthread -std=c++17 -DDebug")
-
-if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
-    # using GNU
-    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -pthread") # for using std::thread in gcc
-endif()
+set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DDebug")
 
 include_directories(lib)
 include_directories(src)
@@ -33,7 +28,7 @@ endif(DO_TEST)
 file(COPY data DESTINATION .)
 file(COPY test/data DESTINATION test)
 file(COPY test/data/accountlist.json DESTINATION test/accountlist.json)
-file(COPY test/data/cardlist.json DESTINATION test/xardlist.json)
+file(COPY test/data/cardlist.json DESTINATION test/cardlist.json)
 
 add_executable(main main.cpp)
 
