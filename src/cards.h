@@ -4,23 +4,13 @@
 #include <string>
 #include <desk.h>
 
-/**
-     struct plate
-    {
-        std::vector<Card *> BF[2],hand[2]; //battlefield
-        int playerHp[2];
-        bool whosTurn;
-    };
- */
-
-
 class Card
 {
 protected:
     int atk,hp,mp,id;
 	std::string name;
     std::string attrib;
-    //Desk *holdDesk;
+    Desk *holdDesk;
 public:
     Card() = default;
     Card(int attack, int healthPoint,int mannaRequired, int ID, std::string Name);
@@ -42,7 +32,7 @@ public:
     std::string getName();
     std::string getAttributes();
 
-	virtual void use(Plate *p,Card *target)=0;
+	virtual void use(Desk *d,Card *target)=0;
     virtual ~Card(){};
 
 };
@@ -52,7 +42,7 @@ class Weapon : public Card
 public:
 	Weapon();
     void usedOnce();
-    void use(Plate *p,Card *target);
+    void use(Desk *d,Card *target);
     virtual ~Weapon();
 };
 
@@ -79,28 +69,28 @@ class Hero : public Minion
 {
 public:
 	Hero();
-    void use(Plate *p,Card *target){};
+    void use(Desk *d,Card *target){};
 };
 
 class Card001 final : public Minion
 {
 public:
 	Card001();
-    void use(Plate *p,Card *target){};
+    void use(Desk *d,Card *target){};
 };
 
 class Card002 final : public Minion
 {
 public:
     Card002();
-    void use(Plate *p,Card *target);
+    void use(Desk *d,Card *target);
 };
 
 class Card003 final : public Minion
 {
 public:
     Card003();
-    void use(Plate *p,Card *target);
+    void use(Desk *d,Card *target);
 };
 
 /////////////////weapons/////////////////
