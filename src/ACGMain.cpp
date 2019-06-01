@@ -18,7 +18,7 @@ void ACGMain::run() {
         } else {
             std::cout << "eat successful" << std::endl;
             nlohmann::json out_json = router->run(json);
-            Printer::print(json);
+            Printer::print(out_json);
         }
     }
 }
