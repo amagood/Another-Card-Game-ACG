@@ -1,6 +1,10 @@
+#include <cstdlib>
+#include <ctime>
 #include "cards.h"
-
+#include <desk.h>
 #include "CardInfoSystem.h"
+#include <Deck.h>
+#include <vector>
 
 constexpr int maxHp = 30;
 
@@ -74,12 +78,25 @@ std::string Card::getName()
 
 Weapon::Weapon()
 {
-	
-}
 
+}
+Weapon::use(Plate *p,Card *target)
+{
+
+    int playerId=p->whosTurn?1:0 ;
+
+    std::vector<Card *> deck=p->hand.at(playerId).getDeck();
+    deck->at(0).atkIncrease(atk);
+}
 void Weapon::usedOnce()
 {
     hpIncrease(-1);
+}
+Weapon :: ~Weapon()
+{
+    int playerId=holdDesk->getPlayerId();
+    std::vector<Card *> deck=holdDesk->getPlayerDeck().at(playerId).getDeck();
+    deck->at(0).atkIncrease(atk*(-1));
 }
 Spell::Spell()
 {
@@ -99,6 +116,7 @@ void Minion::attack(Minion &target)
 
 ////////////////////////Cards ///////////////
 
+////////////////////////minions//////////////////
 Hero::Hero()
 {
 	setId(0);
@@ -110,9 +128,55 @@ Hero::Hero()
 
 Card001::Card001()
 {
-	setId(1);
-	setAtk(1);
-	setHp(2);
-	setMp(1);
-	setName("戰士學徒");
+    setId(1);
+    setAtk(1);
+    setHp(2);
+    setMp(1);
+    setName("戰士學徒");
+}
+Card002::Card002()
+{
+    setId(2);
+    setAtk(6);
+    setHp(6);
+    setMp(10);
+    setName("神");
+    setAttributes("對隨機目標造成一點傷害，次數等同於攻擊力");
+}
+Card002::use(Plate *p, Card *card)
+{
+    int targetPlayer = (1+(p->whosTurn?1:0))%2;
+    std::vector<Card *> deck=p->hand.at(targetPlayer).getDeck();
+    atkIncrease(p->getGodHpAtk);
+    hpIncrease(p->getGodHpAtk);
+
+    for(int i=0;i<atk;i++)
+    {
+        deck->at(rand()%deck.size()).hpIncrease(-1).
+    }
+}
+Card003::Card003()
+{
+    setId(3);
+    setAtk(2);
+    setHp(3);
+    setMp(2);
+    setName("招邪者");
+    setAttributes("你的【神】獲得+1/+1  只要他不在場上");
+}
+Card003::use(Plate *p,Card *card)
+{
+    p->setGodHpAtk+=1;
+}
+
+
+
+//////////////////////////////weapons///////////////////
+Card201 :: Card201()
+{
+    setId(201);
+    setAtk(1);
+    setHp(2);
+    setMp(1);
+    setName("小木棒");
 }
