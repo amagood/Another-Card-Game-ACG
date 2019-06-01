@@ -34,7 +34,6 @@ private:
     std::map<uint32_t , InfoCard> infoCards;
     U32vec cardlist;
     void load();
-    void show();
 
 };
 

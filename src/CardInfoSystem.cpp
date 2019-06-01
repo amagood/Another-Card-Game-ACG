@@ -24,8 +24,6 @@ void CardInfoSystem::load() {
     for (uint32_t i : json_["cardlist"]) {
         cardlist.push_back(i);
     }
-    std::cout << cardlist.size();
-
 
     for (uint32_t i : cardlist) {
         InfoCard card;
@@ -38,12 +36,6 @@ void CardInfoSystem::load() {
         card.name= json_[id_]["name"];
         card.attribute = json_[id_]["attribute"];
         infoCards.insert(std::make_pair(card.id, card));
-    }
-}
-
-void CardInfoSystem::show() {
-    for(auto &i : infoCards) {
-        std::cout << i.second.name;
     }
 }
 

@@ -7,14 +7,13 @@
 #include "Arena.h"
 #include "debug.h"
 
-nlohmann::json ArenaController::run(nlohmann::json &j)
+nlohmann::json ArenaController::run(nlohmann::json &json)
 {
-    error(123123123);
+    error("ArenaController");
 
-    nlohmann::json json = j["data"];
     nlohmann::json result = nlohmann::json();
     RoomMode mode = (RoomMode)json["roomMode"];
-    if(json["eventType"]=="room")
+    if (json["eventType"]=="room")
     {
         nlohmann::json data = nlohmann::json();
         error(arena.getAction(json["action"]));
@@ -26,7 +25,7 @@ nlohmann::json ArenaController::run(nlohmann::json &j)
                 arena.getRoomList(mode, idList, nameList);
                 data["idList"] = idList;
                 data["nameList"] = nameList;
-                error("I am in")
+                error("GET_ROOMLIST");
             }break;
             case GET_ROOMINFO:{
                 std::string name;
@@ -35,28 +34,34 @@ nlohmann::json ArenaController::run(nlohmann::json &j)
                 data["roomID"] = json["roomID"];
                 data["roomName"] = name;
                 data["playerId"] = player;
+                error("GET_ROOMINFO");
             }break;
             case CREATE_ROOM:{
                 uint32_t roomid = arena.createRoom(json["userId"], mode, json["name"], json["password"]);
                 data["userId"] = json["userId"];
                 data["roomId"] = roomid==-1?0:roomid;
                 data["roomName"] = json["name"];
+                error("CREATE_ROOM");
             }break;
             case ENTER_ROOM:{
                 bool success = arena.enterRoom(json["userId"], mode, json["name"], json["password"]);
                 data["result"] = (int)success;
+                error("ENTER_ROOM");
             }break;
             case ENTER_ROOM_RANDOM:{
                 uint32_t roomid = arena.enterRoomRandom(json["userId"], mode);
                 data["userId"] = json["userId"];
                 data["roomId"] = roomid;
+                error("ENTER_ROOM_RANDOM");
             }break;
             case INVITE_FRIEND:{
                 bool success = arena.inviteFriend(json["userId"], mode, json["roomID"]);
                 data["result"] = (int)success;
+                error("INVITE_FRIEND");
             }break;
             case START_GAME:{
                 arena.startGame(mode, json["roomID"]);
+                error("START_GAME");
             }break;
             default:
                 break;
@@ -65,7 +70,8 @@ nlohmann::json ArenaController::run(nlohmann::json &j)
         data["roomMode"] = json["roomMode"];
         data["action"] = json["action"];
         result["data"] = data;
-    } else
+    } else {
         result = arena.controlDesk(mode, json["deskID"], json);
+    }
     return result;
 }
