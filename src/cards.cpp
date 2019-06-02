@@ -8,7 +8,7 @@
 
 constexpr int maxHp = 30;
 
-Card::Card(int attack,int healthPoint,int mannaRequired,int ID, std::string &Name)
+Card::Card(int attack,int healthPoint,int mannaRequired,int ID, std::string Name)
 {
     atk=attack;
     hp=healthPoint;
@@ -28,7 +28,7 @@ void Card::setMp(int mannaRequired)
 {
     mp=mannaRequired;
 }
-void Card::setAttributes(std::string &s)
+void Card::setAttributes(std::string s)
 {
 	attrib=s;
 }
@@ -36,7 +36,7 @@ void Card::setId(int num)
 {
 	id=num;
 }
-void Card::setName(std::string &s)
+void Card::setName(std::string s)
 {
 	name=s;
 }
@@ -126,7 +126,7 @@ Hero::Hero()
 	setAtk(0);
 	setHp(maxHp);
 	setMp(0);
-	setName("­^¶¯");
+	setName("ï¿½^ï¿½ï¿½");
 }
 
 Card001::Card001()
@@ -135,7 +135,7 @@ Card001::Card001()
     setAtk(1);
     setHp(2);
     setMp(1);
-    setName("¾Ô¤h¾Ç®{");
+    setName("ï¿½Ô¤hï¿½Ç®{");
 }
 Card002::Card002()
 {
@@ -143,8 +143,8 @@ Card002::Card002()
     setAtk(6);
     setHp(6);
     setMp(10);
-    setName("¯«");
-    setAttributes("¹ïÀH¾÷¥Ø¼Ð³y¦¨¤@ÂI¶Ë®`¡A¦¸¼Æµ¥¦P©ó§ðÀ»¤O");
+    setName("ï¿½ï¿½");
+    setAttributes("ï¿½ï¿½ï¿½Hï¿½ï¿½ï¿½Ø¼Ð³yï¿½ï¿½ï¿½@ï¿½Iï¿½Ë®`ï¿½Aï¿½ï¿½ï¿½Æµï¿½ï¿½Pï¿½ï¿½ï¿½ï¿½ï¿½ï¿½O");
 }
 void Card002::use(Plate *p, Card *card)
 {
@@ -164,8 +164,8 @@ Card003::Card003()
     setAtk(2);
     setHp(3);
     setMp(2);
-    setName("©Û¨¸ªÌ");
-    setAttributes("§Aªº¡i¯«¡jÀò±o+1/+1  ¥u­n¥L¤£¦b³õ¤W");
+    setName("ï¿½Û¨ï¿½ï¿½ï¿½");
+    setAttributes("ï¿½Aï¿½ï¿½ï¿½iï¿½ï¿½ï¿½jï¿½ï¿½o+1/+1  ï¿½uï¿½nï¿½Lï¿½ï¿½ï¿½bï¿½ï¿½ï¿½W");
 }
 void Card003::use(Plate *p,Card *card)
 {
@@ -181,5 +181,5 @@ Card201 :: Card201()
     setAtk(1);
     setHp(2);
     setMp(1);
-    setName("¤p¤ì´Î");
+    setName("ï¿½pï¿½ï¿½ï¿½");
 }
