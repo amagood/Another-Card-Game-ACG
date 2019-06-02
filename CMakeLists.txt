@@ -21,16 +21,17 @@ if (DO_TEST)
     set(TEST_FILES "test_main.cpp")
     add_executable(test_main test/test_main.cpp)
     target_link_libraries(test_main gtest gtest_main)
+    file(COPY test/data DESTINATION test)
+    file(COPY test/data/accountlist.json DESTINATION test/accountlist.json)
+    file(COPY test/data/cardlist.json DESTINATION test/cardlist.json)
 endif(DO_TEST)
 
 
 
 file(COPY data DESTINATION .)
-file(COPY test/data DESTINATION test)
-file(COPY test/data/accountlist.json DESTINATION test/accountlist.json)
-file(COPY test/data/cardlist.json DESTINATION test/cardlist.json)
+file(COPY data/account DESTINATION data/)
 
 add_executable(main main.cpp)
 
-target_link_libraries(main ACGMain) #deleted ACGIO
+target_link_libraries(main ACGMain)
 
