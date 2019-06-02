@@ -10,7 +10,7 @@
 class AccountSystem;
 class AccountSystemController;
 class ArenaController;
-
+class UsefulCalls;
 class Router {
 public:
     Router();
@@ -20,5 +20,6 @@ private:
     AccountSystemController * accountSystemController;
     ArenaController * arenaController;
     AccountSystem * accountSystem;
+    UsefulCalls * usefulCalls;
 };
 #endif //ANOTHER_CARD_GAME_ACG_ROUTER_H
