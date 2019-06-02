@@ -34,7 +34,7 @@ nlohmann::json AccountSystemController::run(nlohmann::json &j) {
         U32vec params = paramsToU32vec(j);
         StrVec names;
         for (uint32_t i : params) {
-            if (accountSystem->uuidExist(i)) {
+            if (accountSystem->exist(i)) {
                 data["returnValue"][std::to_string(i)] = accountSystem->getAccountName(i);
                 success = true;
             }
@@ -56,7 +56,7 @@ nlohmann::json AccountSystemController::run(nlohmann::json &j) {
         error("AccountSystemController get info");
         // TODO
         U32vec params = paramsToU32vec(j);
-        accountSystem->getAccountInfo(params[0]);
+        //accountSystem->getAccountInfo(params[0]);
         success = true;
     } else if (func == "payMoney") {
         error("AccountSystemController pay money");

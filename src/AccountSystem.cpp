@@ -123,14 +123,6 @@ Account* AccountSystem::get_account(uint32_t u_num) {
     }
     return nullptr;
 }
-bool AccountSystem::modifyMoney(std::string &id, int money) {
-    Account *account = get_account(id);
-    if (account != nullptr) {
-        return account->modifyMoney(money);
-    } else {
-        return false;
-    }
-}
 bool AccountSystem::modifyMoney(uint32_t user_id_, int money) {
     Account *account = get_account(user_id_);
     if (account != nullptr) {
@@ -139,14 +131,14 @@ bool AccountSystem::modifyMoney(uint32_t user_id_, int money) {
         return false;
     }
 }
-void AccountSystem::saveAccount(int userId, nlohmann::json j) {
+void AccountSystem::saveAccount(uint32_t userId, nlohmann::json &j) {
     std::string dir = "data/account/";
     std::string filename = std::to_string(userId) + ".json";
     error(j);
     std::ofstream file(dir + filename);
     file << j;
 }
-int AccountSystem::getMoney(std::string &id) {
+uint32_t AccountSystem::getMoney(std::string &id) {
     Account *account = get_account(id);
     if (account != nullptr) {
         return account->getMoney();
@@ -155,16 +147,8 @@ int AccountSystem::getMoney(std::string &id) {
     }
 }
 
-bool AccountSystem::logout(uint32_t user_id_) {
-    Account *account = get_account(user_id_);
-    if(account->isOnline()) {
-        account->left();
-        return true;
-    }
-    return false;
-}
-bool AccountSystem::logout(std::string &account_name) {
-    Account *account = get_account(account_name);
+bool AccountSystem::logout(uint32_t userId) {
+    Account *account = get_account(userId);
     if(account->isOnline()) {
         account->left();
         return true;
@@ -176,19 +160,26 @@ bool AccountSystem::addCard(uint32_t userId, uint32_t cardId) {
     return account->addCard(cardId);
 
 }
-void AccountSystem::load() {
-    // load cardlist
-}
 
-uint32_t AccountSystem::getUUId(std::string &account_name) {
-    Account * a = get_account(account_name);
-
-    return a->getUUID();
-}
-
-bool AccountSystem::uuidExist(uint32_t i) {
-    Account * a = get_account(i);
+bool AccountSystem::exist(uint32_t userId) {
+    Account * a = get_account(userId);
     return a != nullptr;
 }
+std::string AccountSystem::getAccountName(uint32_t userId) {
+    error("get Account Name");
+    return get_account(userId)->getName();
+}
 
+
+U32vec AccountSystem::getDeck(uint32_t userId) {
+    return get_account(userId)->getDeck();
+}
+
+U32vec AccountSystem::getCards(uint32_t userId) {
+    return get_account(userId)->getCards();
+}
+
+bool AccountSystem::isOnline(uint32_t userId)  {
+    return get_account(userId)->isOnline();
+}
 #undef SLEEP
