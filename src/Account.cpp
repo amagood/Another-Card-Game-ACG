@@ -60,7 +60,7 @@ int Account::getMoney() {
     return money_;
 }
 bool Account::modifyMoney(int money) {
-    if (money < 0) {
+    if (money_ + money < 0) {
         return false;
     } else {
         money_ += money;

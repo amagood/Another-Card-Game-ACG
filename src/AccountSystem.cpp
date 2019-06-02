@@ -21,7 +21,7 @@ bool AccountSystem::modifyCards(uint32_t id, U32vec deck) {
     Account *acc = get_account(id);
     U32vec cards = acc->getCards();
     if (deckIsLegal(deck, cards)) {
-        acc->setCards(deck);
+        acc->setDeck(deck);
         return true;
     } else {
         return false;
