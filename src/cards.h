@@ -78,28 +78,28 @@ public:
 class Hero : public Minion
 {
 public:
-	Hero();
+	Hero() =default;
     void use(Plate *p,Card *target){};
 };
 
 class Card001 final : public Minion
 {
 public:
-	Card001();
+	Card001() = default;
     void use(Plate *p,Card *target){};
 };
 
 class Card002 final : public Minion
 {
 public:
-    Card002();
+    Card002() = default;
     void use(Plate *p,Card *target);
 };
 
 class Card003 final : public Minion
 {
 public:
-    Card003();
+    Card003() = default;
     void use(Plate *p,Card *target);
 };
 
@@ -107,7 +107,7 @@ public:
 class Card201 final : public Weapon
 {
 public:
-    Card201();
+    Card201() = default;
 };
 #endif // CARDS_H_AMAGOOD
 

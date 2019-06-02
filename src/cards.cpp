@@ -120,16 +120,7 @@ void Minion::attack(Minion &target)
 ////////////////////////Cards ///////////////
 
 ////////////////////////minions//////////////////
-Hero::Hero()
-{
-}
 
-Card001::Card001()
-{
-}
-Card002::Card002()
-{
-}
 void Card002::use(Plate *p, Card *card)
 {
     int targetPlayer = (1+(p->whosTurn?1:0))%2;
@@ -142,9 +133,7 @@ void Card002::use(Plate *p, Card *card)
         deck.at(rand()%deck.size())->hpIncrease(-1);
     }
 }
-Card003::Card003()
-{
-}
+
 void Card003::use(Plate *p,Card *card)
 {
     p->GodHpAtk+=1;
@@ -153,11 +142,3 @@ void Card003::use(Plate *p,Card *card)
 
 
 //////////////////////////////weapons///////////////////
-Card201 :: Card201()
-{
-    setId(201);
-    setAtk(1);
-    setHp(2);
-    setMp(1);
-    setName("?p???");
-}
