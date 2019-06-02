@@ -43,9 +43,7 @@ nlohmann::json Account::toJson() {
 void Account::modifyPassword(std::string password){
     password_ = password;
 }
-std::string Account::getDeviceId() {
-    return device_id_;
-}
+
 bool Account::isIDSame(std::string other_id) {
     return this->id_ == other_id;
 }
@@ -99,4 +97,14 @@ bool Account::isOnline() {
 bool Account::addCard(uint32_t card_num) {
     card_list.push_back(card_num);
     return true;
+}
+
+uint32_t Account::getLose() {
+    return lose_;
+}
+uint32_t Account::getWin() {
+    return win_;
+}
+std::string Account::getLadderLevel() {
+    return ladderLevel;
 }

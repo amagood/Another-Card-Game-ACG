@@ -28,12 +28,17 @@ public:
 
     bool modifyPassword(std::string &id, std::string &ori_password, std::string &new_password);
     bool modifyMoney(uint32_t userId, int money);
-    void modifyCards(uint32_t id, U32vec cards, U32vec deck);
+    bool modifyCards(uint32_t id, U32vec deck);
 
-    uint32_t getMoney(std::string &id);
+
+    uint32_t getMoney(uint32_t userId);
     U32vec getCards(uint32_t userId);
     U32vec getDeck(uint32_t userId);
     std::string getAccountName(uint32_t userId);
+    uint32_t getLadderPoint(uint32_t userId);
+    std::string getLadderLevel(uint32_t userId);
+    uint32_t getWin(uint32_t userId);
+    uint32_t getLose(uint32_t userId);
 
     bool addCard(uint32_t userId, uint32_t cardId);
 
@@ -48,6 +53,7 @@ private:
     uint32_t lastId;
     Account* get_account(std::string id);
     Account* get_account(uint32_t u_num);
+    bool deckIsLegal(U32vec deck, U32vec cards);
 };
 
 

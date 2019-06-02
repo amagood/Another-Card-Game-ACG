@@ -25,11 +25,13 @@ public:
     nlohmann::json toJson();
     int getMoney();
     std::string getName();
-    std::string getDeviceId();
     int getLadderPoint();
     uint32_t getUniqueNumber();
     U32vec getDeck ();
     U32vec getCards ();
+    uint32_t getWin();
+    uint32_t getLose();
+    std::string getLadderLevel();
     bool addCard(uint32_t);
     void setDeck(U32vec deck);
     void setCards(U32vec cards);
@@ -43,10 +45,8 @@ private:
     bool online = false;
     std::string id_;
     std::string password_;
-    std::string device_id_;
     uint32_t win_ = 0;
     uint32_t lose_ = 0;
-
 
     int ladderPoint_ = 0;
     std::string ladderLevel = "copper";

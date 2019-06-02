@@ -8,7 +8,7 @@
 #include <chrono>
 #include <thread>
 #include <fstream>
-
+#include <algorithm>
 #include <nlohmann/json.hpp>
 
 #define SLEEP(ms) std::this_thread::sleep_for(std::chrono::milliseconds(ms))
@@ -17,10 +17,26 @@
 AccountSystem::AccountSystem() {
     loadAccounts();
 }
-void AccountSystem::modifyCards(uint32_t id, U32vec cards, U32vec deck) {
-    Account * acc = get_account(id);
-    acc->setCards(cards);
-    acc->setCards(deck);
+bool AccountSystem::modifyCards(uint32_t id, U32vec deck) {
+    Account *acc = get_account(id);
+    U32vec cards = acc->getCards();
+    if (deckIsLegal(deck, cards)) {
+        acc->setCards(deck);
+        return true;
+    } else {
+        return false;
+    }
+}
+bool AccountSystem::deckIsLegal(U32vec deck, U32vec cards) {
+    for(uint32_t card : deck) {
+        auto u32vecIter = std::find(cards.begin(), cards.end(), card);
+        if(u32vecIter == cards.end()) {
+            return false;
+        } else {
+            *u32vecIter = -1;
+        }
+    }
+    return true;
 }
 void AccountSystem::loadAccounts() {
     std::ifstream file("data/accountlist.json");
@@ -138,8 +154,8 @@ void AccountSystem::saveAccount(uint32_t userId, nlohmann::json &j) {
     std::ofstream file(dir + filename);
     file << j;
 }
-uint32_t AccountSystem::getMoney(std::string &id) {
-    Account *account = get_account(id);
+uint32_t AccountSystem::getMoney(uint32_t userId) {
+    Account *account = get_account(userId);
     if (account != nullptr) {
         return account->getMoney();
     } else {
@@ -181,5 +197,18 @@ U32vec AccountSystem::getCards(uint32_t userId) {
 
 bool AccountSystem::isOnline(uint32_t userId)  {
     return get_account(userId)->isOnline();
+}
+
+uint32_t AccountSystem::getLadderPoint(uint32_t userId){
+    return get_account(userId)->getLadderPoint();
+}
+std::string AccountSystem::AccountSystem::getLadderLevel(uint32_t userId) {
+    return get_account(userId)->getLadderLevel();
+}
+uint32_t AccountSystem::getWin(uint32_t userId) {
+    return get_account(userId)->getWin();
+}
+uint32_t AccountSystem::getLose(uint32_t userId) {
+    return get_account(userId)->getLose();
 }
 #undef SLEEP
