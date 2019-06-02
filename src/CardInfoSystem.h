@@ -7,7 +7,7 @@
 
 #include <string>
 #include <map>
-
+#include "cards.h"
 #include "ACGType.h"
 
 struct InfoCard {
@@ -30,6 +30,7 @@ public:
     std::string getName(int id);
     std::string getAttribute(int id);
     U32vec getCardPool();
+    void setCard(Card *, int id);
 private:
     std::map<uint32_t , InfoCard> infoCards;
     U32vec cardlist;

@@ -23,14 +23,14 @@ protected:
     //Desk *holdDesk;
 public:
     Card() = default;
-    Card(int attack, int healthPoint,int mannaRequired, int ID, std::string& Name);
+    Card(int attack, int healthPoint,int mannaRequired, int ID, std::string Name);
 
     void setAtk(int attack);
     void setHp(int healthPoint);
     void setMp(int mannaRequired);
-    void setAttributes(std::string &s);
+    void setAttributes(std::string s);
 	void setId(int num);
-	void setName(std::string &s);
+	void setName(std::string s);
 
     void atkIncrease(int i);
     void hpIncrease(int i);

@@ -7,7 +7,7 @@
 
 #include "cards.h"
 #include "ACGType.h"
-
+#include "CardInfoSystem.h"
 class CardFactory;
 
 class CardIdType {
@@ -27,6 +27,7 @@ class CardIdType {
 
 class CardFactory {
     CardIdType * types;
+    CardInfoSystem cardInfoSystem;
 public:
     CardFactory();
     Card * createCard(int cardId);

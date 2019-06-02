@@ -122,29 +122,13 @@ void Minion::attack(Minion &target)
 ////////////////////////minions//////////////////
 Hero::Hero()
 {
-	setId(0);
-	setAtk(0);
-	setHp(maxHp);
-	setMp(0);
-	setName("�^��");
 }
 
 Card001::Card001()
 {
-    setId(1);
-    setAtk(1);
-    setHp(2);
-    setMp(1);
-    setName("�Ԥh�Ǯ{");
 }
 Card002::Card002()
 {
-    setId(2);
-    setAtk(6);
-    setHp(6);
-    setMp(10);
-    setName("��");
-    setAttributes("���H���ؼгy���@�I�ˮ`�A���Ƶ��P������O");
 }
 void Card002::use(Plate *p, Card *card)
 {
@@ -160,12 +144,6 @@ void Card002::use(Plate *p, Card *card)
 }
 Card003::Card003()
 {
-    setId(3);
-    setAtk(2);
-    setHp(3);
-    setMp(2);
-    setName("�ۨ���");
-    setAttributes("�A���i���j��o+1/+1  �u�n�L���b���W");
 }
 void Card003::use(Plate *p,Card *card)
 {
@@ -181,5 +159,5 @@ Card201 :: Card201()
     setAtk(1);
     setHp(2);
     setMp(1);
-    setName("�p���");
+    setName("?p???");
 }

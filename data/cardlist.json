@@ -1,38 +1,38 @@
 {
   "cardlist" : [0, 1, 2, 3, 4],
   "0" : {
-    "hp": 1,
-    "mp": 1,
+    "hp": 0,
+    "mp": 30,
     "atk": 0,
-    "name" : "card0",
-    "attribute" : "nothing"
+    "name" : "英雄",
+    "attribute" : ""
   },
   "1" : {
-    "hp": 1,
+    "hp": 2,
     "mp": 1,
-    "atk": 0,
-    "name" : "card0",
-    "attribute" : "nothing"
+    "atk": 1,
+    "name" : "戰士學徒",
+    "attribute" : ""
   },
   "2" : {
-    "hp": 1,
-    "mp": 1,
-    "atk": 0,
-    "name" : "card2",
-    "attribute" : "nothing"
+    "hp": 6,
+    "mp": 10,
+    "atk": 6,
+    "name" : "神",
+    "attribute" : "對隨機目標造成一點傷害，次數等同於攻擊力"
   },
   "3" : {
-    "hp": 1,
-    "mp": 1,
-    "atk": 0,
-    "name" : "card3",
-    "attribute" : "nothing"
+    "hp": 3,
+    "mp": 2,
+    "atk": 2,
+    "name" : "招邪者",
+    "attribute" : "你的【神】獲得+1/+1  只要他不在場上"
   },
-  "4" : {
-    "hp": 1,
+  "201" : {
+    "hp": 2,
     "mp": 1,
-    "atk": 0,
-    "name" : "card4",
-    "attribute" : "nothing"
+    "atk": 1,
+    "name" : "小木棒",
+    "attribute" : ""
   }
 }

@@ -16,6 +16,17 @@ CardInfoSystem::CardInfoSystem() {
 U32vec CardInfoSystem::getCardPool() {
     return cardlist;
 }
+
+void CardInfoSystem::setCard(Card *s, int id) {
+    InfoCard * info = this->getInfoCard(id);
+    s->setAtk(info->atk);
+    s->setHp(info->hp);
+    s->setId(id);
+    s->setMp(info->mp);
+    s->setName(info->name);
+    s->setAttributes(info->attribute);
+}
+
 void CardInfoSystem::load() {
     std::string filename = "data/cardlist.json";
     std::ifstream file(filename);
