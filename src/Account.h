@@ -9,7 +9,7 @@
 #include <nlohmann/json.hpp>
 
 #include "ACGType.h"
-
+#include "roommode.h"
 
 class Account{
 public:
@@ -38,6 +38,11 @@ public:
     void left();
     void login();
     bool isOnline();
+    void win();
+    void lose();
+    void ladderWin();
+    void ladderLose();
+    void recordHistory(uint32_t rivalId, bool isWin, RoomMode r);
     uint32_t getUUID() {return user_id_;}
 private:
     uint32_t user_id_ = 0; // TODO make it unique, readonly
@@ -50,12 +55,12 @@ private:
 
     int ladderPoint_ = 0;
     std::string ladderLevel = "copper";
-    uint32_t ladder_win_;
-    uint32_t ladder_lose_;
-    // FIXME should add some interact with card and card list
+    uint32_t ladder_win_ = 0;
+    uint32_t ladder_lose_ = 0;
     U32vec deck_card_list;
     U32vec card_list;
-    // FIXME should add history
+    int games = 0;
+    std::vector<std::vector<int> > history;
 
 };
 

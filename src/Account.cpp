@@ -9,6 +9,11 @@ Account::Account(std::string &id, std::string &password, uint32_t uuid) {
     password_ = password;
     user_id_ = uuid;
 }
+void Account::recordHistory(uint32_t rivalId, bool isWin, RoomMode r) {
+    std::vector<int> game = {(int)rivalId, (int)isWin, (int)r};
+    games ++;
+    history.push_back(game);
+}
 Account::Account(nlohmann::json j) {
     user_id_ = j["userId"];
     id_ = j["name"];
@@ -37,6 +42,7 @@ nlohmann::json Account::toJson() {
     j["ladderLevel"] = ladderLevel;
     j["ladderWin"] = ladder_win_;
     j["ladderLose"]= ladder_lose_;
+    j["history"] = history;
     return j;
 }
 
@@ -107,4 +113,21 @@ uint32_t Account::getWin() {
 }
 std::string Account::getLadderLevel() {
     return ladderLevel;
+}
+
+void Account::win() {
+    win_ += 1;
+}
+void Account::lose() {
+    lose_ += 1;
+}
+void Account::ladderWin() {
+    ladderPoint_ += 30;
+    ladder_win_ += 1;
+    win_ += 1;
+}
+void Account::ladderLose() {
+    ladderPoint_ -= 20;
+    ladder_lose_ += 1;
+    lose_ += 1;
 }

@@ -8,9 +8,8 @@
 #include <nlohmann/json.hpp>
 
 #include "AccountSystem.h"
-#include "Router.h"
 #include "Room.h"
-
+#include "roommode.h"
 
 enum ArenaAction { GET_ROOMLIST=0, GET_ROOMINFO, CREATE_ROOM, ENTER_ROOM, ENTER_ROOM_RANDOM, INVITE_FRIEND, START_GAME, ACTION_COUNT };
 class Arena

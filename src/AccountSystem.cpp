@@ -10,7 +10,7 @@
 #include <fstream>
 #include <algorithm>
 #include <nlohmann/json.hpp>
-
+#include "roommode.h"
 #define SLEEP(ms) std::this_thread::sleep_for(std::chrono::milliseconds(ms))
 
 
@@ -211,4 +211,29 @@ uint32_t AccountSystem::getWin(uint32_t userId) {
 uint32_t AccountSystem::getLose(uint32_t userId) {
     return get_account(userId)->getLose();
 }
+
+bool AccountSystem::update(uint32_t winner, uint32_t loser, RoomMode mode) {
+    Account *winnerA = get_account(winner);
+    Account *loserA = get_account(loser);
+
+    if (mode == SINGLE_ROOM) {
+        winnerA->win();
+        loserA->lose();
+        winnerA->recordHistory(loser, true, SINGLE_ROOM);
+        loserA->recordHistory(winner, false, SINGLE_ROOM);
+    } else if (mode == LADDER_ROOM) {
+        winnerA->ladderWin();
+        loserA->ladderLose();
+        winnerA->recordHistory(loser, true, LADDER_ROOM);
+        loserA->recordHistory(winner, false, LADDER_ROOM);
+    } else if (mode == ONEONONE_ROOM) {
+        winnerA->win();
+        loserA->lose();
+        winnerA->recordHistory(loser, true, ONEONONE_ROOM);
+        loserA->recordHistory(winner, false, ONEONONE_ROOM);
+    }
+
+    return false;
+}
+
 #undef SLEEP

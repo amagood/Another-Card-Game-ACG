@@ -9,7 +9,7 @@
 #include "ACGFunctions.h"
 #include "Room.h"
 #include "Arena.h"
-
+#include "roommode.h"
 const char* Arena::_arenaActionString[] = {"getRoomList", "getRoomInfo", "createRoom", "enterRoom", "enterRoomRandom", "inviteFriend", "startGame"};
 
 
@@ -92,7 +92,7 @@ nlohmann::json Arena::controlDesk(RoomMode mode, uint32_t id, nlohmann::json jso
     if(room->isEnd()){
         room->endGame();
         uint32_t winner = room->getWinnerID(), loser = room->getLoserID();
-        //_account.update(winner, loser);
+        _account->update(winner, loser, mode);
         delete room;
     }
     return result;

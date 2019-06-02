@@ -10,8 +10,8 @@
 #include "Deck.h"
 #include "AccountSystem.h"
 #include "DeskController.h"
+#include "roommode.h"
 
-enum RoomMode { SINGLE_ROOM=0, ONEONONE_ROOM, LADDER_ROOM, ROOMMODE_COUNT};
 class Room
 {
 public:

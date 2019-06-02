@@ -15,6 +15,9 @@
 
 #include "ACGType.h"
 #include "debug.h"
+#include "roommode.h"
+
+
 class AccountSystem {
 public:
     AccountSystem();
@@ -29,6 +32,7 @@ public:
     bool modifyPassword(std::string &id, std::string &ori_password, std::string &new_password);
     bool modifyMoney(uint32_t userId, int money);
     bool modifyCards(uint32_t id, U32vec deck);
+    bool update(uint32_t winner, uint32_t loser, RoomMode mode);
 
 
     uint32_t getMoney(uint32_t userId);
