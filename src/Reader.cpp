@@ -11,10 +11,19 @@ nlohmann::json Reader::read()
     std::string line;
     std::getline(std::cin, line);
     try {
-        return nlohmann::json::parse(line);
+        nlohmann::json result = nlohmann::json::parse(line);
+        error("parse successful");
+        if (!result.is_object()) {
+            throw std::invalid_argument( "not an object" );
+        }
+        error(result.size());
+        return result;
     }
     catch(nlohmann::json::parse_error &) {
         error("parse error");
         return nlohmann::json();
+    } catch (std::invalid_argument &){
+        error("not an object");
+        return nlohmann::json({});
     }
 }
