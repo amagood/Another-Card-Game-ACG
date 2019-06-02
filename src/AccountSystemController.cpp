@@ -88,25 +88,33 @@ nlohmann::json AccountSystemController::run(nlohmann::json &j) {
     } else if (func == "drawCards" && accountSystem->exist(userID)) {
         error("AccountSystemController draw cards");
         U32vec params = paramsToU32vec(j);
+
         uint32_t times = params[0] / 100;
-        U32vec cardlist;
-        if (times > 10) {
-            cardlist.push_back(drawCardSystem->drawCard());
-        }
-        while (times--) {
-            cardlist.push_back(drawCardSystem->drawCard());
-        }
-        for(uint32_t cardId: cardlist) {
-            accountSystem->addCard(userID, cardId);
-        }
-        data["returnValue"]["money"] = accountSystem->getMoney(userID);
-        if(params[0] == 100) {
-            data["returnValue"]["amount"] = 1;
+        if (accountSystem->getMoney(userID) < params[0]) {
+            // money isn't enough
+            success = false;
         } else {
-            data["returnValue"]["amount"] = 11;
+            accountSystem->modifyMoney(userID, -params[0]);
+            U32vec cardlist;
+            if (times > 10) {
+                cardlist.push_back(drawCardSystem->drawCard());
+            }
+            while (times--) {
+                cardlist.push_back(drawCardSystem->drawCard());
+            }
+            for(uint32_t cardId: cardlist) {
+                accountSystem->addCard(userID, cardId);
+            }
+            data["returnValue"]["money"] = accountSystem->getMoney(userID);
+            if(params[0] == 100) {
+                data["returnValue"]["amount"] = 1;
+            } else {
+                data["returnValue"]["amount"] = 11;
+            }
+            data["returnValue"]["cards"] = cardlist;
+            success = true;
         }
-        data["returnValue"]["cards"] = cardlist;
-        success = true;
+
 
     } else if (func == "getCards") {
         error("AccountSystemController getCards");
@@ -155,48 +163,3 @@ AccountSystemController::AccountSystemController(AccountSystem * accountSystem1)
     accountSystem = accountSystem1;
     drawCardSystem = new DrawCardSystem();
 }
-//
-//void AccountSystemController::createAccount(std::string id, std::string password) {
-//    bool success = accountSystem->createAccount(id, password);
-//    // TODO
-//}
-//void AccountSystemController::getAccountsName(std::vector<uint32_t> userIds) {
-//    nlohmann::json ans;
-//    for (uint32_t& id : userIds) {
-//        std::string name = accountSystem->getAccountName(id);
-//        ans[id] = name;
-//    }
-//}
-//void AccountSystemController::login(std::string name, std::string password) {
-//    accountSystem->login(name, password);
-//}
-//void AccountSystemController::logout(uint32_t userId) {
-//    accountSystem->logout(userId);
-//}
-//void AccountSystemController::payMoney(uint32_t userId, int number) {
-//    accountSystem->modifyMoney(userId, number);
-//}
-//
-//void AccountSystemController::drawCards(uint32_t userId, int card_amount) {
-//    for (int i = 0; i < card_amount; i++) {
-//        uint32_t cardId = drawCardSystem->drawCard();
-//        if (!accountSystem->addCard(userId, cardId)) {
-//            //Todo raise error
-//            return;
-//        }
-//    }
-//}
-//void AccountSystemController::getCards(uint32_t userId) {
-//    std::vector<uint32_t> cards = accountSystem->getCards(userId);
-//    accountSystem->getDeck(userId);
-//}
-//void AccountSystemController::modifyCards(uint32_t userId, std::vector<uint32_t> cards, std::vector<uint32_t> decks)
-//{
-//    accountSystem->updateCards(userId, cards, decks);
-//    accountSystem->getDeck(userId);
-//    accountSystem->getCards(userId);
-//}
-//void AccountSystemController::getAccountInfo(uint32_t userId) {
-//
-//
-//}
