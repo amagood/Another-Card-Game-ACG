@@ -1,4 +1,5 @@
 #include <iostream>
+#include <string>
 
 #include <nlohmann/json.hpp>
 
@@ -23,8 +24,7 @@ nlohmann::json ArenaController::run(nlohmann::json &json)
                 U32vec idList;
                 std::vector<std::string> nameList;
                 arena.getRoomList(mode, idList, nameList);
-                data["idList"] = idList;
-                data["nameList"] = nameList;
+                data["roomId"] = idList;
                 error("GET_ROOMLIST");
             }break;
             case GET_ROOMINFO:{
@@ -37,14 +37,14 @@ nlohmann::json ArenaController::run(nlohmann::json &json)
                 error("GET_ROOMINFO");
             }break;
             case CREATE_ROOM:{
-                uint32_t roomid = arena.createRoom(json["userId"], mode, json["name"], json["password"]);
+                uint32_t roomid = arena.createRoom(json["userId"], mode, json["roomName"], json["roomPassword"]);
                 data["userId"] = json["userId"];
                 data["roomId"] = roomid==-1?0:roomid;
                 data["roomName"] = json["name"];
                 error("CREATE_ROOM");
             }break;
             case ENTER_ROOM:{
-                bool success = arena.enterRoom(json["userId"], mode, json["name"], json["password"]);
+                bool success = arena.enterRoom(json["userId"], mode, json["roomId"], json["roomPassword"]);
                 data["result"] = (int)success;
                 error("ENTER_ROOM");
             }break;
@@ -55,12 +55,12 @@ nlohmann::json ArenaController::run(nlohmann::json &json)
                 error("ENTER_ROOM_RANDOM");
             }break;
             case INVITE_FRIEND:{
-                bool success = arena.inviteFriend(json["userId"], mode, json["roomID"]);
+                bool success = arena.inviteFriend(json["userId"], mode, json["roomId"]);
                 data["result"] = (int)success;
                 error("INVITE_FRIEND");
             }break;
             case START_GAME:{
-                arena.startGame(mode, json["roomID"]);
+                arena.startGame(mode, json["roomId"]);
                 error("START_GAME");
             }break;
             default:
