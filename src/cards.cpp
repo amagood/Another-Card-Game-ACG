@@ -3,7 +3,6 @@
 #include "cards.h"
 #include <plate.h>
 #include "CardInfoSystem.h"
-#include <Deck.h>
 #include <vector>
 
 constexpr int maxHp = 30;
