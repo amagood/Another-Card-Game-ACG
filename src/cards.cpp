@@ -84,7 +84,7 @@ void Weapon::use(Plate *p,Card *target)
 {
 
     int playerId=p->whosTurn?1:0 ;
-
+    holdPlate=p
     std::vector<Card *> deck=p->hand[playerId];
     deck.at(0)->atkIncrease(atk);
 }
@@ -94,12 +94,10 @@ void Weapon::usedOnce()
 }
 Weapon :: ~Weapon()
 {
-    //FIXME deleted holdDeck
-    /*
-    int playerId=holdDesk->getPlayerId();
-    std::vector<Card *> deck=holdDesk->getPlayerDeck().at(playerId).getDeck();
-    deck->at(0).atkIncrease(atk*(-1));
-    */
+    int playerId=holdPlate->whosTurn?1:0 ;
+    std::vector<Card *> deck=p->hand[playerId];
+    deck.at(0)->setAtk(0);
+
 }
 Spell::Spell()
 {

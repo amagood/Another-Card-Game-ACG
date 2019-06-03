@@ -20,7 +20,7 @@ protected:
     int atk,hp,mp,id;
 	std::string name;
     std::string attrib;
-    //Desk *holdDesk;
+    Plate *holdPlate;
 public:
     Card() = default;
     Card(int attack, int healthPoint,int mannaRequired, int ID, std::string Name);
