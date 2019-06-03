@@ -8,6 +8,10 @@
 
 constexpr int maxHp = 30;
 
+void draw(Plate &state){
+    state.hand[state.whosTurn].push_back(state..popDeck());
+}
+
 Card::Card(int attack,int healthPoint,int mannaRequired,int ID, std::string Name)
 {
     atk=attack;
@@ -84,7 +88,7 @@ void Weapon::use(Plate *p,Card *target)
 {
 
     int playerId=p->whosTurn?1:0 ;
-
+    holdPlate=p;
     std::vector<Card *> deck=p->hand[playerId];
     deck.at(0)->atkIncrease(atk);
 }
@@ -94,12 +98,10 @@ void Weapon::usedOnce()
 }
 Weapon :: ~Weapon()
 {
-    //FIXME deleted holdDeck
-    /*
-    int playerId=holdDesk->getPlayerId();
-    std::vector<Card *> deck=holdDesk->getPlayerDeck().at(playerId).getDeck();
-    deck->at(0).atkIncrease(atk*(-1));
-    */
+    int playerId=holdPlate->whosTurn?1:0 ;
+    std::vector<Card *> deck=holdPlate->hand[playerId];
+    deck.at(0)->setAtk(0);
+
 }
 Spell::Spell()
 {
@@ -139,6 +141,16 @@ void Card003::use(Plate *p,Card *card)
     p->GodHpAtk+=1;
 }
 
+void Card004::use(Plate *p,Card *card)
+{
+    p->GodHpAtk+=1;
+}
+/////////////////spells/////////////////
+/*
+void Card101::use(Plate *p,Card *target)
+{
 
+}
+*/
 
 //////////////////////////////weapons///////////////////
