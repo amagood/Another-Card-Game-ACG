@@ -84,7 +84,7 @@ void Weapon::use(Plate *p,Card *target)
 {
 
     int playerId=p->whosTurn?1:0 ;
-    holdPlate=p
+    holdPlate=p;
     std::vector<Card *> deck=p->hand[playerId];
     deck.at(0)->atkIncrease(atk);
 }
@@ -95,7 +95,7 @@ void Weapon::usedOnce()
 Weapon :: ~Weapon()
 {
     int playerId=holdPlate->whosTurn?1:0 ;
-    std::vector<Card *> deck=p->hand[playerId];
+    std::vector<Card *> deck=holdPlate->hand[playerId];
     deck.at(0)->setAtk(0);
 
 }
