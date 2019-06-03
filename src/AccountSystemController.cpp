@@ -96,7 +96,7 @@ nlohmann::json AccountSystemController::run(nlohmann::json &j) {
         } else {
             accountSystem->modifyMoney(userID, -(int)params[0]);
             U32vec cardlist;
-            if (times > 10) {
+            if (times == 10) {
                 cardlist.push_back(drawCardSystem->drawCard());
             }
             while (times--) {
