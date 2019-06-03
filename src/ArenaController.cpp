@@ -1,5 +1,4 @@
 #include <iostream>
-#include <string>
 
 #include <nlohmann/json.hpp>
 
@@ -40,7 +39,7 @@ nlohmann::json ArenaController::run(nlohmann::json &json)
                 uint32_t roomid = arena.createRoom(json["userId"], mode, json["roomName"], json["roomPassword"]);
                 data["userId"] = json["userId"];
                 data["roomId"] = roomid==-1?0:roomid;
-                data["roomName"] = json["name"];
+                data["roomName"] = json["roomName"];
                 error("CREATE_ROOM");
             }break;
             case ENTER_ROOM:{

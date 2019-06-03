@@ -28,7 +28,7 @@ uint32_t Arena::createRoom(uint32_t playerID, RoomMode mode, const std::string& 
     if(!_isRoomNameAdmitted(name, mode))
         return -1;
     uint32_t id=_getNonRepeatRandomRoomID();
-    _createRoom(playerID, mode, _getNonRepeatRandomRoomID(), name, password);
+    _createRoom(playerID, mode, id, name, password);
     return id;
 }
 bool Arena::enterRoom(uint32_t playerID, RoomMode mode, uint32_t id, const std::string& password)
@@ -60,12 +60,12 @@ void Arena::startGame(RoomMode mode, uint32_t id)
         deck.push_back(_account->getDeck(player));
     room->startGame(deck);
 }
-void Arena::getRoomList(RoomMode mode, U32vec idList, std::vector<std::string> nameList)
+void Arena::getRoomList(RoomMode mode, U32vec &idList, std::vector<std::string> nameList)
 {
-    for(auto room : _room[mode])
+    for(int i=0;i<_room[(int)mode].size();i++)//auto room : _room[(int)mode])
     {
-        idList.push_back(room->getID());
-        nameList.push_back(room->getName());
+        idList.push_back(_room[(int)mode][i]->getID());
+        nameList.push_back(_room[(int)mode][i]->getName());
     }
 }
 void Arena::getRoomInfo(RoomMode mode, uint32_t id, std::string name, U32vec player)
