@@ -1,7 +1,6 @@
 //
 // Created by jacky on 2019/4/21.
 //
-#define DEBUG
 #include "Router.h"
 
 #include <nlohmann/json.hpp>
@@ -24,7 +23,7 @@ nlohmann::json Router::run(nlohmann::json &j) {
     if (j["data"]["eventType"] == "accountSystem") {
         try {
             return accountSystemController->run(j);
-        } catch (exception &e) {
+        } catch (std::exception &e) {
             error("accountSystem but I don't know what happen");
             return nlohmann::json({});
         }
@@ -33,7 +32,7 @@ nlohmann::json Router::run(nlohmann::json &j) {
         try {
             j["data"] = arenaController->run(j["data"])["data"];
             return j;
-        } catch (exception &e){
+        } catch (std::exception &e){
             error("arenaError but I don't know what happen");
             return nlohmann::json({});
         }
@@ -43,7 +42,7 @@ nlohmann::json Router::run(nlohmann::json &j) {
         try {
             j = usefulCalls->run(j);
             return j;
-        } catch (exception &e) {
+        } catch (std::exception &e) {
             error("Error for usefulCalls");
             return nlohmann::json({});
         }

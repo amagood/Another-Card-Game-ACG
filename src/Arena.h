@@ -16,16 +16,14 @@ class Arena
 {
 public:
     Arena(AccountSystem* account);
-
-
     ~Arena();
-    uint32_t createRoom(uint32_t playerID, RoomMode mode, const std::string& name, const std::string& password="");
+    uint32_t createRoom(uint32_t playerID, RoomMode mode, std::string name, std::string password="");
     bool enterRoom(uint32_t playerID, RoomMode mode, uint32_t id, const std::string& password);
     uint32_t enterRoomRandom(uint32_t playerID, RoomMode mode);
     bool inviteFriend(uint32_t playerID, RoomMode mode, uint32_t id);
-    void startGame(RoomMode mode, uint32_t id);
+    bool startGame(RoomMode mode, uint32_t id);
     void getRoomList(RoomMode mode, U32vec &idList, std::vector<std::string> nameList);
-    void getRoomInfo(RoomMode mode, uint32_t id, std::string name, U32vec player);
+    void getRoomInfo(RoomMode mode, uint32_t id, std::string name, U32vec &player);
     static ArenaAction getAction(const std::string& action);
     nlohmann::json controlDesk(RoomMode mode, uint32_t id, nlohmann::json json);
 
@@ -37,7 +35,7 @@ private:
     void _delAllRooms();
     bool _isRoomNameAdmitted(const std::string& name, RoomMode mode);
     uint32_t _getNonRepeatRandomRoomID();
-    void _createRoom(uint32_t player, RoomMode mode, uint32_t id, const std::string& name, const std::string& password="");
+    void _createRoom(uint32_t player, RoomMode mode, uint32_t id, std::string name, std::string password="");
     Room* _getRoom(RoomMode mode, uint32_t id);
     std::string _getRandomString(RoomMode mode);
     std::string _getNonRepeatRandomRoomName(RoomMode mode);

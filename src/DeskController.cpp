@@ -3,6 +3,7 @@
 //
 
 #include "DeskController.h"
+#include "debug.h"
 
 void DeskController::run(U32vec &player1, U32vec &player2){
     CardFactory CF_;//Deck method & Cards factory
@@ -12,49 +13,50 @@ void DeskController::run(U32vec &player1, U32vec &player2){
     }
     while(!player2.empty()){
         plate_.playerDeck[1].pushCard(CF_.createCard(player2[0]));
-        player1.erase(player2.begin());
+        player2.erase(player2.begin());
     }
     initPlate();
     //ready for server json to play game
 }
 
 nlohmann::json DeskController::getJson(nlohmann::json json_){
-    if(plate_.whosTurn != json_["data"]["myPlayerId"]){ //if change player
+    if(plate_.whosTurn != json_["myPlayerId"]){ //if change player
         //draw card(change people)
-        plate_.whosTurn = json_["data"]["myPlayerId"];
+        error(json_["myPlayerId"]);
+        plate_.whosTurn = json_["myPlayerId"];
         desk_.draw(plate_);
         //package and return
         return package();
     }
 
-    if(json_["data"]["useOrAttack"]=="useCard") //UseCard
+    if(json_["useOrAttack"]=="useCard") //UseCard
     {
         Card * Main;
-        if((int)json_["data"]["selectedCardId"]%10){
-            Main= plate_.BF[plate_.whosTurn][(int)json_["data"]["selectedCardId"]/10];
+        if((int)json_["selectedCardId"]%10){
+            Main= plate_.BF[plate_.whosTurn][(int)json_["selectedCardId"]/10];
         }
         else{
-            Main= plate_.hand[plate_.whosTurn][(int)json_["data"]["selectedCardId"]/10];
+            Main= plate_.hand[plate_.whosTurn][(int)json_["selectedCardId"]/10];
         }
 
-        if((int)json_["data"]["targetCardId"]/10 < 2){
-            int side = (plate_.whosTurn + (int)json_["data"]["targetCardId"]%10) % 2;
-            Card * target = plate_.BF[side][(int)json_["data"]["targetCardId"]/10];
-            desk_.playerMovement(plate_, json_["data"]["useOrAttack"], Main, target);
+        if((int)json_["targetCardId"]/10 < 2){
+            int side = (plate_.whosTurn + (int)json_["targetCardId"]%10) % 2;
+            Card * target = plate_.BF[side][(int)json_["targetCardId"]/10];
+            desk_.playerMovement(plate_, json_["useOrAttack"], Main, target);
         }
         else{ //全場或頭
-            if((int)json_["data"]["targetCardId"]/10 == 3){ //頭
+            if((int)json_["targetCardId"]/10 == 3){ //頭
                 //實體化生物(Hero)
                 Hero *temp = new Hero();
                 //設定血量
                 temp->setHp(plate_.playerHp[!plate_.whosTurn]);
                 //playerMovement
-                desk_.playerMovement(plate_, json_["data"]["useOrAttack"], Main, temp);
+                desk_.playerMovement(plate_, json_["useOrAttack"], Main, temp);
                 //寫回血量
                 plate_.playerHp[!plate_.whosTurn] = temp->getHp();
             }
             else{
-                desk_.playerMovement(plate_, json_["data"]["useOrAttack"], Main);
+                desk_.playerMovement(plate_, json_["useOrAttack"], Main);
             }
         }
     }

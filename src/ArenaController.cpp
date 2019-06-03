@@ -29,8 +29,8 @@ nlohmann::json ArenaController::run(nlohmann::json &json)
             case GET_ROOMINFO:{
                 std::string name;
                 U32vec player;
-                arena.getRoomInfo(mode, json["roomID"], name, player);
-                data["roomID"] = json["roomID"];
+                arena.getRoomInfo(mode, json["roomId"], name, player);
+                data["roomId"] = json["roomId"];
                 data["roomName"] = name;
                 data["playerId"] = player;
                 error("GET_ROOMINFO");
@@ -59,7 +59,9 @@ nlohmann::json ArenaController::run(nlohmann::json &json)
                 error("INVITE_FRIEND");
             }break;
             case START_GAME:{
-                arena.startGame(mode, json["roomId"]);
+                bool success = arena.startGame(mode, json["roomId"]);
+                data["roomId"] = json["roomId"];
+                data["result"] = (int)success;
                 error("START_GAME");
             }break;
             default:
@@ -70,7 +72,8 @@ nlohmann::json ArenaController::run(nlohmann::json &json)
         data["action"] = json["action"];
         result["data"] = data;
     } else {
-        result = arena.controlDesk(mode, json["deskID"], json);
+        result = arena.controlDesk(mode, json["deskId"], json);
+        error("DESK");
     }
     return result;
 }

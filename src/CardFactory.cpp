@@ -5,6 +5,7 @@
 #include "CardFactory.h"
 #include "cards.h"
 #include "CardInfoSystem.h"
+#include "debug.h"
 CardFactory::CardFactory() {
     types = new CardIdType();
 }
@@ -14,14 +15,14 @@ Card* CardFactory::createCard(int cardId) {
     if(types->minionIds.find(cardId) != types->minionIds.end()) {
         // minionType
         // 0 - 99
-        if (cardId == 0) {
-            card = new Hero();
-        } else if (cardId == 1) {
+        if (cardId == 1) {
             card =  new Card001();
         } else if(cardId == 2){
             card = new Card002();
         } else if (cardId == 3) {
             card = new Card003();
+        } else if (cardId == 4) {
+            card = new Card004();
         }
 
 
@@ -36,6 +37,7 @@ Card* CardFactory::createCard(int cardId) {
         cardInfoSystem.setCard(card, cardId);
         return card;
     } else {
+        error("null card");
         return nullptr;
     }
 }

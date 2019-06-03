@@ -23,7 +23,7 @@ Arena::~Arena()
     _delAllRooms();
 }
 
-uint32_t Arena::createRoom(uint32_t playerID, RoomMode mode, const std::string& name, const std::string& password)
+uint32_t Arena::createRoom(uint32_t playerID, RoomMode mode, std::string name, std::string password)
 {
     if(!_isRoomNameAdmitted(name, mode))
         return -1;
@@ -52,13 +52,17 @@ bool Arena::inviteFriend(uint32_t playerID, RoomMode mode, uint32_t id)
     Room* room=_getRoom(mode, id);
     return room->addPlayer(playerID);
 }
-void Arena::startGame(RoomMode mode, uint32_t id)
+bool Arena::startGame(RoomMode mode, uint32_t id)
 {
     Room* room = _getRoom(mode, id);
     std::vector<U32vec> deck;
-    for(uint32_t player : room->getPlayers())
+    for(uint32_t player : room->getPlayers()){
+        if(_account->getDeck(player).size()!=30)
+            return false;
         deck.push_back(_account->getDeck(player));
+    }
     room->startGame(deck);
+    return true;
 }
 void Arena::getRoomList(RoomMode mode, U32vec &idList, std::vector<std::string> nameList)
 {
@@ -68,7 +72,7 @@ void Arena::getRoomList(RoomMode mode, U32vec &idList, std::vector<std::string> 
         nameList.push_back(_room[(int)mode][i]->getName());
     }
 }
-void Arena::getRoomInfo(RoomMode mode, uint32_t id, std::string name, U32vec player)
+void Arena::getRoomInfo(RoomMode mode, uint32_t id, std::string name, U32vec &player)
 {
     Room* room = _getRoom(mode, id);
     name = room->getName();
@@ -146,7 +150,7 @@ uint32_t Arena::_getNonRepeatRandomRoomID()
     }
     return num;
 }
-void Arena::_createRoom(uint32_t player, RoomMode mode, uint32_t id, const std::string& name, const std::string& password)
+void Arena::_createRoom(uint32_t player, RoomMode mode, uint32_t id, std::string name, std::string password)
 {
     Room* room = Room::createRoom(player, mode, id, name, password);
     _room[mode].push_back(room);
@@ -158,7 +162,7 @@ Room* Arena::_getRoom(RoomMode mode, uint32_t id)
             return _room[mode][i];
     return nullptr;
 }
-std::string Arena::_getNonRepeatRandomRoomName(RoomMode mode)
+std::string Arena::_getNonRepeatRandomRoomName(RoomMode mode) //FIXME
 {
     std::string str=_getRandomString(mode);
     while(!_isRoomNameAdmitted(str, mode))
@@ -189,7 +193,7 @@ std::string Arena::_getRandomString(RoomMode mode)
     }
     for (int i = 0; i < len; ++i)
         str += alphanum[rand() % (alphanum.size() - 1)];
-    str[len] = 0;
+    str[len] = '\0';
     return str;
 }
 

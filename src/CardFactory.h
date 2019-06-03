@@ -20,6 +20,7 @@ class CardIdType {
         minionIds.insert(1);
         minionIds.insert(2);
         minionIds.insert(3);
+        minionIds.insert(4);
         weaponIds.insert(201);
     }
 
