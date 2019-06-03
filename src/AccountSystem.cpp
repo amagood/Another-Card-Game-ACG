@@ -240,4 +240,10 @@ uint32_t AccountSystem::getUserId(std::string name) {
     return get_account(name)->getUUID();
 }
 
+bool AccountSystem::addAllToDesk(uint32_t userId) {
+    Account * account = get_account(userId);
+    account->setDeck(account->getCards(30));
+    return true;
+}
+
 #undef SLEEP

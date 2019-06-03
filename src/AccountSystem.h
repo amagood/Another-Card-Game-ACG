@@ -33,6 +33,7 @@ public:
     bool modifyMoney(uint32_t userId, int money);
     bool modifyCards(uint32_t id, U32vec deck);
     bool update(uint32_t winner, uint32_t loser, RoomMode mode);
+    bool addAllToDesk(uint32_t userId);
     uint32_t getUserId(std::string name);
 
     uint32_t getMoney(uint32_t userId);

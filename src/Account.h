@@ -29,6 +29,7 @@ public:
     uint32_t getUniqueNumber();
     U32vec getDeck ();
     U32vec getCards ();
+    U32vec getCards (uint32_t amount);
     uint32_t getWin();
     uint32_t getLose();
     std::string getLadderLevel();
