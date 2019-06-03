@@ -146,6 +146,19 @@ nlohmann::json AccountSystemController::run(nlohmann::json &j) {
         }
 
 
+    } else if (func == "getUserId") {
+        error("Get UserId");
+        StrVec params = paramsToStrVec(j);
+        bool isSuccess = true;
+        for (std::string name: params) {
+            if(accountSystem->exist(name)) {
+                data["returnVaule"][name] = accountSystem->getUserId(name);
+            } else {
+                isSuccess = false;
+                break;
+            }
+        }
+        success = isSuccess;
     }
     if(success) {
         data["returnValue"]["0"] = "1";

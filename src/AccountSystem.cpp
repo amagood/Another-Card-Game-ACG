@@ -236,4 +236,8 @@ bool AccountSystem::update(uint32_t winner, uint32_t loser, RoomMode mode) {
     return false;
 }
 
+uint32_t AccountSystem::getUserId(std::string name) {
+    return get_account(name)->getUUID();
+}
+
 #undef SLEEP

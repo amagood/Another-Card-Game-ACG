@@ -23,7 +23,7 @@ void Router::end() {
 nlohmann::json Router::run(nlohmann::json &j) {
     if (j["data"]["eventType"] == "accountSystem") {
         return accountSystemController->run(j);
-    } else if (j["data"]["eventType"] == "room") {
+    } else if (j["data"]["eventType"] == "room" || j["data"]["eventType"] == "desk") {
         error("goto arena");
         j["data"] = arenaController->run(j["data"])["data"];
         return j;
