@@ -29,7 +29,7 @@ Card* CardFactory::createCard(int cardId) {
         // spellIdsType
     } else if (types->weaponIds.find(cardId) != types->weaponIds.end()) {
         if (cardId == 201) {
-            return new Card201();
+            card = new Card201();
         }
     }
     if (card != nullptr) {
