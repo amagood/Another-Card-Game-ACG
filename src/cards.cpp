@@ -3,14 +3,14 @@
 #include "cards.h"
 #include <plate.h>
 #include "CardInfoSystem.h"
-#include <Deck.h>
 #include <vector>
 
 constexpr int maxHp = 30;
 
+/*
 void draw(Plate &state){
     state.hand[state.whosTurn].push_back(state..popDeck());
-}
+}*/
 
 Card::Card(int attack,int healthPoint,int mannaRequired,int ID, std::string Name)
 {
