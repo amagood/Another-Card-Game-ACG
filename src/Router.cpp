@@ -22,17 +22,33 @@ void Router::end() {
 }
 nlohmann::json Router::run(nlohmann::json &j) {
     if (j["data"]["eventType"] == "accountSystem") {
-        return accountSystemController->run(j);
+        try {
+            return accountSystemController->run(j);
+        } catch (exception &e) {
+            error("accountSystem but I don't know what happen");
+            return nlohmann::json({});
+        }
     } else if (j["data"]["eventType"] == "room" || j["data"]["eventType"] == "desk") {
         error("goto arena");
-        j["data"] = arenaController->run(j["data"])["data"];
-        return j;
+        try {
+            j["data"] = arenaController->run(j["data"])["data"];
+            return j;
+        } catch (exception &e){
+            error("arenaError but I don't know what happen");
+            return nlohmann::json({});
+        }
+
     } else if (j["data"]["eventType"] == "usefulcalls" ) {
         error("goto usefulCalls");
-        j = usefulCalls->run(j);
-        return j;
+        try {
+            j = usefulCalls->run(j);
+            return j;
+        } catch (exception &e) {
+            error("Error for usefulCalls");
+            return nlohmann::json({});
+        }
     } else {
         error("empty");
-        return nlohmann::json();
+        return nlohmann::json({});
     }
 }
