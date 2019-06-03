@@ -14,6 +14,7 @@ public:
     uint32_t drawCard();
 private:
     U32vec cardpools;
+    U32vec drawAbleCardpools;
     std::default_random_engine rd;
     CardInfoSystem cardInfoSystem;
 };
