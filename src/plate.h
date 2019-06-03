@@ -6,11 +6,12 @@
 #define ANOTHER_CARD_GAME_ACG_PLATE_H
 
 #include <vector>
+#include "Deck.h"
 class Card;
-
 struct Plate
 {
     std::vector<Card *> BF[2],hand[2]; //battlefield
+    Deck playerDeck[2];
     int playerHp[2];
     bool whosTurn;
     int GodHpAtk;

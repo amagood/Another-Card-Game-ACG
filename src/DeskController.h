@@ -6,8 +6,6 @@
 #define ANOTHER_CARD_GAME_ACG_DESKCONTROLLER_H
 
 #include <vector>
-#include "cards.h"
-#include "Deck.h"
 #include "NDesk.h"
 #include <ctime>
 #include <nlohmann/json.hpp>
@@ -24,6 +22,5 @@ private:
     nlohmann::json Card2Json(Card *temp);
     NDesk desk_;
     Plate plate_;
-    Deck PD[2];
 };
 #endif //ANOTHER_CARD_GAME_ACG_DESKCONTROLLER_H

@@ -7,11 +7,11 @@
 void DeskController::run(U32vec &player1, U32vec &player2){
     CardFactory CF_;//Deck method & Cards factory
     while(!player1.empty()){
-        PD[0].pushCard(CF_.createCard(player1[0]));
+        plate_.playerDeck[0].pushCard(CF_.createCard(player1[0]));
         player1.erase(player1.begin());
     }
     while(!player2.empty()){
-        PD[1].pushCard(CF_.createCard(player2[0]));
+        plate_.playerDeck[1].pushCard(CF_.createCard(player2[0]));
         player1.erase(player2.begin());
     }
     initPlate();
@@ -22,7 +22,7 @@ nlohmann::json DeskController::getJson(nlohmann::json json_){
     if(plate_.whosTurn != json_["data"]["myPlayerId"]){ //if change player
         //draw card(change people)
         plate_.whosTurn = json_["data"]["myPlayerId"];
-        desk_.draw(plate_, PD[plate_.whosTurn]);
+        desk_.draw(plate_, plate_.playerDeck[plate_.whosTurn]);
         //package and return
         return package();
     }
@@ -40,7 +40,7 @@ nlohmann::json DeskController::getJson(nlohmann::json json_){
         if((int)json_["data"]["targetCardId"]/10 < 2){
             int side = (plate_.whosTurn + (int)json_["data"]["targetCardId"]%10) % 2;
             Card * target = plate_.BF[side][(int)json_["data"]["targetCardId"]/10];
-            desk_.playerMovement(plate_, PD[plate_.whosTurn], json_["data"]["useOrAttack"], Main, target);
+            desk_.playerMovement(plate_, json_["data"]["useOrAttack"], Main, target);
         }
         else{ //全場或頭
             if((int)json_["data"]["targetCardId"]/10 == 3){ //頭
@@ -49,12 +49,12 @@ nlohmann::json DeskController::getJson(nlohmann::json json_){
                 //設定血量
                 temp->setHp(plate_.playerHp[!plate_.whosTurn]);
                 //playerMovement
-                desk_.playerMovement(plate_, PD[plate_.whosTurn], json_["data"]["useOrAttack"], Main, temp);
+                desk_.playerMovement(plate_, json_["data"]["useOrAttack"], Main, temp);
                 //寫回血量
                 plate_.playerHp[!plate_.whosTurn] = temp->getHp();
             }
             else{
-                desk_.playerMovement(plate_, PD[plate_.whosTurn], json_["data"]["useOrAttack"], Main);
+                desk_.playerMovement(plate_, json_["data"]["useOrAttack"], Main);
             }
         }
     }
@@ -67,8 +67,8 @@ nlohmann::json DeskController::getJson(nlohmann::json json_){
 void DeskController::initPlate(){
     //起手五張
     for(int i=0;i<5;i++){
-       plate_.hand[0].push_back(PD[0].popDeck(-1));
-       plate_.hand[1].push_back(PD[1].popDeck(-1));
+       plate_.hand[0].push_back(plate_.playerDeck[0].popDeck(-1));
+       plate_.hand[1].push_back(plate_.playerDeck[1].popDeck(-1));
     }
     //set player HP
     plate_.playerHp[0] = 30;

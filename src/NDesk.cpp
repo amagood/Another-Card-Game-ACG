@@ -4,9 +4,7 @@
 
 #include "NDesk.h"
 
-NDesk::NDesk(){}
-
-void NDesk::playerMovement(Plate &state, Deck &deck, std::string action, Card *Main, Card *target){
+void NDesk::playerMovement(Plate &state, std::string action, Card *Main, Card *target){
     if(action == "use"){
         ((Spell*)Main)->use(&state,target);
     }
@@ -28,6 +26,6 @@ void NDesk::use(std::vector<Card *> Cards[2],bool t) {
         }
 }
 
-void NDesk::draw(Plate &state, Deck &deck){
-    state.hand[state.whosTurn].push_back(deck.popDeck());
+void NDesk::draw(Plate &state){
+    state.hand[state.whosTurn].push_back(state.playerDeck[state.whosTurn].popDeck());
 }
