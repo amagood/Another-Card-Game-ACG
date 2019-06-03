@@ -8,6 +8,10 @@
 
 constexpr int maxHp = 30;
 
+void draw(Plate &state){
+    state.hand[state.whosTurn].push_back(state..popDeck());
+}
+
 Card::Card(int attack,int healthPoint,int mannaRequired,int ID, std::string Name)
 {
     atk=attack;
@@ -137,6 +141,16 @@ void Card003::use(Plate *p,Card *card)
     p->GodHpAtk+=1;
 }
 
+void Card004::use(Plate *p,Card *card)
+{
+    p->GodHpAtk+=1;
+}
+/////////////////spells/////////////////
+/*
+void Card101::use(Plate *p,Card *target)
+{
 
+}
+*/
 
 //////////////////////////////weapons///////////////////

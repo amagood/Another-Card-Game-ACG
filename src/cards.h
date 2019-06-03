@@ -103,6 +103,24 @@ public:
     void use(Plate *p,Card *target);
 };
 
+class Card004 final : public Minion
+{
+public:
+    Card004() = default;
+    void use(Plate *p,Card *target);
+};
+
+/////////////////spells/////////////////
+/*
+class Card101 final : public Spell
+{
+public:
+    Card101 = default;
+    void use(Plate *p,Card *target);
+
+};
+*/
+
 /////////////////weapons/////////////////
 class Card201 final : public Weapon
 {
