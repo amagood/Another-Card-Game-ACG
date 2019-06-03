@@ -5,7 +5,7 @@
 
 #include <nlohmann/json.hpp>
 
-#include "cards.h"
+class Card;
 
 class Deck
 {

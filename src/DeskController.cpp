@@ -22,7 +22,7 @@ nlohmann::json DeskController::getJson(nlohmann::json json_){
     if(plate_.whosTurn != json_["data"]["myPlayerId"]){ //if change player
         //draw card(change people)
         plate_.whosTurn = json_["data"]["myPlayerId"];
-        desk_.draw(plate_, plate_.playerDeck[plate_.whosTurn]);
+        desk_.draw(plate_);
         //package and return
         return package();
     }

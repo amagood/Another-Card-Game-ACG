@@ -48,7 +48,7 @@ Card *Deck::popDeck(int index)
     return nullptr;
 }
 //-1 抽一張牌, others just pop by index
-
+/*
 Card *Deck::getIndexCards(int num, int mode, std::type_info sieve)
 {
     if (mode) // mode => 1 or -1
@@ -66,7 +66,6 @@ Card *Deck::getIndexCards(int num, int mode, std::type_info sieve)
     else // mode => 0
     {
         int temp = rand() % deckLinkList.size();
-        // TODO fixed
         while (sieve == typeid(*deckLinkList[temp]))
         {
             temp = rand() % deckLinkList.size();
@@ -93,7 +92,7 @@ Card *Deck::getIndexCards(int num, int mode)
         return deckLinkList[temp];
     }
 }
-
+*/
 //取得Card reference, mode=0 (random抽取), mode=1 (從牌堆最前面), mode=-1 (從牌堆最後面), sieve=-1 所有牌,others 只有那種type的牌
 
 void Deck::deckShuffler()

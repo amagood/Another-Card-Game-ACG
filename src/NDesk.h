@@ -10,7 +10,6 @@
 
 class NDesk{ //執行指令
 public:
-    NDesk();//constructor(....)
 
     void playerMovement(Plate &state, std::string action, Card *Main, Card *target = NULL);
 
