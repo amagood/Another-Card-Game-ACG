@@ -30,11 +30,19 @@ Card* CardFactory::createCard(int cardId) {
         // spellIdsType
         if(cardId == 101)
         {
-            cardId = new Card101();
+            card = new Card101();
         }
         else if(cardId == 102)
         {
-            cardId = new Card102();
+            card = new Card102();
+        }
+        else if(cardId == 103)
+        {
+            card = new Card103();
+        }
+        else if(cardId == 104)
+        {
+            card = new Card104();
         }
     } else if (types->weaponIds.find(cardId) != types->weaponIds.end()) {
         if (cardId == 201) {

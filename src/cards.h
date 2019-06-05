@@ -115,14 +115,28 @@ public:
 class Card101 final : public Spell
 {
 public:
-    Card101 = default;
+    Card101() = default;
     void use(Plate *p,Card *target);
 
 };
 class Card102 final : public Spell
 {
 public:
-    Card102 = default;
+    Card102() = default;
+    void use(Plate *p,Card *target);
+
+};
+class Card103 final : public Spell
+{
+public:
+    Card103() = default;
+    void use(Plate *p,Card *target);
+
+};
+class Card104 final : public Spell
+{
+public:
+    Card104() = default;
     void use(Plate *p,Card *target);
 
 };
