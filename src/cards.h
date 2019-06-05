@@ -111,7 +111,7 @@ public:
 };
 
 /////////////////spells/////////////////
-/*
+
 class Card101 final : public Spell
 {
 public:
@@ -119,7 +119,14 @@ public:
     void use(Plate *p,Card *target);
 
 };
-*/
+class Card102 final : public Spell
+{
+public:
+    Card102 = default;
+    void use(Plate *p,Card *target);
+
+};
+
 
 /////////////////weapons/////////////////
 class Card201 final : public Weapon

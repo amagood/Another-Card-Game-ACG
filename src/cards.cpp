@@ -8,9 +8,23 @@
 constexpr int maxHp = 30;
 
 /*
-void draw(Plate &state){
-    state.hand[state.whosTurn].push_back(state..popDeck());
-}*/
+ *
+struct Plate
+{
+    std::vector<Card *> BF[2],hand[2]; //battlefield
+    Deck playerDeck[2];
+    int playerHp[2];
+    int whosTurn;
+    int GodHpAtk;
+};
+ */
+void draw(std::vector<Card*> &to,Deck &from)
+{
+    Card* tmp=from.popDeck(-1);
+
+    to.emplace_back(tmp);
+
+}
 
 Card::Card(int attack,int healthPoint,int mannaRequired,int ID, std::string Name)
 {
@@ -146,11 +160,19 @@ void Card004::use(Plate *p,Card *card)
     p->GodHpAtk+=1;
 }
 /////////////////spells/////////////////
-/*
+
 void Card101::use(Plate *p,Card *target)
 {
+    int usePlayer = (p->whosTurn?1:0);
+    draw(p->hand[usePlayer],p->playerDeck[usePlayer]);  //draw 1 card out
 
 }
-*/
+void Card102::use(Plate *p,Card *target)
+{
+    int usePlayer = (p->whosTurn?1:0);
+    for (int i=0;i<2;i++) {
+        draw(p->hand[usePlayer],p->playerDeck[usePlayer]);  //draw 1 card out
+    }
+}
 
 //////////////////////////////weapons///////////////////

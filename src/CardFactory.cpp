@@ -28,6 +28,14 @@ Card* CardFactory::createCard(int cardId) {
 
     } else if (types->spellIds.find(cardId) != types->spellIds.end()) {
         // spellIdsType
+        if(cardId == 101)
+        {
+            cardId = new Card101();
+        }
+        else if(cardId == 102)
+        {
+            cardId = new Card102();
+        }
     } else if (types->weaponIds.find(cardId) != types->weaponIds.end()) {
         if (cardId == 201) {
             card = new Card201();
