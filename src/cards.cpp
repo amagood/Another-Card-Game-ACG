@@ -159,6 +159,31 @@ void Card004::use(Plate *p,Card *card)
 {
     p->GodHpAtk+=1;
 }
+void Card005::use(Plate *p,Card *card)
+{
+    p->GodHpAtk+=1;
+    int usePlayer = (p->whosTurn?1:0);
+    draw(p->hand[usePlayer],p->playerDeck[usePlayer]);  //draw 1 card out
+}
+void Card006::use(Plate *p,Card *card)
+{
+    p->GodHpAtk+=1;
+    int usePlayer = (p->whosTurn?1:0);
+    draw(p->hand[usePlayer],p->playerDeck[usePlayer]);  //draw 1 card out
+
+    card->hpIncrease(-2);
+}
+void Card007::use(Plate *p,Card *card)
+{
+    holdPlate=p;
+}
+void Card007::attack(Minion &target)
+{
+    hpIncrease(-target.getAtk());
+    target.hpIncrease(-getAtk());
+
+    holdPlate->GodHpAtk+=1;
+}
 /////////////////spells/////////////////
 
 void Card101::use(Plate *p,Card *target)
@@ -213,7 +238,7 @@ void Card109::use(Plate *p,Card *target)
     target->hpIncrease(-10);
     for(auto i:p->BF[(usePlayer+1)%2])
     {
-        i->hpIncrease(-5)
+        i->hpIncrease(-5);
     }
 }
 //////////////////////////////weapons///////////////////

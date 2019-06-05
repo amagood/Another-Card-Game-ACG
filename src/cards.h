@@ -68,7 +68,7 @@ class Minion : public Card
 public:
 	Minion();
 
-    void attack(Minion &target);
+    virtual void attack(Minion &target);
     virtual ~Minion(){};
 };
 
@@ -107,6 +107,25 @@ class Card004 final : public Minion
 {
 public:
     Card004() = default;
+    void use(Plate *p,Card *target);
+};
+class Card005 final : public Minion
+{
+public:
+    Card005() = default;
+    void use(Plate *p,Card *target);
+};
+class Card006 final : public Minion
+{
+public:
+    Card006() = default;
+    void use(Plate *p,Card *target);
+};
+class Card007 final : public Minion
+{
+public:
+    Card007() = default;
+    void attack(Minion &target);
     void use(Plate *p,Card *target);
 };
 
