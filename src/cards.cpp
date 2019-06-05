@@ -184,6 +184,24 @@ void Card007::attack(Minion &target)
 
     holdPlate->GodHpAtk+=1;
 }
+void Card008::use(Plate *p,Card *card)
+{
+    holdPlate=p;
+}
+void Card008::attack(Minion &target)
+{
+    hpIncrease(-target.getAtk());
+    target.hpIncrease(-getAtk());
+
+    int usePlayer = (holdPlate->whosTurn?1:0);
+    draw(holdPlate->hand[usePlayer],holdPlate->playerDeck[usePlayer]);  //draw 1 card out
+}
+
+void Card009::use(Plate *p,Card *card)
+{
+    Minion *tmp=(Minion *)card;
+    this->attack(*tmp);
+}
 /////////////////spells/////////////////
 
 void Card101::use(Plate *p,Card *target)

@@ -29,6 +29,10 @@ Card* CardFactory::createCard(int cardId) {
             card = new Card006();
         } else if (cardId == 7) {
             card = new Card007();
+        } else if (cardId == 8) {
+            card = new Card008();
+        } else if (cardId == 9) {
+            card = new Card009();
         }
 
 
