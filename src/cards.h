@@ -140,7 +140,34 @@ public:
     void use(Plate *p,Card *target);
 
 };
+class Card105 final : public Spell
+{
+public:
+    Card105() = default;
+    void use(Plate *p,Card *target);
 
+};
+class Card106 final : public Spell
+{
+public:
+    Card106() = default;
+    void use(Plate *p,Card *target);
+
+};
+class Card107 final : public Spell
+{
+public:
+    Card107() = default;
+    void use(Plate *p,Card *target);
+
+};
+class Card108 final : public Spell
+{
+public:
+    Card108() = default;
+    void use(Plate *p,Card *target);
+
+};
 
 /////////////////weapons/////////////////
 class Card201 final : public Weapon

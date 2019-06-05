@@ -44,6 +44,22 @@ Card* CardFactory::createCard(int cardId) {
         {
             card = new Card104();
         }
+        else if(cardId == 105)
+        {
+            card = new Card105();
+        }
+        else if(cardId == 106)
+        {
+            card = new Card106();
+        }
+        else if(cardId == 107)
+        {
+            card = new Card107();
+        }
+        else if(cardId == 108)
+        {
+            card = new Card108();
+        }
     } else if (types->weaponIds.find(cardId) != types->weaponIds.end()) {
         if (cardId == 201) {
             card = new Card201();

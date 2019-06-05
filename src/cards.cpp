@@ -189,5 +189,23 @@ void Card104::use(Plate *p,Card *target)
     }
     target->atkIncrease(-3);
 }
+void Card105::use(Plate *p,Card *target)
+{
+    target->atkIncrease(-2);
+}
+void Card106::use(Plate *p,Card *target)
+{
+    target->atkIncrease(-6);
+}
+void Card107::use(Plate *p,Card *target)
+{
+    target->atkIncrease(-8);
+}
+void Card108::use(Plate *p,Card *target)
+{
+    int usePlayer = (p->whosTurn?1:0);
+    draw(p->hand[usePlayer],p->playerDeck[usePlayer]);  //draw 1 card out
+    target->atkIncrease(-10);
+}
 
 //////////////////////////////weapons///////////////////
