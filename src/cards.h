@@ -168,6 +168,12 @@ public:
     void use(Plate *p,Card *target);
 
 };
+class Card109 final : public Spell
+{
+public:
+    Card109() = default;
+    void use(Plate *p,Card *target);
+};
 
 /////////////////weapons/////////////////
 class Card201 final : public Weapon

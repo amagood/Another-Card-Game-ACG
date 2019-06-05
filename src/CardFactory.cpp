@@ -60,6 +60,10 @@ Card* CardFactory::createCard(int cardId) {
         {
             card = new Card108();
         }
+        else if(cardId == 109)
+        {
+            card = new Card109();
+        }
     } else if (types->weaponIds.find(cardId) != types->weaponIds.end()) {
         if (cardId == 201) {
             card = new Card201();

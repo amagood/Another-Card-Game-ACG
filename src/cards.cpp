@@ -187,25 +187,33 @@ void Card104::use(Plate *p,Card *target)
     for (int i=0;i<5;i++) {
         draw(p->hand[usePlayer],p->playerDeck[usePlayer]);  //draw 1 card out
     }
-    target->atkIncrease(-3);
+    target->hpIncrease(-3);
 }
 void Card105::use(Plate *p,Card *target)
 {
-    target->atkIncrease(-2);
+    target->hpIncrease(-2);
 }
 void Card106::use(Plate *p,Card *target)
 {
-    target->atkIncrease(-6);
+    target->hpIncrease(-6);
 }
 void Card107::use(Plate *p,Card *target)
 {
-    target->atkIncrease(-8);
+    target->hpIncrease(-8);
 }
 void Card108::use(Plate *p,Card *target)
 {
     int usePlayer = (p->whosTurn?1:0);
     draw(p->hand[usePlayer],p->playerDeck[usePlayer]);  //draw 1 card out
-    target->atkIncrease(-10);
+    target->hpIncrease(-10);
 }
-
+void Card109::use(Plate *p,Card *target)
+{
+    int usePlayer = (p->whosTurn?1:0);
+    target->hpIncrease(-10);
+    for(auto i:p->BF[(usePlayer+1)%2])
+    {
+        i->hpIncrease(-5)
+    }
+}
 //////////////////////////////weapons///////////////////
