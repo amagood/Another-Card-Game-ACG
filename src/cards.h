@@ -32,7 +32,7 @@ public:
 	void setId(int num);
 	void setName(std::string s);
 
-    void atkIncrease(int i);
+    virtual void atkIncrease(int i);
     void hpIncrease(int i);
 
     int getAtk();
@@ -140,6 +140,20 @@ class Card009 final : public Minion
 public:
     Card009() = default;
     void use(Plate *p,Card *target);
+};
+class Card010 final : public Minion
+{
+public:
+    Card010() = default;
+    void use(Plate *p,Card *target);
+    void atkIncrease(int i);
+};
+class Card011 final : public Minion
+{
+public:
+    Card011() = default;
+    void use(Plate *p,Card *target);
+    void atkIncrease(int i);
 };
 
 /////////////////spells/////////////////

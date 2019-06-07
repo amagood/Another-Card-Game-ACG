@@ -202,6 +202,33 @@ void Card009::use(Plate *p,Card *card)
     Minion *tmp=(Minion *)card;
     this->attack(*tmp);
 }
+void Card010::use(Plate *p,Card *card)
+{
+    holdPlate=p;
+}
+void Card010::atkIncrease(int i)
+{
+    if(i<0)
+    {
+        int usePlayer = (holdPlate->whosTurn?1:0);
+        draw(holdPlate->hand[usePlayer],holdPlate->playerDeck[usePlayer]);  //draw 1 card out
+    }
+}
+void Card011::use(Plate *p,Card *card)
+{
+    holdPlate=p;
+}
+void Card011::atkIncrease(int i)
+{
+    if(i<0)
+    {
+        int usePlayer = (holdPlate->whosTurn?1:0);
+        for(auto i:holdPlate->BF[(usePlayer+1)%2])
+        {
+            i->hpIncrease(-5);
+        }
+    }
+}
 /////////////////spells/////////////////
 
 void Card101::use(Plate *p,Card *target)
