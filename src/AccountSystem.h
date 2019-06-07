@@ -17,7 +17,6 @@
 #include "debug.h"
 #include "roommode.h"
 
-
 class AccountSystem {
 public:
     AccountSystem();

@@ -10,25 +10,22 @@
 #include "CardInfoSystem.h"
 class CardFactory;
 
-class CardIdType {
-    friend CardFactory;
-    U32set minionIds;
-    U32set weaponIds;
-    U32set spellIds;
-    CardIdType() {
-        minionIds.insert(0);
-        minionIds.insert(1);
-        minionIds.insert(2);
-        minionIds.insert(3);
-        minionIds.insert(4);
-        weaponIds.insert(201);
-    }
-
+class Creator
+{
+public:
+    virtual Card* create() = 0;
+};
+template <class T>
+class CreatorImpl : public Creator
+{
+public:
+    virtual Card* create() { return new T; }
 };
 
 class CardFactory {
-    CardIdType * types;
     CardInfoSystem cardInfoSystem;
+    std::map<uint32_t, Creator *> createTable;
+
 public:
     CardFactory();
     Card * createCard(int cardId);
