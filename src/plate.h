@@ -15,6 +15,8 @@ struct Plate
     int playerHp[2];
     int whosTurn;
     int GodHpAtk;
+    int Mp;
+    int CanAttack[20];
 };
 
 #endif //ANOTHER_CARD_GAME_ACG_PLATE_H

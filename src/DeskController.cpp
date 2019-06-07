@@ -6,6 +6,7 @@
 #include "debug.h"
 
 void DeskController::run(U32vec &player1, U32vec &player2){
+    error("Desk_init");
     CardFactory CF_;//Deck method & Cards factory
     while(!player1.empty()){
         plate_.playerDeck[0].pushCard(CF_.createCard(player1[0]));
@@ -20,25 +21,42 @@ void DeskController::run(U32vec &player1, U32vec &player2){
 }
 
 nlohmann::json DeskController::getJson(nlohmann::json json_){
-    if(plate_.whosTurn != json_["myPlayerId"]){ //if change player
+    error("DC eat~!!!");
+    int tmpy = (int)json_["myPlayerId"];
+    if(plate_.whosTurn != tmpy){ //if change player
         //draw card(change people)
+        error("draw card");
         error(json_["myPlayerId"]);
         plate_.whosTurn = json_["myPlayerId"];
         desk_.draw(plate_);
+        plate_.Mp++;
         //package and return
         return package();
     }
-
-    if(json_["useOrAttack"]=="useCard") //UseCard
-    {
+    // if mp ok~
+    int tmpx = (int)json_["selectedCardId"]/10;
+    if(plate_.Mp >=  plate_.BF[plate_.whosTurn][(int)json_["selectedCardId"]/10]->getMp()){
+        error("Mp OK~");
+        plate_.Mp -= plate_.BF[plate_.whosTurn][(int)json_["selectedCardId"]/10]->getMp(); // !!??
+        error("Main?");
         Card * Main;
-        if((int)json_["selectedCardId"]%10){
-            Main= plate_.BF[plate_.whosTurn][(int)json_["selectedCardId"]/10];
+        if((int)json_["selectedCardId"]/10){
+            if(plate_.CanAttack[(int)json_["selectedCardId"]/10]){
+                nlohmann::json output;
+                output["type"] = "warning";
+                output["message"] = "so cold~";
+                return output;
+            }
+            else{
+                Main = plate_.BF[plate_.whosTurn][(int)json_["selectedCardId"]/10];
+                plate_.CanAttack[(int)json_["selectedCardId"]/10] = 1;
+            }
         }
         else{
-            Main= plate_.hand[plate_.whosTurn][(int)json_["selectedCardId"]/10];
+            Main = plate_.hand[plate_.whosTurn][(int)json_["selectedCardId"]/10];
         }
-
+        //決定對象
+        error("target?");
         if((int)json_["targetCardId"]/10 < 2){
             int side = (plate_.whosTurn + (int)json_["targetCardId"]%10) % 2;
             Card * target = plate_.BF[side][(int)json_["targetCardId"]/10];
@@ -59,11 +77,22 @@ nlohmann::json DeskController::getJson(nlohmann::json json_){
                 desk_.playerMovement(plate_, json_["useOrAttack"], Main);
             }
         }
+        error("package return");
+        return package();
     }
     else{
-        throw "json_error!!!";
+        /* dialog */
+        // output a message to user
+        /*{
+            “type”: string // “error”, “warning”, “info”
+            “message”: string
+       }*/
+        nlohmann::json output;
+        output["type"] = "warning";
+        output["message"] = "Mp GG~";
+        return output;
     }
-    return package();
+
 }
 
 void DeskController::initPlate(){
@@ -94,6 +123,7 @@ nlohmann::json DeskController::Card2Json(Card *temp){
 }
 
 nlohmann::json DeskController::package(){ //auto plate -> json
+    error("packing");
     nlohmann::json Pack;
     std::vector <nlohmann::json> output;
 
