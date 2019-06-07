@@ -159,6 +159,16 @@ nlohmann::json AccountSystemController::run(nlohmann::json &j) {
             }
         }
         success = isSuccess;
+    } else if (func == "addAllToDesk") {
+        error("Add all to desk");
+        U32vec params = paramsToU32vec(j);
+        if(accountSystem->exist(params[0])) {
+            success = accountSystem->addAllToDesk(params[0]);
+            data["returnValue"]["deck"] = accountSystem->getDeck(params[0]);
+            data["returnValue"]["deckAmount"] = accountSystem->getDeck(params[0]).size();
+        } else {
+            success = false;
+        }
     }
     if(success) {
         data["returnValue"]["0"] = "1";

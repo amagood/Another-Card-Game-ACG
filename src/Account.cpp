@@ -81,10 +81,17 @@ uint32_t Account::getUniqueNumber() {
 
 U32vec Account::getDeck (){
     return deck_card_list;
-};
+}
 U32vec Account::getCards (){
     return card_list;
-};
+}
+U32vec Account::getCards (uint32_t amount){
+    U32vec s;
+    for (uint32_t i = 0; i < amount && i < card_list.size(); i++) {
+        s.push_back(card_list.at(i));
+    }
+    return s;
+}
 void Account::setDeck(U32vec deck) {
     deck_card_list = deck;
 }
