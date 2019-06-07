@@ -48,6 +48,7 @@ nlohmann::json AccountSystemController::run(nlohmann::json &j) {
         error("AccountSystemController login");
         StrVec params = paramsToStrVec(j);
         success = accountSystem->login(params[0], params[1]);
+        data["returnValue"]["connectionId"] = params[3];
     } else if (func == "logout") {
         error("AccountSystemController log out");
         U32vec params = paramsToU32vec(j);
@@ -171,9 +172,9 @@ nlohmann::json AccountSystemController::run(nlohmann::json &j) {
         }
     }
     if(success) {
-        data["returnValue"]["0"] = "1";
+        data["returnValue"]["success"] = true;
     } else {
-        data["returnValue"]["0"] = "0";
+        data["returnValue"]["success"] = false;
     }
 
     j["data"] = data;
