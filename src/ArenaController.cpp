@@ -29,10 +29,11 @@ nlohmann::json ArenaController::run(nlohmann::json &json)
             case GET_ROOMINFO:{
                 std::string name;
                 U32vec player;
-                arena.getRoomInfo(mode, json["roomId"], name, player);
+                bool success = arena.getRoomInfo(mode, json["roomId"], name, player);
                 data["roomId"] = json["roomId"];
                 data["roomName"] = name;
                 data["playerId"] = player;
+                data["result"] = (int)success;
                 error("GET_ROOMINFO");
             }break;
             case CREATE_ROOM:{
