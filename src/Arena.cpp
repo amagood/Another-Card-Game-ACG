@@ -64,7 +64,7 @@ bool Arena::startGame(RoomMode mode, uint32_t id)
     room->startGame(deck);
     return true;
 }
-void Arena::getRoomList(RoomMode mode, U32vec &idList, std::vector<std::string> &nameList)
+void Arena::getRoomList(RoomMode mode, U32vec &idList, std::vector<std::string> nameList)
 {
     for(int i=0;i<_room[(int)mode].size();i++)//auto room : _room[(int)mode])
     {
@@ -72,7 +72,7 @@ void Arena::getRoomList(RoomMode mode, U32vec &idList, std::vector<std::string> 
         nameList.push_back(_room[(int)mode][i]->getName());
     }
 }
-void Arena::getRoomInfo(RoomMode mode, uint32_t id, std::string &name, U32vec &player)
+void Arena::getRoomInfo(RoomMode mode, uint32_t id, std::string name, U32vec &player)
 {
     Room* room = _getRoom(mode, id);
     name = room->getName();
