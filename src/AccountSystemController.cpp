@@ -55,7 +55,6 @@ nlohmann::json AccountSystemController::run(nlohmann::json &j) {
         success = accountSystem->logout(params[0]);
     } else if (func == "getAccountInfo") {
         error("AccountSystemController get info");
-        // TODO
 
         U32vec params = paramsToU32vec(j);
         bool flag = true;
