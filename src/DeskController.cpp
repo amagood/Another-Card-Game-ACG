@@ -4,7 +4,7 @@
 
 #include "DeskController.h"
 #include "debug.h"
-
+#include "CardFactory.h"
 void DeskController::run(U32vec &player1, U32vec &player2){
     error("Desk_init");
     CardFactory CF_;//Deck method & Cards factory
@@ -22,11 +22,9 @@ void DeskController::run(U32vec &player1, U32vec &player2){
 
 nlohmann::json DeskController::getJson(nlohmann::json json_){
     error("DC eat~!!!");
-    int tmpy = (int)json_["myPlayerId"];
-    if(plate_.whosTurn != tmpy){ //if change player
+    if(plate_.whosTurn != (int)json_["myPlayerId"]){ //if change player
         //draw card(change people)
         error("draw card");
-        error(json_["myPlayerId"]);
         plate_.whosTurn = json_["myPlayerId"];
         desk_.draw(plate_);
         plate_.Mp++;
@@ -98,8 +96,8 @@ nlohmann::json DeskController::getJson(nlohmann::json json_){
 void DeskController::initPlate(){
     //起手五張
     for(int i=0;i<5;i++){
-       plate_.hand[0].push_back(plate_.playerDeck[0].popDeck(-1));
-       plate_.hand[1].push_back(plate_.playerDeck[1].popDeck(-1));
+       plate_.hand[0].push_back(plate_.playerDeck[0].popDeck());
+       plate_.hand[1].push_back(plate_.playerDeck[1].popDeck());
     }
     //set player HP
     plate_.playerHp[0] = 30;
@@ -114,11 +112,16 @@ int DeskController::winer_and_endgame() {
 
 nlohmann::json DeskController::Card2Json(Card *temp){
     nlohmann::json tmp;
-    tmp["CardId"] = temp->getId();
-    tmp["CardCost"] = temp->getMp();
-    tmp["CardHealth"] = temp->getHp();
-    tmp["CardATK"] = temp->getAtk();
-    tmp["attributes"] = temp->getAttributes(); //???
+    if(temp == NULL){
+        error("NO~~~~!!!");
+    }
+    else{
+        tmp["CardId"] = temp->getId();
+        tmp["CardCost"] = temp->getMp();
+        tmp["CardHealth"] = temp->getHp();
+        tmp["CardATK"] = temp->getAtk();
+        tmp["attributes"] = temp->getAttributes(); //???
+    }
     return tmp;
 }
 
@@ -139,6 +142,8 @@ nlohmann::json DeskController::package(){ //auto plate -> json
     }
     Pack["HP0"] = plate_.playerHp[0];
     Pack["HP1"] = plate_.playerHp[1];
+    Pack["Mp"] = plate_.Mp;
+    error(Pack);
     return Pack;
 }
 

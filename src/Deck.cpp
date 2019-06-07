@@ -1,52 +1,43 @@
 #include "Deck.h"
-
-#include <iostream>
-#include <vector>
 #include <ctime>
-#include <nlohmann/json.hpp>
+#include <random>
 
-using json = nlohmann::json;
-using namespace std;
+Deck::Deck(){
+    head_ptr = 0;
+    for(int i = 0;i < 1000;i++)
+        deckLinkList[i];
+}
 
 int Deck::size()
 {
-    return deckLinkList.size();
+    return head_ptr;
 }
 
 void Deck::pushCard(Card *C)
 {
-    deckLinkList.push_back(C);
+    deckLinkList[head_ptr++] = C;
 }
-void Deck::pushCard(json JSON) //
-{
-    //Card Card_;
-
-    //Deck::pushCard(Card_);
-}
-
-//-1 search by type, others by id
-
-vector<Card *> Deck::getDeck()
-{
-    return this->deckLinkList;
-}
-//取得整副牌
 
 Card *Deck::popDeck(int index)
 {
     if (index == -1)
     {
-        Card *card_ = deckLinkList[-1];
-        deckLinkList.pop_back();
-        return card_;
+        Card * Card_ = deckLinkList[head_ptr-1];
+        deckLinkList[head_ptr-1] = NULL;
+        head_ptr--;
+        return Card_;
     }
     else
     {
-        delete *(deckLinkList.begin() + index);
-        deckLinkList.erase(deckLinkList.begin() + index);
+        for(int i=index;i<head_ptr;i++)
+            deckLinkList[i] = deckLinkList[i+1];
+        head_ptr--;
     }
     return nullptr;
 }
+
+
+
 //-1 抽一張牌, others just pop by index
 /*
 Card *Deck::getIndexCards(int num, int mode, std::type_info sieve)
@@ -98,18 +89,17 @@ Card *Deck::getIndexCards(int num, int mode)
 void Deck::deckShuffler()
 {
     Deck::Init();
-    for (uint32_t i = 0; i < deckLinkList.size(); i++)
-        swap(deckLinkList[i], deckLinkList[i + rand() % (deckLinkList.size() - i)]);
+    for (uint32_t i = 0; i < head_ptr; i++)
+        std::swap(deckLinkList[i], deckLinkList[i + rand() % (head_ptr - i)]);
 }
-
-void Deck::Init()
-{
+void Deck::Init(){
     srand(time(NULL));
 }
 
+
 Deck::~Deck()
 {
-    for (uint32_t i = 0; i < deckLinkList.size(); i++)  {
+    for (uint32_t i = 0; i < head_ptr; i++){//TODO
         delete (deckLinkList[i]);
     }
 }
