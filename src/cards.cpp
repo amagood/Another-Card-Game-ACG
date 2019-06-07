@@ -229,6 +229,22 @@ void Card011::atkIncrease(int i)
         }
     }
 }
+
+void Card012::use(Plate *p,Card *card)
+{
+    holdPlate=p;
+}
+void Card012::attack(Minion &target)
+{
+    hpIncrease(-target.getAtk());
+    target.hpIncrease(-getAtk());
+
+    int usePlayer = (holdPlate->whosTurn?1:0);
+    for(auto i:holdPlate->BF[(usePlayer+1)%2])
+    {
+        i->hpIncrease(-getAtk());
+    }
+}
 /////////////////spells/////////////////
 
 void Card101::use(Plate *p,Card *target)

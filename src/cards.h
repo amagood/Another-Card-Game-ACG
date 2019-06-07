@@ -156,6 +156,14 @@ public:
     void atkIncrease(int i);
 };
 
+class Card012 final : public Minion
+{
+public:
+    Card012() = default;
+    void use(Plate *p,Card *target);
+    void attack(Minion &target);
+};
+
 /////////////////spells/////////////////
 
 class Card101 final : public Spell

@@ -59,6 +59,14 @@ Card *CardFactory::createCard(int cardId)
         {
             card = new Card010();
         }
+        else if (cardId == 11)
+        {
+            card = new Card011();
+        }
+        else if (cardId == 12)
+        {
+            card = new Card012();
+        }
 
 
     }
