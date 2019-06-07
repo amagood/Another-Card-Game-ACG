@@ -65,8 +65,13 @@ bool AccountSystemController::logout(nlohmann::json &data, uint32_t userId) {
 bool AccountSystemController::login(nlohmann::json &data, uint32_t userId) {
     error("AccountSystemController login");
     StrVec params = paramsToStrVec(data);
-    data["returnValue"]["connectionId"] = params[3];
-    return accountSystem->exist(params[0]) && accountSystem->login(params[0], params[1]);
+    if(accountSystem->exist(params[0]) && accountSystem->login(params[0], params[1])) {
+        data["returnValue"]["connectionId"] = params[3];
+        data["returnValue"]["userId"] = accountSystem->getUserId(params[0]);
+        return true;
+    } else {
+        return false;
+    }
 }
 bool AccountSystemController::payMoney(nlohmann::json &data, uint32_t userId) {
     error("AccountSystemController pay money");
