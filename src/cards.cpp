@@ -261,15 +261,15 @@ void Card109::use(Plate *p,Card *target)
 }
 void Card110::use(Plate *p,Card *target)
 {
-    target->hp+=2;
+    target->hpIncrease(2);
 }
 void Card111::use(Plate *p,Card *target)
 {
-    target->hp+=5;
+    target->hpIncrease(5);
 }
 void Card112::use(Plate *p,Card *target)
 {
-    target->hp+=8;
+    target->hpIncrease(8);
 }
 void Card113::use(Plate *p,Card *target)
 {
@@ -277,6 +277,42 @@ void Card113::use(Plate *p,Card *target)
     for(auto i:p->BF[(usePlayer+1)%2])
     {
         i->hpIncrease(8);
+    }
+}
+void Card114::use(Plate *p,Card *target)
+{
+    target->hpIncrease(2);
+    target->atkIncrease(2);
+}
+void Card115::use(Plate *p,Card *target)
+{
+    target->hpIncrease(4);
+    target->atkIncrease(5);
+}
+void Card116::use(Plate *p,Card *target)
+{
+    target->hpIncrease(4);
+    target->atkIncrease(8);
+}
+void Card117::use(Plate *p,Card *target)
+{
+    int usePlayer = (p->whosTurn?1:0);
+    for(auto i:p->BF[(usePlayer+1)%2])
+    {
+        i->hpIncrease(5);
+        i->atkIncrease(5);
+    }
+}
+void Card118::use(Plate *p,Card *target)
+{
+    int usePlayer = (p->whosTurn?1:0);
+    if(target->getId()!=0)    //if target isn't hero
+    {
+        target->hpIncrease(12);
+        target->atkIncrease(12);
+
+        auto hero=p->BF[p->whosTurn].at(0);
+        hero->hpIncrease((hero->getHp())/2);
     }
 }
 //////////////////////////////weapons///////////////////

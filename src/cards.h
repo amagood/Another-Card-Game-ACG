@@ -230,6 +230,36 @@ public:
     Card113() = default;
     void use(Plate *p,Card *target);
 };
+class Card114 final : public Spell
+{
+public:
+    Card114() = default;
+    void use(Plate *p,Card *target);
+};
+class Card115 final : public Spell
+{
+public:
+    Card115() = default;
+    void use(Plate *p,Card *target);
+};
+class Card116 final : public Spell
+{
+public:
+    Card116() = default;
+    void use(Plate *p,Card *target);
+};
+class Card117 final : public Spell
+{
+public:
+    Card117() = default;
+    void use(Plate *p,Card *target);
+};
+class Card118 final : public Spell
+{
+public:
+    Card118() = default;
+    void use(Plate *p,Card *target);
+};
 
 
 /////////////////weapons/////////////////
