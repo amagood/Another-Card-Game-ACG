@@ -253,10 +253,30 @@ void Card108::use(Plate *p,Card *target)
 void Card109::use(Plate *p,Card *target)
 {
     int usePlayer = (p->whosTurn?1:0);
-    target->hpIncrease(-10);
+    target->hpIncrease(-5);
     for(auto i:p->BF[(usePlayer+1)%2])
     {
         i->hpIncrease(-5);
+    }
+}
+void Card110::use(Plate *p,Card *target)
+{
+    target->hp+=2;
+}
+void Card111::use(Plate *p,Card *target)
+{
+    target->hp+=5;
+}
+void Card112::use(Plate *p,Card *target)
+{
+    target->hp+=8;
+}
+void Card113::use(Plate *p,Card *target)
+{
+    int usePlayer = (p->whosTurn?1:0);
+    for(auto i:p->BF[(usePlayer+1)%2])
+    {
+        i->hpIncrease(8);
     }
 }
 //////////////////////////////weapons///////////////////
