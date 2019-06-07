@@ -60,6 +60,7 @@ nlohmann::json ArenaController::run(nlohmann::json &json)
                 error("INVITE_FRIEND");
             }break;
             case START_GAME:{
+                error(json["roomId"]);
                 bool success = arena.startGame(mode, json["roomId"]);
                 data["roomId"] = json["roomId"];
                 data["result"] = (int)success;
