@@ -37,7 +37,7 @@ RoomMode Room::getMode(const std::string& mode)
     }
     return RoomMode::ROOMMODE_COUNT;
 }
-Room* Room::createRoom(uint32_t player, RoomMode mode, uint32_t id, const std::string& name, const std::string& password)
+Room* Room::createRoom(uint32_t player, RoomMode mode, uint32_t id, const std::string& name, const std::string& password, const std::string& level)
 {
     switch(mode)
     {
@@ -46,7 +46,7 @@ Room* Room::createRoom(uint32_t player, RoomMode mode, uint32_t id, const std::s
         case ONEONONE_ROOM:
             return new OneOnOneRoom(id, name, password, player);
         case LADDER_ROOM:
-            return new LadderRoom(id, name, password, player);
+            return new LadderRoom(id, name, password, player, level);
         default:
             break;
     }
@@ -61,7 +61,7 @@ void Room::endGame()
 
 
 constexpr short OneOnOneRoom::MaxPlayerNum;
-bool OneOnOneRoom::addPlayer(uint32_t playerid)
+bool OneOnOneRoom::addPlayer(uint32_t playerid, const std::string& level)
 {
     if(isFull()) return false;
     _player.push_back(playerid);
@@ -75,10 +75,10 @@ void OneOnOneRoom::startGame(std::vector<U32vec> deck)
 }
 
 
-constexpr short OneOnOneRoom::MaxPlayerNum;
-bool LadderRoom::addPlayer(uint32_t playerid)
+constexpr short LadderRoom::MaxPlayerNum;
+bool LadderRoom::addPlayer(uint32_t playerid, const std::string& level)
 {
-    if(isFull()) return false;
+    if(isFull() || level!=_level) return false;
     _player.push_back(playerid);
     return true;
 }
