@@ -245,6 +245,12 @@ void Card012::attack(Minion &target)
         i->hpIncrease(-getAtk());
     }
 }
+
+void Card013::use(Plate *p,Card *card)
+{
+    int usePlayer = (holdPlate->whosTurn?1:0);
+    p->BF[usePlayer].emplace_back(new Card013);
+}
 /////////////////spells/////////////////
 
 void Card101::use(Plate *p,Card *target)
