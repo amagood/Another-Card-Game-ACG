@@ -34,7 +34,6 @@ uint32_t Arena::createRoom(uint32_t playerID, RoomMode mode, std::string name, s
 bool Arena::enterRoom(uint32_t playerID, RoomMode mode, uint32_t id, const std::string& password)
 {
     Room* room=_getRoom(mode, id);
-    if(!room) return false;
     if(!room->isPasswordCorrect(password))
         return false;
     return room->addPlayer(playerID);
@@ -51,13 +50,11 @@ uint32_t Arena::enterRoomRandom(uint32_t playerID, RoomMode mode)
 bool Arena::inviteFriend(uint32_t playerID, RoomMode mode, uint32_t id)
 {
     Room* room=_getRoom(mode, id);
-    if(!room) return false;
     return room->addPlayer(playerID);
 }
 bool Arena::startGame(RoomMode mode, uint32_t id)
 {
     Room* room = _getRoom(mode, id);
-    if(!room) return false;
     std::vector<U32vec> deck;
     for(uint32_t player : room->getPlayers()){
         if(_account->getDeck(player).size()!=30)
@@ -75,13 +72,11 @@ void Arena::getRoomList(RoomMode mode, U32vec &idList, std::vector<std::string> 
         nameList.push_back(_room[(int)mode][i]->getName());
     }
 }
-bool Arena::getRoomInfo(RoomMode mode, uint32_t id, std::string &name, U32vec &player)
+void Arena::getRoomInfo(RoomMode mode, uint32_t id, std::string &name, U32vec &player)
 {
     Room* room = _getRoom(mode, id);
-    if(!room) return false;
     name = room->getName();
     player = room->getPlayers();
-    return true;
 }
 ArenaAction Arena::getAction(const std::string& action)
 {
