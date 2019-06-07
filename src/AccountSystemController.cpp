@@ -66,7 +66,7 @@ bool AccountSystemController::login(nlohmann::json &data, uint32_t userId) {
     error("AccountSystemController login");
     StrVec params = paramsToStrVec(data);
     if(accountSystem->exist(params[0]) && accountSystem->login(params[0], params[1])) {
-        data["returnValue"]["connectionId"] = params[3];
+        data["returnValue"]["connectionId"] = params[2];
         data["returnValue"]["userId"] = accountSystem->getUserId(params[0]);
         return true;
     } else {
@@ -157,6 +157,7 @@ nlohmann::json AccountSystemController::run(nlohmann::json &j) {
     std::string func = data["function"];
     data["returnValue"] = nlohmann::json({});
     data["returnValue"]["success"] = (map_functions.count(func) > 0) && (map_functions.at(func)(*this, data, userID));
+    data.erase("params");
     j["data"] = data;
     return j;
 }
