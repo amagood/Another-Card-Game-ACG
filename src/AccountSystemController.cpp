@@ -171,6 +171,7 @@ AccountSystemController::AccountSystemController(AccountSystem * accountSystem1)
         {"getCards", &AccountSystemController::getCards},
         {"getUserId", &AccountSystemController::getUserId},
         {"addAllToDesk", &AccountSystemController::addAllToDesk},
+        {"modifyCards", &AccountSystemController::modifyCards}
     };
 }
 

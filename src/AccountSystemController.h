@@ -15,8 +15,6 @@ class AccountSystemController {
     DrawCardSystem * drawCardSystem;
     std::unordered_map<std::string,
       std::function<bool(AccountSystemController&, nlohmann::json &, uint32_t)>> map_functions;
-//    std::unordered_map<std::string,
-//            bool(AccountSystemController&)(nlohmann::json &, uint32_t)> map_functions;
 
     bool getAccountName(nlohmann::json &data, uint32_t userId);
     bool createAccount(nlohmann::json &data, uint32_t userId);
