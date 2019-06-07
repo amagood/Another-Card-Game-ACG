@@ -46,7 +46,7 @@ public:
     void recordHistory(uint32_t rivalId, bool isWin, RoomMode r);
     uint32_t getUUID() {return user_id_;}
 private:
-    uint32_t user_id_ = 0; // TODO make it unique, readonly
+    uint32_t user_id_ = 0;
     int money_ = 0;
     bool online = false;
     std::string id_;

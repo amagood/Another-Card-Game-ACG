@@ -10,7 +10,7 @@
 #include <ctime>
 #include <nlohmann/json.hpp>
 #include "ACGType.h"
-#include "CardFactory.h"
+
 class DeskController { //分析json 傳遞指令
 public:
     void run(U32vec &player1, U32vec &player2);//前端玩家與排組的順序要對應!!!

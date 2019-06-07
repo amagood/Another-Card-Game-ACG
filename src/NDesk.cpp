@@ -27,5 +27,6 @@ void NDesk::use(std::vector<Card *> Cards[2],bool t) {
 }
 
 void NDesk::draw(Plate &state){
+    state.playerDeck[state.whosTurn].deckShuffler();
     state.hand[state.whosTurn].push_back(state.playerDeck[state.whosTurn].popDeck());
 }
