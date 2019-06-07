@@ -44,6 +44,7 @@ public:
 
 	virtual void use(Plate *p,Card *target)=0;
     virtual ~Card(){};
+    virtual void attack(Card &){};
 
 };
 

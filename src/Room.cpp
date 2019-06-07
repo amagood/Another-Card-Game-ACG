@@ -25,6 +25,7 @@ Room::~Room()
 }
 nlohmann::json Room::deskAction(nlohmann::json json)
 {
+    //nlohmann::json json__ = _deskController.getJson(json);
     return _deskController.getJson(json);
 }
 RoomMode Room::getMode(const std::string& mode)
