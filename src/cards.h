@@ -51,7 +51,7 @@ class Weapon : public Card
 {
 public:
 	Weapon();
-    void usedOnce();
+    virtual void usedOnce();
     virtual void use(Plate *p,Card *target);
     virtual ~Weapon();
 };
@@ -267,6 +267,12 @@ class Card201 final : public Weapon
 {
 public:
     Card201() = default;
+};
+class Card202 final : public Weapon
+{
+public:
+    Card202() = default;
+    void usedOnce();
 };
 #endif // CARDS_H_AMAGOOD
 

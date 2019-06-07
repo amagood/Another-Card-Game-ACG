@@ -114,6 +114,9 @@ Card* CardFactory::createCard(int cardId) {
         if (cardId == 201) {
             card = new Card201();
         }
+        else if(cardId == 202) {
+            card = new Card202();
+        }
     }
     if (card != nullptr) {
         cardInfoSystem.setCard(card, cardId);

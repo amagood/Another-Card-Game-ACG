@@ -103,8 +103,8 @@ void Weapon::use(Plate *p,Card *target)
 
     int playerId=p->whosTurn?1:0 ;
     holdPlate=p;
-    std::vector<Card *> deck=p->hand[playerId];
-    deck.at(0)->atkIncrease(atk);
+    //std::vector<Card *> deck=p->hand[playerId];
+    p->hand[playerId].at(0)->atkIncrease(atk);
 }
 void Weapon::usedOnce()
 {
@@ -113,8 +113,8 @@ void Weapon::usedOnce()
 Weapon :: ~Weapon()
 {
     int playerId=holdPlate->whosTurn?1:0 ;
-    std::vector<Card *> deck=holdPlate->hand[playerId];
-    deck.at(0)->setAtk(0);
+    //std::vector<Card *> deck=holdPlate->hand[playerId];
+    holdPlate->hand[playerId].at(0)->setAtk(0);
 
 }
 Spell::Spell()
@@ -140,13 +140,13 @@ void Minion::attack(Minion &target)
 void Card002::use(Plate *p, Card *card)
 {
     int targetPlayer = (1+(p->whosTurn?1:0))%2;
-    std::vector<Card *> deck=p->hand[targetPlayer];
+    //std::vector<Card *> deck=p->hand[targetPlayer];
     atkIncrease(p->GodHpAtk);
     hpIncrease(p->GodHpAtk);
 
     for(int i=0;i<atk;i++)
     {
-        deck.at(rand()%deck.size())->hpIncrease(-1);
+        p->hand[targetPlayer].at(rand()%p->hand[targetPlayer].size())->hpIncrease(-1);
     }
 }
 
@@ -311,8 +311,16 @@ void Card118::use(Plate *p,Card *target)
         target->hpIncrease(12);
         target->atkIncrease(12);
 
-        auto hero=p->BF[p->whosTurn].at(0);
-        hero->hpIncrease((hero->getHp())/2);
+        //auto hero=p->BF[p->whosTurn].at(0);
+        p->BF[p->whosTurn].at(0)->hpIncrease((p->BF[p->whosTurn].at(0)->getHp())/2);
     }
 }
 //////////////////////////////weapons///////////////////
+void Card202::usedOnce()
+{
+    hpIncrease(-1);
+    atkIncrease(-1);
+    int playerId=holdPlate->whosTurn?1:0 ;
+    //std::vector<Card *> deck=holdPlate->hand[playerId];
+    holdPlate->hand[playerId].at(0)->atkIncrease(-1);   //hero atk-=1
+}
