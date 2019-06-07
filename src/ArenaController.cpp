@@ -74,7 +74,8 @@ nlohmann::json ArenaController::run(nlohmann::json &json)
         data["action"] = json["action"];
         result["data"] = data;
     } else {
-        result = arena.controlDesk(mode, json["deskId"], json);
+        result["data"] = arena.controlDesk(mode, json["deskId"], json);
+        result["data"]["eventType"] = "desk";
         error("DESK");
     }
     return result;

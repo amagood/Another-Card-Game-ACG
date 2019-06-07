@@ -96,6 +96,7 @@ ArenaAction Arena::getAction(const std::string& action)
 nlohmann::json Arena::controlDesk(RoomMode mode, uint32_t id, nlohmann::json json)
 {
     Room* room = _getRoom(mode, id);
+    if(!room) return false;
     nlohmann::json result = room->deskAction(json);
     //TODO
     if(room->isEnd()){

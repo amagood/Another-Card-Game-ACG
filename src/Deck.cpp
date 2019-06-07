@@ -92,6 +92,7 @@ void Deck::deckShuffler()
     for (uint32_t i = 0; i < head_ptr; i++)
         std::swap(deckLinkList[i], deckLinkList[i + rand() % (head_ptr - i)]);
 }
+
 void Deck::Init(){
     srand(time(NULL));
 }

@@ -6,10 +6,10 @@
 
 void NDesk::playerMovement(Plate &state, std::string action, Card *Main, Card *target){
     if(action == "use"){
-        ((Spell*)Main)->use(&state,target);
+        Main->use(&state,target);
     }
     else if(action == "attack"){
-        ((Minion*)Main)->attack(*((Minion*)target));
+        Main->attack(*target);
     }
     //refreshBF(state); No刷新檯面
 }
