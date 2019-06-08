@@ -28,7 +28,7 @@ public:
     bool isEnd() { return _deskController.winer_and_endgame()>=0;}
     bool isPlaying() { return _playing; }
     bool isPasswordCorrect(const std::string& word) const { return _password=="" || _password==word; }
-    virtual void startGame(std::vector<U32vec> deck) { _playing = true; }
+    virtual void startGame(std::vector<U32vec> deck)=0;
     virtual bool isFull() const =0;
     virtual bool addPlayer(uint32_t playerid, const std::string& level="")=0;
     void endGame();
