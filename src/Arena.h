@@ -23,7 +23,7 @@ public:
     bool inviteFriend(uint32_t playerID, RoomMode mode, uint32_t id);
     bool startGame(RoomMode mode, uint32_t id);
     void getRoomList(RoomMode mode, U32vec &idList, std::vector<std::string> &nameList);
-    bool getRoomInfo(RoomMode mode, uint32_t id, std::string &name, U32vec &player);
+    bool getRoomInfo(RoomMode mode, uint32_t id, std::string &name, U32vec &player, std::string &level);
     static ArenaAction getAction(const std::string& action);
     nlohmann::json controlDesk(RoomMode mode, uint32_t id, nlohmann::json json);
     bool endGame(RoomMode mode, uint32_t id, uint32_t& winner, uint32_t& loser);

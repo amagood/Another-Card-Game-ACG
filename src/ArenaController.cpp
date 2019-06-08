@@ -28,11 +28,13 @@ nlohmann::json ArenaController::run(nlohmann::json &json)
             }break;
             case GET_ROOMINFO:{
                 std::string name;
+                std::string level;
                 U32vec player;
-                bool success = arena.getRoomInfo(mode, json["roomId"], name, player);
+                bool success = arena.getRoomInfo(mode, json["roomId"], name, player, level);
                 data["roomId"] = json["roomId"];
                 data["roomName"] = name;
                 data["playerId"] = player;
+                data["roomLevel"] = level;
                 data["result"] = (int)success;
                 error("GET_ROOMINFO");
             }break;
@@ -41,6 +43,7 @@ nlohmann::json ArenaController::run(nlohmann::json &json)
                 data["userId"] = json["userId"];
                 data["roomId"] = roomid==-1?0:roomid;
                 data["roomName"] = json["roomName"];
+                data["result"] = (int)(roomid>0);
                 error("CREATE_ROOM");
             }break;
             case ENTER_ROOM:{
@@ -52,6 +55,7 @@ nlohmann::json ArenaController::run(nlohmann::json &json)
                 uint32_t roomid = arena.enterRoomRandom(json["userId"], mode);
                 data["userId"] = json["userId"];
                 data["roomId"] = roomid;
+                data["result"] = (int)(roomid>0);
                 error("ENTER_ROOM_RANDOM");
             }break;
             case INVITE_FRIEND:{
