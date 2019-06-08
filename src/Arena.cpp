@@ -10,7 +10,7 @@
 #include "Room.h"
 #include "Arena.h"
 #include "roommode.h"
-const char* Arena::_arenaActionString[] = {"getRoomList", "getRoomInfo", "createRoom", "enterRoom", "enterRoomRandom", "inviteFriend", "startGame"};
+const char* Arena::_arenaActionString[] = {"getRoomList", "getRoomInfo", "createRoom", "enterRoom", "enterRoomRandom", "inviteFriend", "startGame", "endGame"};
 
 
 
@@ -25,8 +25,8 @@ Arena::~Arena()
 
 uint32_t Arena::createRoom(uint32_t playerID, RoomMode mode, std::string name, std::string password)
 {
-    if(!_isRoomNameAdmitted(name, mode) || mode==LADDER_ROOM)
-        return 0;
+    if(!_isRoomNameAdmitted(name, mode))
+        return -1;
     uint32_t id=_getNonRepeatRandomRoomID();
     _createRoom(playerID, mode, id, name, password);
     return id;
@@ -42,7 +42,7 @@ bool Arena::enterRoom(uint32_t playerID, RoomMode mode, uint32_t id, const std::
 uint32_t Arena::enterRoomRandom(uint32_t playerID, RoomMode mode)
 {
     for(size_t i=0; i<_room[mode].size(); i++)
-        if(_room[mode][i]->addPlayer(playerID, _account->getLadderLevel(playerID)))
+        if(_room[mode][i]->addPlayer(playerID))
             return _room[mode][i]->getID();
     uint32_t id = _getNonRepeatRandomRoomID();
     _createRoom(playerID, mode, id, _getNonRepeatRandomRoomName(mode));
@@ -50,7 +50,6 @@ uint32_t Arena::enterRoomRandom(uint32_t playerID, RoomMode mode)
 }
 bool Arena::inviteFriend(uint32_t playerID, RoomMode mode, uint32_t id)
 {
-    if(mode==LADDER_ROOM) return false;
     Room* room=_getRoom(mode, id);
     if(!room) return false;
     return room->addPlayer(playerID);
@@ -61,10 +60,8 @@ bool Arena::startGame(RoomMode mode, uint32_t id)
     if(!room) return false;
     std::vector<U32vec> deck;
     for(uint32_t player : room->getPlayers()){
-        if(_account->getDeck(player).size()!=30){
-            error("No Deck!");
+        if(_account->getDeck(player).size()!=30)
             return false;
-        }
         deck.push_back(_account->getDeck(player));
     }
     room->startGame(deck);
@@ -78,13 +75,12 @@ void Arena::getRoomList(RoomMode mode, U32vec &idList, std::vector<std::string> 
         nameList.push_back(_room[(int)mode][i]->getName());
     }
 }
-bool Arena::getRoomInfo(RoomMode mode, uint32_t id, std::string &name, U32vec &player, std::string &level)
+bool Arena::getRoomInfo(RoomMode mode, uint32_t id, std::string &name, U32vec &player)
 {
     Room* room = _getRoom(mode, id);
     if(!room) return false;
     name = room->getName();
     player = room->getPlayers();
-    level = room->getLevel();
     return true;
 }
 ArenaAction Arena::getAction(const std::string& action)
@@ -113,12 +109,14 @@ bool Arena::endGame(RoomMode mode, uint32_t id, uint32_t& winner, uint32_t& lose
         winner = room->getWinnerID();
         loser = room->getLoserID();
         _account->update(winner, loser, mode);
+        int index = _getRoomIndex(mode, id);
+        _room[(int)mode][index] = nullptr;
+        _room[(int)mode].erase(std::remove(_room[(int)mode].begin(), _room[(int)mode].end(), nullptr), _room[(int)mode].end());
         delete room;
         return true;
     }
     return false;
 }
-
 
 ///private
 void Arena::_initArena()
@@ -168,20 +166,24 @@ uint32_t Arena::_getNonRepeatRandomRoomID()
 }
 void Arena::_createRoom(uint32_t player, RoomMode mode, uint32_t id, std::string name, std::string password)
 {
-    Room* room;
-    if(mode==LADDER_ROOM)
-        room = Room::createRoom(player, mode, id, name, password, _account->getLadderLevel(player));
-    else
-        room = Room::createRoom(player, mode, id, name, password);
+    Room* room = Room::createRoom(player, mode, id, name, password);
     _room[mode].push_back(room);
 }
 Room* Arena::_getRoom(RoomMode mode, uint32_t id)
 {
-    for(size_t i=0; i<_room[mode].size(); i++)
-        if(_room[mode][i]->getID()==id)
-            return _room[mode][i];
+    int index = _getRoomIndex(mode, id);
+    if(index>=0)
+        return _room[mode][index];
     return nullptr;
 }
+int Arena::_getRoomIndex(RoomMode mode, uint32_t id)
+{
+    for(size_t i=0; i<_room[mode].size(); i++)
+        if(_room[mode][i]->getID()==id)
+            return i;
+    return -1;
+}
+
 std::string Arena::_getNonRepeatRandomRoomName(RoomMode mode) //FIXME
 {
     std::string str=_getRandomString(mode);

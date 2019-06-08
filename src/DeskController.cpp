@@ -112,8 +112,6 @@ void DeskController::initPlate(){
 }
 
 int DeskController::winer_and_endgame() {
-
-
     if( plate_.BF[1][0]->getHp() <= 0 || plate_.BF[0][0]->getHp() <= 0){
         if(plate_.BF[0][0]->getHp()<= 0) return 1;
         if(plate_.BF[1][0]->getHp()<= 0) return 0;
@@ -156,6 +154,7 @@ nlohmann::json DeskController::package(){ //auto plate -> json
     Pack["HP0"] = plate_.BF[0].front()->getHp();
     Pack["HP1"] = plate_.BF[1].front()->getHp();
     Pack["Mp"] = plate_.Mp;
+    Pack["EndGame"] = winer_and_endgame() < 0 ? 1:0;
     //error(Pack);
     return Pack;
 }
