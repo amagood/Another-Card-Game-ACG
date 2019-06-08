@@ -13,12 +13,20 @@ void NDesk::playerMovement(Plate &state, std::string action, Card *Main, Card *t
         error(Main->getName() + " Attack " + (target == NULL ? "" : target->getName()));
         ((Minion*)Main)->attack(*(Minion*)target);
     }
-    //refreshBF(state); No刷新檯面
+    refreshBF(state); //刷新檯面
 }
 
 void NDesk::refreshBF(Plate &state){
-    use(state.BF, state.whosTurn);
-    use(state.hand, state.whosTurn);
+    for(int j=0;j < 2;j++){
+        for(std::vector <Card *>::iterator i = state.BF[j].begin()+1;i != state.BF[j].end();i++){
+            if((*i)->getHp()<=0){
+                delete (*i);
+                state.BF[j].erase(i--);
+            }
+        }
+    }
+    //use(state.BF, state.whosTurn);
+    //use(state.hand, state.whosTurn);
 }
 
 void NDesk::use(std::vector<Card *> Cards[2],bool t) {

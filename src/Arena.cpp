@@ -33,7 +33,6 @@ uint32_t Arena::createRoom(uint32_t playerID, RoomMode mode, std::string name, s
 }
 bool Arena::enterRoom(uint32_t playerID, RoomMode mode, uint32_t id, const std::string& password)
 {
-    if(mode==LADDER_ROOM) return false;
     Room* room=_getRoom(mode, id);
     if(!room) return false;
     if(!room->isPasswordCorrect(password))
@@ -103,15 +102,22 @@ nlohmann::json Arena::controlDesk(RoomMode mode, uint32_t id, nlohmann::json jso
     Room* room = _getRoom(mode, id);
     if(!room) return false;
     nlohmann::json result = room->deskAction(json);
-    if(room->isEnd()){
-        room->endGame();
-        uint32_t winner = room->getWinnerID(), loser = room->getLoserID();
-        _account->update(winner, loser, mode);
-        delete room;
-    }
     return result;
 }
-
+bool Arena::endGame(RoomMode mode, uint32_t id, uint32_t& winner, uint32_t& loser)
+{
+    Room* room = _getRoom(mode, id);
+    if(!room) return false;
+    if(room->isEnd()){
+        room->endGame();
+        winner = room->getWinnerID();
+        loser = room->getLoserID();
+        _account->update(winner, loser, mode);
+        delete room;
+        return true;
+    }
+    return false;
+}
 
 
 ///private
