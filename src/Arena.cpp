@@ -10,7 +10,7 @@
 #include "Room.h"
 #include "Arena.h"
 #include "roommode.h"
-const char* Arena::_arenaActionString[] = {"getRoomList", "getRoomInfo", "createRoom", "enterRoom", "enterRoomRandom", "inviteFriend", "startGame"};
+const char* Arena::_arenaActionString[] = {"getRoomList", "getRoomInfo", "createRoom", "enterRoom", "enterRoomRandom", "inviteFriend", "startGame", "endGame"};
 
 
 
@@ -98,16 +98,22 @@ nlohmann::json Arena::controlDesk(RoomMode mode, uint32_t id, nlohmann::json jso
     Room* room = _getRoom(mode, id);
     if(!room) return false;
     nlohmann::json result = room->deskAction(json);
-    //TODO
-    if(room->isEnd()){
-        room->endGame();
-        uint32_t winner = room->getWinnerID(), loser = room->getLoserID();
-        _account->update(winner, loser, mode);
-        delete room;
-    }
     return result;
 }
-
+bool Arena::endGame(RoomMode mode, uint32_t id, uint32_t& winner, uint32_t& loser)
+{
+    Room* room = _getRoom(mode, id);
+    if(!room) return false;
+    if(room->isEnd()){
+        room->endGame();
+        winner = room->getWinnerID();
+        loser = room->getLoserID();
+        _account->update(winner, loser, mode);
+        delete room;
+        return true;
+    }
+    return false;
+}
 
 
 ///private

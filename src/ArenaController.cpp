@@ -60,10 +60,20 @@ nlohmann::json ArenaController::run(nlohmann::json &json)
                 error("INVITE_FRIEND");
             }break;
             case START_GAME:{
-                error(json["roomId"]);
+                error("Room " + std::to_string((uint32_t)json["roomId"]) + " start game!!");
                 bool success = arena.startGame(mode, json["roomId"]);
                 data["roomId"] = json["roomId"];
                 data["result"] = (int)success;
+                error("START_GAME");
+            }break;
+            case END_GAME:{
+                error("Room " + std::to_string((uint32_t)json["roomId"]) + " end game!!");
+                uint32_t winner, loser;
+                bool success = arena.endGame(mode, json["roomId"], winner, loser);
+                data["roomId"] = json["roomId"];
+                data["result"] = (int)success;
+                data["winner"] = winner;
+                data["loser"] = loser;
                 error("START_GAME");
             }break;
             default:

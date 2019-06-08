@@ -11,7 +11,7 @@
 #include "Room.h"
 #include "roommode.h"
 
-enum ArenaAction { GET_ROOMLIST=0, GET_ROOMINFO, CREATE_ROOM, ENTER_ROOM, ENTER_ROOM_RANDOM, INVITE_FRIEND, START_GAME, ACTION_COUNT };
+enum ArenaAction { GET_ROOMLIST=0, GET_ROOMINFO, CREATE_ROOM, ENTER_ROOM, ENTER_ROOM_RANDOM, INVITE_FRIEND, START_GAME, END_GAME, ACTION_COUNT };
 class Arena
 {
 public:
@@ -26,6 +26,7 @@ public:
     bool getRoomInfo(RoomMode mode, uint32_t id, std::string &name, U32vec &player);
     static ArenaAction getAction(const std::string& action);
     nlohmann::json controlDesk(RoomMode mode, uint32_t id, nlohmann::json json);
+    bool endGame(RoomMode mode, uint32_t id, uint32_t& winner, uint32_t& loser);
 
 private:
     AccountSystem* _account;
