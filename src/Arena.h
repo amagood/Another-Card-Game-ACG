@@ -21,7 +21,7 @@ public:
     bool enterRoom(uint32_t playerID, RoomMode mode, uint32_t id, const std::string& password);
     uint32_t enterRoomRandom(uint32_t playerID, RoomMode mode);
     bool inviteFriend(uint32_t playerID, RoomMode mode, uint32_t id);
-    bool startGame(RoomMode mode, uint32_t id);
+    bool startGame(RoomMode mode, uint32_t id, nlohmann::json &json);
     void getRoomList(RoomMode mode, U32vec &idList, std::vector<std::string> &nameList);
     bool getRoomInfo(RoomMode mode, uint32_t id, std::string &name, U32vec &player, std::string &level, bool &full, bool &playing);
     static ArenaAction getAction(const std::string& action);
