@@ -7,7 +7,7 @@
 #ifdef DEBUG
 #include<iostream>
 using namespace std;
-#define error(s) cout << s << endl
+#define error(s) cerr << s << endl
 #else
 #define error(s)
 #endif
