@@ -4,6 +4,7 @@
 #include <plate.h>
 #include "CardInfoSystem.h"
 #include <vector>
+#include <debug.h>
 
 constexpr int maxHp = 30;
 
@@ -112,6 +113,8 @@ void Weapon::usedOnce()
 }
 Weapon :: ~Weapon()
 {
+    if(holdPlate== nullptr)
+        error("Error : Plate* holdPlate points to nothing");
     int playerId=holdPlate->whosTurn?1:0 ;
     //std::vector<Card *> deck=holdPlate->hand[playerId];
     holdPlate->hand[playerId].at(0)->setAtk(0);
@@ -179,6 +182,8 @@ void Card007::use(Plate *p,Card *card)
 }
 void Card007::attack(Minion &target)
 {
+    if(holdPlate== nullptr)
+        error("Error : Plate* holdPlate points to nothing");
     hpIncrease(-target.getAtk());
     target.hpIncrease(-getAtk());
 
@@ -190,6 +195,8 @@ void Card008::use(Plate *p,Card *card)
 }
 void Card008::attack(Minion &target)
 {
+    if(holdPlate== nullptr)
+        error("Error : Plate* holdPlate points to nothing");
     hpIncrease(-target.getAtk());
     target.hpIncrease(-getAtk());
 
@@ -208,6 +215,8 @@ void Card010::use(Plate *p,Card *card)
 }
 void Card010::atkIncrease(int i)
 {
+    if(holdPlate== nullptr)
+        error("Error : Plate* holdPlate points to nothing");
     if(i<0)
     {
         int usePlayer = (holdPlate->whosTurn?1:0);
@@ -220,6 +229,8 @@ void Card011::use(Plate *p,Card *card)
 }
 void Card011::atkIncrease(int i)
 {
+    if(holdPlate== nullptr)
+        error("Error : Plate* holdPlate points to nothing");
     if(i<0)
     {
         int usePlayer = (holdPlate->whosTurn?1:0);
@@ -236,6 +247,8 @@ void Card012::use(Plate *p,Card *card)
 }
 void Card012::attack(Minion &target)
 {
+    if(holdPlate== nullptr)
+        error("Error : Plate* holdPlate points to nothing");
     hpIncrease(-target.getAtk());
     target.hpIncrease(-getAtk());
 
@@ -248,8 +261,19 @@ void Card012::attack(Minion &target)
 
 void Card013::use(Plate *p,Card *card)
 {
-    int usePlayer = (holdPlate->whosTurn?1:0);
+    int usePlayer = (p->whosTurn?1:0);
     p->BF[usePlayer].emplace_back(new Card013);
+}
+void Card014::attack(Minion &target)
+{
+    bool critical = (rand()%2);
+
+    hpIncrease(-target.getAtk());
+    if(critical)
+        target.hpIncrease(-getAtk()*2);
+    else
+        target.hpIncrease(-getAtk());
+
 }
 /////////////////spells/////////////////
 
@@ -367,9 +391,21 @@ void Card118::use(Plate *p,Card *target)
 //////////////////////////////weapons///////////////////
 void Card202::usedOnce()
 {
+    if(holdPlate== nullptr)
+        error("Error : Plate* holdPlate points to nothing");
     hpIncrease(-1);
     atkIncrease(-1);
     int playerId=holdPlate->whosTurn?1:0 ;
     //std::vector<Card *> deck=holdPlate->hand[playerId];
     holdPlate->hand[playerId].at(0)->atkIncrease(-1);   //hero atk-=1
+}
+void Card203::usedOnce()
+{
+    if(holdPlate== nullptr)
+        error("Error : Plate* holdPlate points to nothing");
+    hpIncrease(-1);
+    atkIncrease(-1);
+    int playerId=holdPlate->whosTurn?1:0 ;
+    //std::vector<Card *> deck=holdPlate->hand[playerId];
+    holdPlate->BF[playerId].emplace_back(new Card001);
 }

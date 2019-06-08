@@ -44,7 +44,9 @@ public:
     void ladderWin();
     void ladderLose();
     void recordHistory(uint32_t rivalId, bool isWin, RoomMode r);
-    uint32_t getUUID() {return user_id_;}
+    void updateLevel();
+    uint32_t getLevel() { return level;}
+    uint32_t getExp() { return exp;}
 private:
     uint32_t user_id_ = 0;
     int money_ = 0;
@@ -60,6 +62,8 @@ private:
     uint32_t ladder_lose_ = 0;
     U32vec deck_card_list;
     U32vec card_list;
+    uint32_t level = 1;
+    uint32_t exp = 0;
     int games = 0;
     std::vector<std::vector<int> > history;
 

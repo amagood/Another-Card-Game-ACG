@@ -174,7 +174,6 @@ bool AccountSystem::logout(uint32_t userId) {
 bool AccountSystem::addCard(uint32_t userId, uint32_t cardId) {
     Account *account = get_account(userId);
     return account->addCard(cardId);
-
 }
 
 bool AccountSystem::exist(uint32_t userId) {
@@ -237,7 +236,7 @@ bool AccountSystem::update(uint32_t winner, uint32_t loser, RoomMode mode) {
 }
 
 uint32_t AccountSystem::getUserId(std::string name) {
-    return get_account(name)->getUUID();
+    return get_account(name)->getUniqueNumber();
 }
 
 bool AccountSystem::addAllToDesk(uint32_t userId) {
@@ -245,5 +244,23 @@ bool AccountSystem::addAllToDesk(uint32_t userId) {
     account->setDeck(account->getCards(30));
     return true;
 }
+
+bool AccountSystem::addCards(uint32_t userId, U32vec cardIds) {
+    for (uint32_t cardId: cardIds) {
+        if (!addCard(userId, cardId)) {
+            return false;
+        }
+    }
+    return true;
+}
+
+uint32_t AccountSystem::getLevel(uint32_t userId) {
+    return get_account(userId)->getLevel();
+}
+
+uint32_t AccountSystem::getExp(uint32_t userId) {
+    return get_account(userId)->getExp();
+}
+
 
 #undef SLEEP

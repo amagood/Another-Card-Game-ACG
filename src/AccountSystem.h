@@ -34,7 +34,8 @@ public:
     bool update(uint32_t winner, uint32_t loser, RoomMode mode);
     bool addAllToDesk(uint32_t userId);
     uint32_t getUserId(std::string name);
-
+    uint32_t getLevel(uint32_t userId);
+    uint32_t getExp(uint32_t userId);
     uint32_t getMoney(uint32_t userId);
     U32vec getCards(uint32_t userId);
     U32vec getDeck(uint32_t userId);
@@ -45,7 +46,7 @@ public:
     uint32_t getLose(uint32_t userId);
 
     bool addCard(uint32_t userId, uint32_t cardId);
-
+    bool addCards(uint32_t userId, U32vec cardIds);
     void saveAccounts();
 
 

@@ -173,6 +173,13 @@ public:
     Card013() = default;
     void use(Plate *p,Card *target);
 };
+class Card014 final : public Minion
+{
+public:
+    Card014() = default;
+    void use(Plate *p,Card *target){};
+    void attack(Minion &target);
+};
 
 /////////////////spells/////////////////
 
@@ -304,6 +311,12 @@ class Card202 final : public Weapon
 {
 public:
     Card202() = default;
+    void usedOnce();
+};
+class Card203 final : public Weapon
+{
+public:
+    Card203() = default;
     void usedOnce();
 };
 #endif // CARDS_H_AMAGOOD

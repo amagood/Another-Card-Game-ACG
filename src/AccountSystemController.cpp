@@ -35,6 +35,9 @@ bool AccountSystemController::getAccountInfo(nlohmann::json &data, uint32_t user
         data["returnValue"][stringId]["ladderLevel"] = accountSystem->getLadderLevel(userId);
         data["returnValue"][stringId]["win"] = accountSystem->getWin(userId);
         data["returnValue"][stringId]["lose"] = accountSystem->getLose(userId);
+        data["returnValue"][stringId]["level"] = accountSystem->getLevel(userId);
+        data["returnValue"][stringId]["exp"] = accountSystem->getExp(userId);
+
     }
     return true;
 }
@@ -54,7 +57,18 @@ bool AccountSystemController::getAccountName(nlohmann::json &data, uint32_t user
 bool AccountSystemController::createAccount(nlohmann::json &data, uint32_t userId) {
     error("AccountSystemController create account");
     StrVec params = paramsToStrVec(data);
-    return accountSystem->createAccount(params[0], params[1]);
+    if (accountSystem->createAccount(params[0], params[1])) {
+        // initial account setting
+        data["returnValue"]["connectionId"] = params[2];
+        data["returnValue"]["userId"] = accountSystem->getUserId(params[0]);
+        U32vec cardIds = drawCardSystem->drawCards(30);
+        uint32_t userId = accountSystem->getUserId(params[0]);
+        accountSystem->addCards(userId, cardIds);
+        accountSystem->addAllToDesk(userId);
+        return true;
+    } else {
+        return false;
+    }
 }
 
 bool AccountSystemController::logout(nlohmann::json &data, uint32_t userId) {
@@ -65,8 +79,13 @@ bool AccountSystemController::logout(nlohmann::json &data, uint32_t userId) {
 bool AccountSystemController::login(nlohmann::json &data, uint32_t userId) {
     error("AccountSystemController login");
     StrVec params = paramsToStrVec(data);
-    data["returnValue"]["connectionId"] = params[3];
-    return accountSystem->exist(params[0]) && accountSystem->login(params[0], params[1]);
+    if(accountSystem->exist(params[0]) && accountSystem->login(params[0], params[1])) {
+        data["returnValue"]["connectionId"] = params[2];
+        data["returnValue"]["userId"] = accountSystem->getUserId(params[0]);
+        return true;
+    } else {
+        return false;
+    }
 }
 bool AccountSystemController::payMoney(nlohmann::json &data, uint32_t userId) {
     error("AccountSystemController pay money");
@@ -85,12 +104,8 @@ bool AccountSystemController::drawCards(nlohmann::json &data, uint32_t userId) {
 
     if (accountSystem->exist(userId) && (accountSystem->getMoney(userId) >= params[0])) {
         accountSystem->modifyMoney(userId, -(int)params[0]);
-        U32vec cardlist;
-        while (times--) {
-            uint32_t cardId = drawCardSystem->drawCard();
-            cardlist.push_back(cardId);
-            accountSystem->addCard(userId, cardId);
-        }
+        U32vec cardlist = drawCardSystem->drawCards(times);
+        accountSystem->addCards(userId, cardlist);
         data["returnValue"]["money"] = accountSystem->getMoney(userId);
         data["returnValue"]["amount"] = times;
         data["returnValue"]["cards"] = cardlist;
@@ -152,6 +167,7 @@ nlohmann::json AccountSystemController::run(nlohmann::json &j) {
     std::string func = data["function"];
     data["returnValue"] = nlohmann::json({});
     data["returnValue"]["success"] = (map_functions.count(func) > 0) && (map_functions.at(func)(*this, data, userID));
+    data.erase("params");
     j["data"] = data;
     return j;
 }
@@ -169,10 +185,22 @@ AccountSystemController::AccountSystemController(AccountSystem * accountSystem1)
         {"payMoney", &AccountSystemController::payMoney},
         {"drawCards", &AccountSystemController::drawCards},
         {"getCards", &AccountSystemController::getCards},
+        {"getDeck", &AccountSystemController::getDeck},
         {"getUserId", &AccountSystemController::getUserId},
         {"addAllToDesk", &AccountSystemController::addAllToDesk},
         {"modifyCards", &AccountSystemController::modifyCards}
     };
+}
+
+bool AccountSystemController::getDeck(nlohmann::json &data, uint32_t userId) {
+    error("Get desk");
+    U32vec params = paramsToU32vec(data);
+    if (accountSystem->exist(userId)) {
+        data["returnValue"]["deck"] = accountSystem->getDeck(params[0]);
+        data["returnValue"]["amounts"] = accountSystem->getDeck(params[0]).size();
+        return true;
+    }
+    return false;
 }
 
 

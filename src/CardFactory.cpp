@@ -23,6 +23,7 @@ CardFactory::CardFactory()
     creator(11, Card011, card011);
     creator(12, Card012, card012);
     creator(13, Card013, card013);
+    creator(14, Card014, card014);
 
     creator(101, Card101, card101);
     creator(102, Card102, card102);
@@ -45,6 +46,7 @@ CardFactory::CardFactory()
 
     creator(201, Card201, card201);
     creator(202, Card202, card202);
+    creator(203, Card203, card203);
 }
 
 Card *CardFactory::createCard(int cardId)

@@ -28,6 +28,12 @@ Account::Account(nlohmann::json j) {
     ladder_lose_ = j["ladderLose"];
     deck_card_list = d;
     card_list = c;
+    if(j.count("exp")!= 0) {
+        exp = j["exp"];
+    }
+    if(j.count("level")!= 0) {
+        level = j["level"];
+    }
 }
 nlohmann::json Account::toJson() {
     nlohmann::json j;
@@ -43,6 +49,8 @@ nlohmann::json Account::toJson() {
     j["ladderWin"] = ladder_win_;
     j["ladderLose"]= ladder_lose_;
     j["history"] = history;
+    j["exp"] = exp;
+    j["level"] = level;
     return j;
 }
 
@@ -123,18 +131,42 @@ std::string Account::getLadderLevel() {
 }
 
 void Account::win() {
+    exp += 20;
     win_ += 1;
+    updateLevel();
 }
 void Account::lose() {
+    exp += 10;
     lose_ += 1;
+    updateLevel();
 }
 void Account::ladderWin() {
+    exp += 30;
     ladderPoint_ += 30;
     ladder_win_ += 1;
     win_ += 1;
+    updateLevel();
 }
 void Account::ladderLose() {
+    exp += 20;
     ladderPoint_ -= 20;
     ladder_lose_ += 1;
     lose_ += 1;
+    updateLevel();
+}
+
+void Account::updateLevel() {
+    if(exp<100) {
+        level = 0;
+    } else if (exp < 200) {
+        level = 1;
+    } else if (exp < 500) {
+        level = 2;
+    } else if (exp < 1000) {
+        level = 3;
+    } else if (exp < 2000) {
+        level = 4;
+    } else {
+        level = 5;
+    }
 }
