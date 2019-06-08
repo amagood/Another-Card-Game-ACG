@@ -10,7 +10,7 @@
 #include "Room.h"
 #include "Arena.h"
 #include "roommode.h"
-const char* Arena::_arenaActionString[] = {"getRoomList", "getRoomInfo", "createRoom", "enterRoom", "enterRoomRandom", "inviteFriend", "startGame"};
+const char* Arena::_arenaActionString[] = {"getRoomList", "getRoomInfo", "createRoom", "enterRoom", "enterRoomRandom", "inviteFriend", "startGame", "endGame"};
 
 
 
