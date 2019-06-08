@@ -25,8 +25,9 @@ Room::~Room()
 }
 nlohmann::json Room::deskAction(nlohmann::json json)
 {
-    //nlohmann::json json__ = _deskController.getJson(json);
-    return _deskController.getJson(json);
+    nlohmann::json result = _deskController.getJson(json);
+    result["deskId"] = _ID;
+    return result;
 }
 RoomMode Room::getMode(const std::string& mode)
 {
@@ -68,12 +69,14 @@ bool OneOnOneRoom::addPlayer(uint32_t playerid, const std::string& level)
     _player.push_back(playerid);
     return true;
 }
-void OneOnOneRoom::startGame(std::vector<U32vec> deck)
+nlohmann::json OneOnOneRoom::startGame(std::vector<U32vec> deck)
 {
     _playing = true;
-    _deskController.run(deck[0], deck[1]);
+    //_deskController.run(deck[0], deck[1]);
+    nlohmann::json json = _deskController.run(deck[0], deck[1]);
     deck.clear();
     deck.shrink_to_fit();
+    return json;
 }
 
 
@@ -84,12 +87,14 @@ bool LadderRoom::addPlayer(uint32_t playerid, const std::string& level)
     _player.push_back(playerid);
     return true;
 }
-void LadderRoom::startGame(std::vector<U32vec> deck)
+nlohmann::json LadderRoom::startGame(std::vector<U32vec> deck)
 {
     _playing = true;
-    _deskController.run(deck[0], deck[1]);
+    //_deskController.run(deck[0], deck[1]);
+    nlohmann::json json = _deskController.run(deck[0], deck[1]);
     deck.clear();
     deck.shrink_to_fit();
+    return json;
 }
 int LadderRoom::getWinnerScore()
 {

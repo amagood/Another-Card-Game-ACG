@@ -57,7 +57,7 @@ bool Arena::inviteFriend(uint32_t playerID, RoomMode mode, uint32_t id)
     if(!room) return false;
     return room->addPlayer(playerID);
 }
-bool Arena::startGame(RoomMode mode, uint32_t id)
+bool Arena::startGame(RoomMode mode, uint32_t id, nlohmann::json &json)
 {
     Room* room = _getRoom(mode, id);
     if(!room || !room->isFull()) return false;
@@ -69,7 +69,7 @@ bool Arena::startGame(RoomMode mode, uint32_t id)
         }
         deck.push_back(_account->getDeck(player));
     }
-    room->startGame(deck);
+    json = room->startGame(deck);
     return true;
 }
 void Arena::getRoomList(RoomMode mode, U32vec &idList, std::vector<std::string> &nameList)

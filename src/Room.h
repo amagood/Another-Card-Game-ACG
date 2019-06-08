@@ -28,7 +28,7 @@ public:
     bool isEnd() { return _deskController.winer_and_endgame()>=0;}
     bool isPlaying() { return _playing; }
     bool isPasswordCorrect(const std::string& word) const { return _password=="" || _password==word; }
-    virtual void startGame(std::vector<U32vec> deck)=0;
+    virtual nlohmann::json startGame(std::vector<U32vec> deck)=0;
     virtual bool isFull() const =0;
     virtual bool addPlayer(uint32_t playerid, const std::string& level="")=0;
     void endGame();
@@ -57,7 +57,7 @@ public:
     const std::string getLevel() const override { return ""; }
     bool isFull() const override { return _player.size()>=MaxPlayerNum; }
     bool addPlayer(uint32_t playerid, const std::string& level) override;
-    void startGame(std::vector<U32vec> deck) override;
+    nlohmann::json startGame(std::vector<U32vec> deck) override;
 private:
     static constexpr short MaxPlayerNum=2;
 };
@@ -70,7 +70,7 @@ public:
     const std::string getLevel() const override { return _level; }
     bool isFull() const override { return _player.size()>=MaxPlayerNum; }
     bool addPlayer(uint32_t playerid, const std::string& level) override;
-    void startGame(std::vector<U32vec> deck) override;
+    nlohmann::json startGame(std::vector<U32vec> deck) override;
 private:
     static constexpr short MaxPlayerNum=2;
     const std::string _level;
