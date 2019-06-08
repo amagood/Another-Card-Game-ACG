@@ -1,7 +1,7 @@
 //
 // Created by jacky on 2019/6/1.
 //
-//#define DEBUG
+#define DEBUG
 #ifndef ANOTHER_CARD_GAME_ACG_DEBUG_H
 #define ANOTHER_CARD_GAME_ACG_DEBUG_H
 #ifdef DEBUG

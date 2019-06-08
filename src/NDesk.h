@@ -7,7 +7,7 @@
 
 #include <vector>
 #include "cards.h"
-
+#include "debug.h"
 class NDesk{ //執行指令
 public:
 
