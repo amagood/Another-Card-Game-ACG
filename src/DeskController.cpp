@@ -4,7 +4,7 @@
 
 #include "DeskController.h"
 
-void DeskController::run(U32vec &player1, U32vec &player2){
+nlohmann::json DeskController::run(U32vec &player1, U32vec &player2){
     error("Desk_init");
     CardFactory CF_;//Deck method & Cards factory
     while(!player1.empty()){
@@ -12,18 +12,23 @@ void DeskController::run(U32vec &player1, U32vec &player2){
         player1.erase(player1.begin());
     }
     plate_.BF[0].push_back(CF_.createCard(0));
-    plate_.BF[0][0]->setHp(1);
+    //plate_.BF[0][0]->setHp(30);
     while(!player2.empty()){
         plate_.playerDeck[1].pushCard(CF_.createCard(player2[0]));
         player2.erase(player2.begin());
     }
     plate_.BF[1].push_back(CF_.createCard(0));
-    //plate_.BF[1][0]->setHp(30);
+    plate_.BF[1][0]->setHp(1);
     initPlate();
+    timer = 0;
+    desk_.draw(plate_);
+    return package();
     //ready for server json to play game
 }
 
 nlohmann::json DeskController::getJson(nlohmann::json json_){
+
+    /*
     if(plate_.whosTurn != (int)json_["myPlayerId"]) { //if change player
         error("people change " + std::to_string(plate_.whosTurn) + " to " + std::to_string((int)json_["myPlayerId"]));
         if (plate_.playerDeck[0].size() && plate_.playerDeck[1].size()) { // 不要抽光牌組啊~
@@ -38,6 +43,28 @@ nlohmann::json DeskController::getJson(nlohmann::json json_){
         } else {
             plate_.playerDeck[0].size() ? plate_.BF[1][0]->setMp(0) : plate_.BF[0][0]->setMp(0);
         }
+    }
+    */
+    if((int)json_["requestId"] != plate_.whosTurn){
+        return package();
+    }
+
+    if((int)json_["changeSideTag"]){
+        error("people change " + std::to_string(plate_.whosTurn) + " to " + std::to_string((int)json_["myPlayerId"]));
+        if (plate_.playerDeck[0].size() && plate_.playerDeck[1].size()) { // 不要抽光牌組啊~
+            //error("draw card");
+            plate_.whosTurn = json_["myPlayerId"];
+            desk_.draw(plate_);
+            for (int i = 0; i < 20; i++)
+                plate_.CanAttack[i] = 0;
+            timer++;
+            if(timer % 2 == 0){
+                plate_.Mp++;
+            }
+        } else {
+            plate_.playerDeck[0].size() ? plate_.BF[1][0]->setMp(0) : plate_.BF[0][0]->setMp(0);
+        }
+        return package();
     }
 
     // if mp ok~
@@ -108,7 +135,7 @@ void DeskController::initPlate(){
        plate_.hand[1].push_back(plate_.playerDeck[1].popDeck());
     }
     //set Turn
-    plate_.whosTurn = -1;
+    plate_.whosTurn = rand() % 2;
 }
 
 int DeskController::winer_and_endgame() {
@@ -155,6 +182,7 @@ nlohmann::json DeskController::package(){ //auto plate -> json
     Pack["HP1"] = plate_.BF[1].front()->getHp();
     Pack["Mp"] = plate_.Mp;
     Pack["EndGame"] = winer_and_endgame() < 0 ? 1:0;
+    Pack["whosTurn"] = plate_.whosTurn;
     //error(Pack);
     return Pack;
 }
