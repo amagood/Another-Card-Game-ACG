@@ -170,6 +170,13 @@ public:
     Card013() = default;
     void use(Plate *p,Card *target);
 };
+class Card014 final : public Minion
+{
+public:
+    Card014() = default;
+    void use(Plate *p,Card *target){};
+    void attack(Minion &target);
+};
 
 /////////////////spells/////////////////
 

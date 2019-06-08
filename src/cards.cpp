@@ -5,6 +5,7 @@
 #include "CardInfoSystem.h"
 #include <vector>
 
+
 constexpr int maxHp = 30;
 
 /*
@@ -250,6 +251,17 @@ void Card013::use(Plate *p,Card *card)
 {
     int usePlayer = (holdPlate->whosTurn?1:0);
     p->BF[usePlayer].emplace_back(new Card013);
+}
+void Card014::attack(Minion &target)
+{
+    bool critical = (rand()%2);
+
+    hpIncrease(-target.getAtk());
+    if(critical)
+        target.hpIncrease(-getAtk()*2);
+    else
+        target.hpIncrease(-getAtk());
+
 }
 /////////////////spells/////////////////
 

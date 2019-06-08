@@ -23,6 +23,7 @@ CardFactory::CardFactory()
     creator(11, Card011, card011);
     creator(12, Card012, card012);
     creator(13, Card013, card013);
+    creator(14, Card014, card014);
 
     creator(101, Card101, card101);
     creator(102, Card102, card102);
