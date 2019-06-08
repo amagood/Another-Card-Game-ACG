@@ -12,7 +12,7 @@ void DeskController::run(U32vec &player1, U32vec &player2){
         player1.erase(player1.begin());
     }
     plate_.BF[0].push_back(CF_.createCard(0));
-    //plate_.BF[0][0]->setHp(30);
+    plate_.BF[0][0]->setHp(1);
     while(!player2.empty()){
         plate_.playerDeck[1].pushCard(CF_.createCard(player2[0]));
         player2.erase(player2.begin());
@@ -44,7 +44,7 @@ nlohmann::json DeskController::getJson(nlohmann::json json_){
     int selected_index = (int)json_["selectedCardId"]%10;
     int want_Mp = (int)json_["selectedCardId"]/10 ? plate_.BF[plate_.whosTurn][selected_index]->getMp(): plate_.hand[plate_.whosTurn][selected_index]->getMp();
     std::string _str = json_["useOrAttack"];
-    if(plate_.Mp >=  want_Mp || "Attack" == _str){
+    if(plate_.Mp >=  want_Mp || "attack" == _str){
         plate_.Mp -= want_Mp; // !!??
 
         error("analysis Main");
@@ -60,7 +60,7 @@ nlohmann::json DeskController::getJson(nlohmann::json json_){
         }
         else{//手上
             int tmp = plate_.hand[plate_.whosTurn][selected_index]->getId();
-            if((tmp/100 == 0) && ((std::string)json_["useOrAttack"]) == "Attack"){//在手上打屁?
+            if((tmp/100 == 0) && ((std::string)json_["useOrAttack"]) == "attack"){//在手上打屁?
                 return error_output("warning", "Minion on u're hand");
             }
             else{
@@ -84,7 +84,8 @@ nlohmann::json DeskController::getJson(nlohmann::json json_){
         else{
             if(target_index < 2){//檯面
                 int side = (plate_.whosTurn + target_index) % 2;
-                target = plate_.BF[side].at((int)json_["targetCardId"]%10);
+                int tmp = (int)json_["targetCardId"];
+                target = plate_.BF[side][tmp%10];
                 desk_.playerMovement(plate_, json_["useOrAttack"], Main, target);
             }
             else{ //全場
@@ -111,7 +112,15 @@ void DeskController::initPlate(){
 }
 
 int DeskController::winer_and_endgame() {
-    return  (plate_.BF[0][0]->getMp() > 0) && (plate_.BF[1][0]->getMp() <= 0) ? 0 : (plate_.BF[0][0]->getMp()  <= 0) && (plate_.BF[1][0]->getMp()  > 0) ? 1 : -1;
+
+
+    if( plate_.BF[1][0]->getHp() <= 0 || plate_.BF[0][0]->getHp() <= 0){
+        if(plate_.BF[0][0]->getHp()<= 0) return 1;
+        if(plate_.BF[1][0]->getHp()<= 0) return 0;
+    }
+    else{
+        return -1;
+    }
 }
 
 nlohmann::json DeskController::Card2Json(Card *temp){

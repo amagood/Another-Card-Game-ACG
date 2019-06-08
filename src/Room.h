@@ -24,7 +24,7 @@ public:
     std::string getName() const { return _name; }
     U32vec getPlayers() const { return _player; }
     RoomMode getRoomMode() const { return _mode; }
-    bool isEnd() { return _deskController.winer_and_endgame()==0; };
+    bool isEnd() { return _deskController.winer_and_endgame()>=0;};
     bool isPasswordCorrect(const std::string& word) const { return _password=="" || _password==word; }
     virtual void startGame(std::vector<U32vec> deck)=0;
     virtual bool isFull() const =0;
