@@ -12,7 +12,7 @@ nlohmann::json DeskController::run(U32vec &player1, U32vec &player2){
         player1.erase(player1.begin());
     }
     plate_.BF[0].push_back(CF_.createCard(0));
-    //plate_.BF[0][0]->setHp(30);
+    plate_.BF[0][0]->setHp(1);
     while(!player2.empty()){
         plate_.playerDeck[1].pushCard(CF_.createCard(player2[0]));
         player2.erase(player2.begin());
@@ -45,15 +45,17 @@ nlohmann::json DeskController::getJson(nlohmann::json json_){
         }
     }
     */
-    if((int)json_["requestId"] != plate_.whosTurn){
+    std::string _str = json_["useOrAttack"];
+    if((int)json_["myPlayerId"] != plate_.whosTurn || ( _str == "None")){
+        error("not u're turn!!!");
         return package();
     }
 
     if((int)json_["changeSideTag"]){
-        error("people change " + std::to_string(plate_.whosTurn) + " to " + std::to_string((int)json_["myPlayerId"]));
+        error("people change " + std::to_string(plate_.whosTurn) + " to " + std::to_string(!plate_.whosTurn));
         if (plate_.playerDeck[0].size() && plate_.playerDeck[1].size()) { // 不要抽光牌組啊~
             //error("draw card");
-            plate_.whosTurn = json_["myPlayerId"];
+            plate_.whosTurn = !plate_.whosTurn;
             desk_.draw(plate_);
             for (int i = 0; i < 20; i++)
                 plate_.CanAttack[i] = 0;
@@ -70,9 +72,9 @@ nlohmann::json DeskController::getJson(nlohmann::json json_){
     // if mp ok~
     int selected_index = (int)json_["selectedCardId"]%10;
     int want_Mp = (int)json_["selectedCardId"]/10 ? plate_.BF[plate_.whosTurn][selected_index]->getMp(): plate_.hand[plate_.whosTurn][selected_index]->getMp();
-    std::string _str = json_["useOrAttack"];
+    _str = json_["useOrAttack"];
     if(plate_.Mp >=  want_Mp || "attack" == _str){
-        plate_.Mp -= want_Mp; // !!??
+        plate_.Mp -= want_Mp;
 
         error("analysis Main");
         Card * Main;
