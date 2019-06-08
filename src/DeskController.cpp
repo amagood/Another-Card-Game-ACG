@@ -12,11 +12,13 @@ void DeskController::run(U32vec &player1, U32vec &player2){
         player1.erase(player1.begin());
     }
     plate_.BF[0].push_back(CF_.createCard(0));
+    //plate_.BF[0][0]->setHp(30);
     while(!player2.empty()){
         plate_.playerDeck[1].pushCard(CF_.createCard(player2[0]));
         player2.erase(player2.begin());
     }
     plate_.BF[1].push_back(CF_.createCard(0));
+    //plate_.BF[1][0]->setHp(30);
     initPlate();
     //ready for server json to play game
 }
@@ -142,8 +144,8 @@ nlohmann::json DeskController::package(){ //auto plate -> json
             output.push_back(Card2Json(plate_.BF[j][i]));
         Pack["userField" + std::to_string(j)] = output;
     }
-    Pack["HP0"] = plate_.BF[0].front()->getMp();
-    Pack["HP1"] = plate_.BF[1].front()->getMp();
+    Pack["HP0"] = plate_.BF[0].front()->getHp();
+    Pack["HP1"] = plate_.BF[1].front()->getHp();
     Pack["Mp"] = plate_.Mp;
     //error(Pack);
     return Pack;

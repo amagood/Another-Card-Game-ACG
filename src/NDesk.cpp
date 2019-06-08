@@ -11,7 +11,7 @@ void NDesk::playerMovement(Plate &state, std::string action, Card *Main, Card *t
     }
     else if(action == "attack"){
         error(Main->getName() + " Attack " + (target == NULL ? "" : target->getName()));
-        Main->attack(*target);
+        ((Minion*)Main)->attack(*(Minion*)target);
     }
     //refreshBF(state); No刷新檯面
 }
