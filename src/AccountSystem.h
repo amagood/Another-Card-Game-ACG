@@ -45,7 +45,8 @@ public:
     uint32_t getLose(uint32_t userId);
 
     bool addCard(uint32_t userId, uint32_t cardId);
-
+    bool addCards(uint32_t userId, U32vec cardIds);
+    bool addCards(std::string userName, U32vec cardIds);
     void saveAccounts();
 
 

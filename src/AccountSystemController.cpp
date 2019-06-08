@@ -54,7 +54,14 @@ bool AccountSystemController::getAccountName(nlohmann::json &data, uint32_t user
 bool AccountSystemController::createAccount(nlohmann::json &data, uint32_t userId) {
     error("AccountSystemController create account");
     StrVec params = paramsToStrVec(data);
-    return accountSystem->createAccount(params[0], params[1]);
+    if (accountSystem->createAccount(params[0], params[1])) {
+        // initial account setting
+        U32vec cardIds = drawCardSystem->drawCards(30);
+        accountSystem->addCards(params[0], cardIds);
+        return true;
+    } else {
+        return false;
+    }
 }
 
 bool AccountSystemController::logout(nlohmann::json &data, uint32_t userId) {
@@ -90,12 +97,8 @@ bool AccountSystemController::drawCards(nlohmann::json &data, uint32_t userId) {
 
     if (accountSystem->exist(userId) && (accountSystem->getMoney(userId) >= params[0])) {
         accountSystem->modifyMoney(userId, -(int)params[0]);
-        U32vec cardlist;
-        while (times--) {
-            uint32_t cardId = drawCardSystem->drawCard();
-            cardlist.push_back(cardId);
-            accountSystem->addCard(userId, cardId);
-        }
+        U32vec cardlist = drawCardSystem->drawCards(times);
+        accountSystem->addCards(userId, cardlist);
         data["returnValue"]["money"] = accountSystem->getMoney(userId);
         data["returnValue"]["amount"] = times;
         data["returnValue"]["cards"] = cardlist;

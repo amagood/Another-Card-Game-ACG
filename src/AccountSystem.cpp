@@ -174,7 +174,6 @@ bool AccountSystem::logout(uint32_t userId) {
 bool AccountSystem::addCard(uint32_t userId, uint32_t cardId) {
     Account *account = get_account(userId);
     return account->addCard(cardId);
-
 }
 
 bool AccountSystem::exist(uint32_t userId) {
@@ -245,5 +244,20 @@ bool AccountSystem::addAllToDesk(uint32_t userId) {
     account->setDeck(account->getCards(30));
     return true;
 }
+
+bool AccountSystem::addCards(uint32_t userId, U32vec cardIds) {
+    for (uint32_t cardId: cardIds) {
+        if (!addCard(userId, cardId)) {
+            return false;
+        }
+    }
+    return true;
+}
+
+bool AccountSystem::addCards(std::string userName, U32vec cardIds) {
+    uint32_t userId = getUserId(userName);
+    return addCards(userId, cardIds);
+}
+
 
 #undef SLEEP

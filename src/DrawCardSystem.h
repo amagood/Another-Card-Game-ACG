@@ -12,6 +12,7 @@ class DrawCardSystem {
 public:
     DrawCardSystem();
     uint32_t drawCard();
+    U32vec drawCards(uint32_t num);
 private:
     U32vec cardpools;
     U32vec drawAbleCardpools;
