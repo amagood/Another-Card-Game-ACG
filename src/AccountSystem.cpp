@@ -254,10 +254,5 @@ bool AccountSystem::addCards(uint32_t userId, U32vec cardIds) {
     return true;
 }
 
-bool AccountSystem::addCards(std::string userName, U32vec cardIds) {
-    uint32_t userId = getUserId(userName);
-    return addCards(userId, cardIds);
-}
-
 
 #undef SLEEP

@@ -24,6 +24,7 @@ class AccountSystemController {
     bool payMoney(nlohmann::json &data, uint32_t userId);
     bool drawCards(nlohmann::json &data, uint32_t userId);
     bool getCards(nlohmann::json &data, uint32_t userId);
+    bool getDeck(nlohmann::json &data, uint32_t userId);
     bool modifyCards(nlohmann::json &data, uint32_t userId);
     bool getUserId(nlohmann::json &data, uint32_t userId);
     bool addAllToDesk(nlohmann::json &data, uint32_t userId);

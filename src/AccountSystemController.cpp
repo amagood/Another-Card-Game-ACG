@@ -57,7 +57,9 @@ bool AccountSystemController::createAccount(nlohmann::json &data, uint32_t userI
     if (accountSystem->createAccount(params[0], params[1])) {
         // initial account setting
         U32vec cardIds = drawCardSystem->drawCards(30);
-        accountSystem->addCards(params[0], cardIds);
+        uint32_t userId = accountSystem->getUserId(params[0]);
+        accountSystem->addCards(userId, cardIds);
+        accountSystem->addAllToDesk(userId);
         return true;
     } else {
         return false;
@@ -178,10 +180,22 @@ AccountSystemController::AccountSystemController(AccountSystem * accountSystem1)
         {"payMoney", &AccountSystemController::payMoney},
         {"drawCards", &AccountSystemController::drawCards},
         {"getCards", &AccountSystemController::getCards},
+        {"getDeck", &AccountSystemController::getDeck},
         {"getUserId", &AccountSystemController::getUserId},
         {"addAllToDesk", &AccountSystemController::addAllToDesk},
         {"modifyCards", &AccountSystemController::modifyCards}
     };
+}
+
+bool AccountSystemController::getDeck(nlohmann::json &data, uint32_t userId) {
+    error("Get desk");
+    U32vec params = paramsToU32vec(data);
+    if (accountSystem->exist(userId)) {
+        data["returnValue"]["deck"] = accountSystem->getDeck(params[0]);
+        data["returnValue"]["amounts"] = accountSystem->getDeck(params[0]).size();
+        return true;
+    }
+    return false;
 }
 
 
