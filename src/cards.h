@@ -310,5 +310,11 @@ public:
     Card202() = default;
     void usedOnce();
 };
+class Card203 final : public Weapon
+{
+public:
+    Card203() = default;
+    void usedOnce();
+};
 #endif // CARDS_H_AMAGOOD
 

@@ -249,7 +249,7 @@ void Card012::attack(Minion &target)
 
 void Card013::use(Plate *p,Card *card)
 {
-    int usePlayer = (holdPlate->whosTurn?1:0);
+    int usePlayer = (p->whosTurn?1:0);
     p->BF[usePlayer].emplace_back(new Card013);
 }
 void Card014::attack(Minion &target)
@@ -384,4 +384,12 @@ void Card202::usedOnce()
     int playerId=holdPlate->whosTurn?1:0 ;
     //std::vector<Card *> deck=holdPlate->hand[playerId];
     holdPlate->hand[playerId].at(0)->atkIncrease(-1);   //hero atk-=1
+}
+void Card203::usedOnce()
+{
+    hpIncrease(-1);
+    atkIncrease(-1);
+    int playerId=holdPlate->whosTurn?1:0 ;
+    //std::vector<Card *> deck=holdPlate->hand[playerId];
+    holdPlate->BF[playerId].emplace_back(new Card001);
 }
