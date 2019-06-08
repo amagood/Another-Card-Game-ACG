@@ -70,6 +70,7 @@ bool OneOnOneRoom::addPlayer(uint32_t playerid, const std::string& level)
 }
 void OneOnOneRoom::startGame(std::vector<U32vec> deck)
 {
+    _playing = true;
     _deskController.run(deck[0], deck[1]);
     deck.clear();
     deck.shrink_to_fit();
@@ -85,6 +86,7 @@ bool LadderRoom::addPlayer(uint32_t playerid, const std::string& level)
 }
 void LadderRoom::startGame(std::vector<U32vec> deck)
 {
+    _playing = true;
     _deskController.run(deck[0], deck[1]);
     deck.clear();
     deck.shrink_to_fit();
