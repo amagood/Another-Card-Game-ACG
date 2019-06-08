@@ -236,7 +236,7 @@ bool AccountSystem::update(uint32_t winner, uint32_t loser, RoomMode mode) {
 }
 
 uint32_t AccountSystem::getUserId(std::string name) {
-    return get_account(name)->getUUID();
+    return get_account(name)->getUniqueNumber();
 }
 
 bool AccountSystem::addAllToDesk(uint32_t userId) {
@@ -252,6 +252,14 @@ bool AccountSystem::addCards(uint32_t userId, U32vec cardIds) {
         }
     }
     return true;
+}
+
+uint32_t AccountSystem::getLevel(uint32_t userId) {
+    return get_account(userId)->getLevel();
+}
+
+uint32_t AccountSystem::getExp(uint32_t userId) {
+    return get_account(userId)->getExp();
 }
 
 

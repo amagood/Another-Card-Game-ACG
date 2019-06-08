@@ -35,6 +35,9 @@ bool AccountSystemController::getAccountInfo(nlohmann::json &data, uint32_t user
         data["returnValue"][stringId]["ladderLevel"] = accountSystem->getLadderLevel(userId);
         data["returnValue"][stringId]["win"] = accountSystem->getWin(userId);
         data["returnValue"][stringId]["lose"] = accountSystem->getLose(userId);
+        data["returnValue"][stringId]["level"] = accountSystem->getLevel(userId);
+        data["returnValue"][stringId]["exp"] = accountSystem->getExp(userId);
+
     }
     return true;
 }
