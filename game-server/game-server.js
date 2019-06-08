@@ -1,8 +1,10 @@
 const readline = require('readline');
 const socketIo = require('socket.io');
 const {spawn} = require('child_process');
+const path = require('path');
 const printf = require('printf');
 const colors = require('colors');
+const ConnectionManager = require('./connection-manager');
 
 colors.setTheme({
   silly: 'rainbow',
@@ -148,6 +150,13 @@ function commandSendMessage(input) {
 class GameServer {
   constructor() {
     this.commandLine = new CommandLine();
+    commandInitGameLogicEngine();
+    commandInitClientSide();
+    this.connectionManager = new ConnectionManager({
+      clientSide: clientSide,
+      serverSide: gameLogicEngine,
+      logger: logger
+    });
   }
 }
 
@@ -156,24 +165,28 @@ class Logger {
     this.console = options.console || console;
   }
 
+  dir(obj) {
+    this.console.dir(obj);
+  }
+
   log(str) {
     this.console.log(str.toString());
-  }
-
-  error(str) {
-    this.console.error(`${`ERROR`.inverse} ${str.toString()}`.error.bold);
-  }
-
-  info(str) {
-    this.console.info(`${`INFO`.inverse} ${str.toString()}`.info.bold);
   }
 
   debug(str) {
     this.console.debug(`${`DEBUG`.inverse} ${str.toString()}`.debug.bold);
   }
 
-  dir(obj) {
-    this.console.dir(obj);
+  info(str) {
+    this.console.info(`${`INFO`.inverse} ${str.toString()}`.info.bold);
+  }
+
+  warn(str) {
+    this.console.warn(`${`WARN`.inverse} ${str.toString()}`.error.bold);
+  }
+
+  error(str) {
+    this.console.error(`${`ERROR`.inverse} ${str.toString()}`.error.bold);
   }
 }
 
@@ -297,7 +310,9 @@ class GameLogicEngine {
     this._defaultOnStderrHandler = this._defaultOnStderrHandler.bind(this);
 
     // create Game Logic Engine process
-    this.process = spawn(this.processPath);
+    this.process = spawn(this.processPath, [], {
+      cwd: path.dirname(this.processPath)
+    });
 
     // listen to the events of the process
     this.process.on('close', () => {
@@ -312,6 +327,7 @@ class GameLogicEngine {
 
     this.process.stdout.on('data', (data) => {
       data = data.toString().trim();
+      data = JSON.parse(data);
       (this._handlers.data || this._defaultOnDataHandler)(data);
     });
 
@@ -336,8 +352,19 @@ class GameLogicEngine {
     this._handlers[event] = callback;
   }
 
+  onData(handler) {
+    this.on('data', handler);
+  }
+
   send(data) {
+    // convert data to string
+    if (typeof data === 'object')
+      data = JSON.stringify(data);
+    else
+      data = data.toString();
+
     this.process.stdin.write(`${data}\n`);
+    logger.debug(`to server:\n${data}`);
   }
 
   _defaultOnDataHandler(data) {
@@ -345,7 +372,7 @@ class GameLogicEngine {
   }
 
   _defaultOnStderrHandler(data) {
-    logger.log(`[GameLogicEngine]: stderr:\n>>>${data}<<<`);
+    logger.warn(`[GameLogicEngine]: stderr:\n>>>${data}<<<`);
   }
 }
 
@@ -354,6 +381,7 @@ class ClientSide {
     // properties
     this.socketIoPort = options.port;
     this.ioServer = null;
+    this.clientPacketHandler = null;
 
     // create socket.io server
     const io = socketIo(this.socketIoPort);
@@ -363,10 +391,11 @@ class ClientSide {
     io.sockets.on('connection', (client) => {
       logger.debug(`[ClientSide]: client ${client.id} connected.`);
 
+      // receive data
       client.on('dataToServer', (data) => {
-        logger.debug(`[ClientSide]: data from '${client.id}':\n>>>${JSON.stringify(data, null, 2)}<<<`);
-        //this.broadcast(data);
-        this.send(client.id, data);
+        if (this.clientPacketHandler)
+          this.clientPacketHandler(data, client.id);
+        //logger.debug(`[ClientSide]: data from '${client.id}':\n>>>${JSON.stringify(data, null, 2)}<<<`);
       });
     });
 
@@ -381,8 +410,13 @@ class ClientSide {
     });
   }
 
+  onData(handler) {
+    this.clientPacketHandler = handler;
+  }
+
   send(id, data) {
     this.ioServer.to(id).emit('dataToClient', data);
+    logger.debug(`to client ${id}:\n${JSON.stringify(data, null, 2)}`);
   }
 
   broadcast(data) {
