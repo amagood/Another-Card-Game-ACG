@@ -109,12 +109,14 @@ bool Arena::endGame(RoomMode mode, uint32_t id, uint32_t& winner, uint32_t& lose
         winner = room->getWinnerID();
         loser = room->getLoserID();
         _account->update(winner, loser, mode);
+        int index = _getRoomIndex(mode, id);
+        _room[(int)mode][index] = nullptr;
+        _room[(int)mode].erase(std::remove(_room[(int)mode].begin(), _room[(int)mode].end(), nullptr), _room[(int)mode].end());
         delete room;
         return true;
     }
     return false;
 }
-
 
 ///private
 void Arena::_initArena()
@@ -169,11 +171,19 @@ void Arena::_createRoom(uint32_t player, RoomMode mode, uint32_t id, std::string
 }
 Room* Arena::_getRoom(RoomMode mode, uint32_t id)
 {
-    for(size_t i=0; i<_room[mode].size(); i++)
-        if(_room[mode][i]->getID()==id)
-            return _room[mode][i];
+    int index = _getRoomIndex(mode, id);
+    if(index>=0)
+        return _room[mode][index];
     return nullptr;
 }
+int Arena::_getRoomIndex(RoomMode mode, uint32_t id)
+{
+    for(size_t i=0; i<_room[mode].size(); i++)
+        if(_room[mode][i]->getID()==id)
+            return i;
+    return -1;
+}
+
 std::string Arena::_getNonRepeatRandomRoomName(RoomMode mode) //FIXME
 {
     std::string str=_getRandomString(mode);

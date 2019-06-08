@@ -38,6 +38,7 @@ private:
     uint32_t _getNonRepeatRandomRoomID();
     void _createRoom(uint32_t player, RoomMode mode, uint32_t id, std::string name, std::string password="");
     Room* _getRoom(RoomMode mode, uint32_t id);
+    int _getRoomIndex(RoomMode mode, uint32_t id);
     std::string _getRandomString(RoomMode mode);
     std::string _getNonRepeatRandomRoomName(RoomMode mode);
 };
