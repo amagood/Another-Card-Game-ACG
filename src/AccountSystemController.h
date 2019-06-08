@@ -5,31 +5,15 @@
 #ifndef ANOTHER_CARD_GAME_ACG_ACCOUNTSYSTEMCONTROLLER_H
 #define ANOTHER_CARD_GAME_ACG_ACCOUNTSYSTEMCONTROLLER_H
 
-#include <mutex>
-
-#include "AccountSystem.h"
-#include "DrawCardSystem.h"
+#include "nlohmann/json.hpp"
 #include <unordered_map>
-class AccountSystemController {
-    AccountSystem * accountSystem;
-    DrawCardSystem * drawCardSystem;
-    std::unordered_map<std::string,
-      std::function<bool(AccountSystemController&, nlohmann::json &, uint32_t)>> map_functions;
 
-    bool getAccountName(nlohmann::json &data, uint32_t userId);
-    bool createAccount(nlohmann::json &data, uint32_t userId);
-    bool login(nlohmann::json &data, uint32_t userId);
-    bool logout(nlohmann::json &data, uint32_t userId);
-    bool getAccountInfo(nlohmann::json &data, uint32_t userId);
-    bool payMoney(nlohmann::json &data, uint32_t userId);
-    bool drawCards(nlohmann::json &data, uint32_t userId);
-    bool getCards(nlohmann::json &data, uint32_t userId);
-    bool getDeck(nlohmann::json &data, uint32_t userId);
-    bool modifyCards(nlohmann::json &data, uint32_t userId);
-    bool getUserId(nlohmann::json &data, uint32_t userId);
-    bool addAllToDesk(nlohmann::json &data, uint32_t userId);
+class AccountSystem;
+class AccountSystemCommand;
+class AccountSystemController {
+    std::unordered_map<std::string, AccountSystemCommand *> map_functions;
 public:
-    AccountSystemController(AccountSystem *);
+    explicit AccountSystemController(AccountSystem *);
     nlohmann::json run(nlohmann::json &);
 };
 
