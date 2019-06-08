@@ -25,9 +25,10 @@ public:
     U32vec getPlayers() const { return _player; }
     virtual const std::string getLevel() const =0;
     RoomMode getRoomMode() const { return _mode; }
-    bool isEnd() { return _deskController.winer_and_endgame()>=0;};
+    bool isEnd() { return _deskController.winer_and_endgame()>=0;}
+    bool isPlaying() { return _playing; }
     bool isPasswordCorrect(const std::string& word) const { return _password=="" || _password==word; }
-    virtual void startGame(std::vector<U32vec> deck)=0;
+    virtual void startGame(std::vector<U32vec> deck) { _playing = true; }
     virtual bool isFull() const =0;
     virtual bool addPlayer(uint32_t playerid, const std::string& level="")=0;
     void endGame();
@@ -40,6 +41,7 @@ protected:
     U32vec _player;
     RoomMode _mode;
     DeskController _deskController;
+    bool _playing=false;
     short _winner;
     short _loser;
 

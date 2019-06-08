@@ -27,14 +27,16 @@ nlohmann::json ArenaController::run(nlohmann::json &json)
                 error("GET_ROOMLIST");
             }break;
             case GET_ROOMINFO:{
-                std::string name;
-                std::string level;
+                std::string name, level;
                 U32vec player;
-                bool success = arena.getRoomInfo(mode, json["roomId"], name, player, level);
+                bool full, playing;
+                bool success = arena.getRoomInfo(mode, json["roomId"], name, player, level, full, playing);
                 data["roomId"] = json["roomId"];
                 data["roomName"] = name;
                 data["playerId"] = player;
                 data["roomLevel"] = level;
+                data["full"] = (int)full;
+                data["playing"] = (int)playing;
                 data["result"] = (int)success;
                 error("GET_ROOMINFO");
             }break;
