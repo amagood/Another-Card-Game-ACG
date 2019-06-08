@@ -13,6 +13,7 @@
     };
  */
 
+class Minion;
 
 class Card
 {
@@ -44,7 +45,7 @@ public:
 
 	virtual void use(Plate *p,Card *target)=0;
     virtual ~Card(){};
-    virtual void attack(Card &){};
+    //virtual void attack(Minion &)=0;
 
 };
 
@@ -55,6 +56,7 @@ public:
     virtual void usedOnce();
     virtual void use(Plate *p,Card *target);
     virtual ~Weapon();
+    //void attack(Minion &) override {};
 };
 
 class Spell : public Card
@@ -62,6 +64,7 @@ class Spell : public Card
 public:
 	Spell();
     virtual ~Spell(){};
+    //void attack(Minion &) override {};
 };
 
 class Minion : public Card
