@@ -56,6 +56,8 @@ bool AccountSystemController::createAccount(nlohmann::json &data, uint32_t userI
     StrVec params = paramsToStrVec(data);
     if (accountSystem->createAccount(params[0], params[1])) {
         // initial account setting
+        data["returnValue"]["connectionId"] = params[2];
+        data["returnValue"]["userId"] = accountSystem->getUserId(params[0]);
         U32vec cardIds = drawCardSystem->drawCards(30);
         uint32_t userId = accountSystem->getUserId(params[0]);
         accountSystem->addCards(userId, cardIds);
