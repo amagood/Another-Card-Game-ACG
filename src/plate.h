@@ -12,7 +12,6 @@ struct Plate
 {
     std::vector<Card *> BF[2],hand[2]; //battlefield
     Deck playerDeck[2];
-    int playerHp[2];
     int whosTurn;
     int GodHpAtk;
     int Mp;

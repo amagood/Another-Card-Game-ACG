@@ -6,9 +6,11 @@
 
 void NDesk::playerMovement(Plate &state, std::string action, Card *Main, Card *target){
     if(action == "use"){
+        error(Main->getName() + " use " + (target == NULL ? "" : target->getName()));
         Main->use(&state,target);
     }
     else if(action == "attack"){
+        error(Main->getName() + " Attack " + (target == NULL ? "" : target->getName()));
         Main->attack(*target);
     }
     //refreshBF(state); No刷新檯面
@@ -27,6 +29,7 @@ void NDesk::use(std::vector<Card *> Cards[2],bool t) {
 }
 
 void NDesk::draw(Plate &state){
+    error("player " + std::string(std::to_string(state.whosTurn)) + " draw a card");
     state.playerDeck[state.whosTurn].deckShuffler();
     state.hand[state.whosTurn].push_back(state.playerDeck[state.whosTurn].popDeck());
 }
