@@ -79,7 +79,7 @@ nlohmann::json ArenaController::run(nlohmann::json &json)
                 bool success = arena.startGame(mode, json["roomId"], data["desk"]);
                 data["roomId"] = json["roomId"];
                 data["result"] = (int)success;
-                error("START_GAME");
+                error("END_GAME");
             }break;
             case END_GAME:{
                 error("Room " + std::to_string((uint32_t)json["roomId"]) + " end game!!");
