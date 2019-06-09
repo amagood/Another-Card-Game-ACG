@@ -39,23 +39,44 @@ bool AccountSystem::deckIsLegal(U32vec deck, U32vec cards) {
     return true;
 }
 void AccountSystem::loadAccounts() {
-    std::ifstream file("data/accountlist.json");
     nlohmann::json json_;
-    file >> json_;
-    lastId = json_["accountIdLast"];
-    std::vector<uint32_t> userIds = json_["accountlist"];
-
-    for ( uint32_t userId :userIds ) {
-        loadAccount(userId);
+    try {
+        std::ifstream file("data/accountlist.json");
+        file >> json_;
+        lastId = json_["accountIdLast"];
+    } catch (nlohmann::json::parse_error &){
+        error("file data/accountlist.json error");
+        error("Can't not read data/accountlist.json atribuite which is \"accountIdLast\": u32int_t");
+        lastId = 1;
+        return;
     }
+
+    try {
+        std::vector<uint32_t> userIds = json_["accountlist"];
+        for ( uint32_t userId :userIds ) {
+            loadAccount(userId);
+        }
+    } catch (nlohmann::json::parse_error &) {
+        error("file data/accountlist.json error");
+        error("Can't not read data/accountlist.json atribuite which is \"accountlist\": U32vec");
+        lastId = 1;
+        return;
+    }
+
+
 }
 void AccountSystem::loadAccount(uint32_t userId) {
-    std::string dir = "data/account/";
-    std::string filename = std::to_string(userId) + ".json";
-    std::ifstream file(dir + filename);
-    nlohmann::json json_;
-    file >> json_;
-    account_vector.push_back(Account(json_));
+    try {
+        std::string dir = "data/account/";
+        std::string filename = std::to_string(userId) + ".json";
+        std::ifstream file(dir + filename);
+        nlohmann::json json_;
+        file >> json_;
+        account_vector.push_back(Account(json_));
+    } catch (nlohmann::json::parse_error &){
+        error("file data/account/" << userId << ".json error");
+    }
+
 }
 void AccountSystem::saveAccounts() {
     std::ofstream file("data/accountlist.json");
