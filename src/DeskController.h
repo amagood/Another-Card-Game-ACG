@@ -26,5 +26,6 @@ private:
     NDesk desk_;
     Plate plate_;
     int timer;
+    int MpTemp;
 };
 #endif //ANOTHER_CARD_GAME_ACG_DESKCONTROLLER_H

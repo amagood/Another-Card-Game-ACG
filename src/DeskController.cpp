@@ -21,6 +21,7 @@ nlohmann::json DeskController::run(U32vec &player1, U32vec &player2){
     plate_.BF[1][0]->setHp(1);
     initPlate();
     timer = 0;
+    MpTemp = 1;
     desk_.draw(plate_);
     return package();
     //ready for server json to play game
@@ -60,9 +61,9 @@ nlohmann::json DeskController::getJson(nlohmann::json json_){
             for (int i = 0; i < 20; i++)
                 plate_.CanAttack[i] = 0;
             timer++;
-            if(timer % 2 == 0){
-                plate_.Mp++;
-            }
+            if(timer % 2 == 0) MpTemp++;
+            plate_.Mp = MpTemp;
+
         } else {
             plate_.playerDeck[0].size() ? plate_.BF[1][0]->setMp(0) : plate_.BF[0][0]->setMp(0);
         }
@@ -182,7 +183,7 @@ nlohmann::json DeskController::package(){ //auto plate -> json
     }
     Pack["HP0"] = plate_.BF[0].front()->getHp();
     Pack["HP1"] = plate_.BF[1].front()->getHp();
-    Pack["Mp"] = plate_.Mp;
+    Pack["Mp"] = MpTemp;
     Pack["EndGame"] = winer_and_endgame() < 0 ? 1:0;
     Pack["whosTurn"] = plate_.whosTurn;
     //error(Pack);
