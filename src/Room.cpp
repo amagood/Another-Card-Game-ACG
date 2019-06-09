@@ -39,6 +39,16 @@ RoomMode Room::getMode(const std::string& mode)
     }
     return RoomMode::ROOMMODE_COUNT;
 }
+bool Room::removePlayer(uint32_t playerid)
+{
+    for(int i=0;i<_player.size();i+=1){
+        if(_player[i]==playerid){
+            _player.erase(_player.begin()+i);
+            return true;
+        }
+    }
+    return false;
+}
 Room* Room::createRoom(uint32_t player, RoomMode mode, uint32_t id, const std::string& name, const std::string& password, const std::string& level)
 {
     switch(mode)
@@ -72,7 +82,6 @@ bool OneOnOneRoom::addPlayer(uint32_t playerid, const std::string& level)
 nlohmann::json OneOnOneRoom::startGame(std::vector<U32vec> deck)
 {
     _playing = true;
-    //_deskController.run(deck[0], deck[1]);
     nlohmann::json json = _deskController.run(deck[0], deck[1]);
     deck.clear();
     deck.shrink_to_fit();
@@ -90,7 +99,6 @@ bool LadderRoom::addPlayer(uint32_t playerid, const std::string& level)
 nlohmann::json LadderRoom::startGame(std::vector<U32vec> deck)
 {
     _playing = true;
-    //_deskController.run(deck[0], deck[1]);
     nlohmann::json json = _deskController.run(deck[0], deck[1]);
     deck.clear();
     deck.shrink_to_fit();

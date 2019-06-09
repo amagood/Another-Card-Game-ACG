@@ -10,8 +10,7 @@
 #include "Room.h"
 #include "Arena.h"
 #include "roommode.h"
-const char* Arena::_arenaActionString[] = {"getRoomList", "getRoomInfo", "createRoom", "enterRoom", "enterRoomRandom", "inviteFriend", "startGame", "endGame"};
-
+const char* Arena::_arenaActionString[] = {"getRoomList", "getRoomInfo", "createRoom", "enterRoom", "enterRoomRandom", "inviteFriend", "startGame", "endGame", "leaveRoom"};
 
 
 Arena::Arena(AccountSystem* account) : _account(account)
@@ -49,6 +48,21 @@ uint32_t Arena::enterRoomRandom(uint32_t playerID, RoomMode mode)
     uint32_t id = _getNonRepeatRandomRoomID();
     _createRoom(playerID, mode, id, _getNonRepeatRandomRoomName(mode));
     return id;
+}
+bool Arena::leaveRoom(uint32_t playerID, RoomMode mode, uint32_t id)
+{
+    if(!_isInRoom(playerID)) return false;
+    Room* room=_getRoom(mode, id);
+    if(!room) return false;
+    bool success = room->removePlayer(playerID);
+    if(room->isEmpty())
+    {
+        int index = _getRoomIndex(mode, id);
+        _room[(int)mode][index] = nullptr;
+        _room[(int)mode].erase(std::remove(_room[(int)mode].begin(), _room[(int)mode].end(), nullptr), _room[(int)mode].end());
+        delete room;
+    }
+    return success;
 }
 bool Arena::inviteFriend(uint32_t playerID, RoomMode mode, uint32_t id)
 {
