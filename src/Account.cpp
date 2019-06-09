@@ -169,4 +169,15 @@ void Account::updateLevel() {
     } else {
         level = 5;
     }
+    if (ladderPoint_ < 20) {
+        ladderLevel = "copper";
+    } else if (ladderPoint_ < 50) {
+        ladderLevel = "silver";
+    } else if (ladderPoint_ < 100) {
+        ladderLevel = "gold";
+    } else if (ladderPoint_ < 200) {
+        ladderLevel = "diamond";
+    } else {
+        ladderLevel = "grand_master";
+    }
 }
