@@ -63,6 +63,11 @@ nlohmann::json ArenaController::run(nlohmann::json &json)
                 data["result"] = (int)(roomid>0);
                 error("ENTER_ROOM_RANDOM");
             }break;
+            case LEAVE_ROOM:{
+                bool success = arena.leaveRoom(json["userId"], mode, json["roomId"]);
+                data["result"] = (int)success;
+                error("ENTER_ROOM");
+            }break;
             case INVITE_FRIEND:{
                 bool success = arena.inviteFriend(json["userId"], mode, json["roomId"]);
                 data["result"] = (int)success;
