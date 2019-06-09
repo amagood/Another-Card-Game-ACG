@@ -63,6 +63,11 @@ nlohmann::json ArenaController::run(nlohmann::json &json)
                 data["result"] = (int)(roomid>0);
                 error("ENTER_ROOM_RANDOM");
             }break;
+            case LEAVE_ROOM:{
+                bool success = arena.leaveRoom(json["userId"], mode, json["roomId"]);
+                data["result"] = (int)success;
+                error("ENTER_ROOM");
+            }break;
             case INVITE_FRIEND:{
                 bool success = arena.inviteFriend(json["userId"], mode, json["roomId"]);
                 data["result"] = (int)success;
@@ -74,7 +79,7 @@ nlohmann::json ArenaController::run(nlohmann::json &json)
                 bool success = arena.startGame(mode, json["roomId"], data["desk"]);
                 data["roomId"] = json["roomId"];
                 data["result"] = (int)success;
-                error("START_GAME");
+                error("END_GAME");
             }break;
             case END_GAME:{
                 error("Room " + std::to_string((uint32_t)json["roomId"]) + " end game!!");

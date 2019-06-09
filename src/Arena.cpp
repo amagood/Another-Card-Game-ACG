@@ -9,8 +9,7 @@
 #include "Room.h"
 #include "Arena.h"
 #include "roommode.h"
-const char* Arena::_arenaActionString[] = {"getRoomList", "getRoomInfo", "createRoom", "enterRoom", "enterRoomRandom", "inviteFriend", "startGame", "endGame"};
-
+const char* Arena::_arenaActionString[] = {"getRoomList", "getRoomInfo", "createRoom", "enterRoom", "enterRoomRandom", "inviteFriend", "startGame", "endGame", "leaveRoom"};
 
 
 Arena::Arena(AccountSystem* account) : _account(account)
@@ -48,6 +47,16 @@ uint32_t Arena::enterRoomRandom(uint32_t playerID, RoomMode mode)
     uint32_t id = _getNonRepeatRandomRoomID();
     _createRoom(playerID, mode, id, _getNonRepeatRandomRoomName(mode));
     return id;
+}
+bool Arena::leaveRoom(uint32_t playerID, RoomMode mode, uint32_t id)
+{
+    if(!_isInRoom(playerID)) return false;
+    Room* room=_getRoom(mode, id);
+    if(!room) return false;
+    bool success = room->removePlayer(playerID);
+    if(room->isEmpty())
+        _destoryRoom(room);
+    return success;
 }
 bool Arena::inviteFriend(uint32_t playerID, RoomMode mode, uint32_t id)
 {
@@ -116,10 +125,7 @@ bool Arena::endGame(RoomMode mode, uint32_t id, uint32_t& winner, uint32_t& lose
         winner = room->getWinnerID();
         loser = room->getLoserID();
         _account->update(winner, loser, mode);
-        int index = _getRoomIndex(mode, id);
-        _room[(int)mode][index] = nullptr;
-        _room[(int)mode].erase(std::remove(_room[(int)mode].begin(), _room[(int)mode].end(), nullptr), _room[(int)mode].end());
-        delete room;
+        _destoryRoom(room);
         return true;
     }
     return false;
@@ -198,10 +204,20 @@ bool Arena::_isInRoom(uint32_t playerID)
 {
     for(int mode=0; mode<ROOMMODE_COUNT; mode++)
         for(size_t i=0; i<_room[mode].size(); i++)
-            for(uint32_t id : _room[mode][i]->getPlayers())
-                if(playerID==id)
-                    return true;
+            if(_room[mode][i]->isInRoom(playerID))
+                return true;
     return false;
+}
+bool Arena::_destoryRoom(Room* room)
+{
+    if(!room) return false;
+    RoomMode mode = room->getRoomMode();
+    uint32_t id = room->getID();
+    int index = _getRoomIndex(mode, id);
+    _room[(int)mode][index] = nullptr;
+    _room[(int)mode].erase(std::remove(_room[(int)mode].begin(), _room[(int)mode].end(), nullptr), _room[(int)mode].end());
+    delete room;
+    return true;
 }
 std::string Arena::_getNonRepeatRandomRoomName(RoomMode mode) //FIXME
 {
