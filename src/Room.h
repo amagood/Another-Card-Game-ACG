@@ -33,6 +33,7 @@ public:
     bool isEmpty() const { return _player.size()==0; };
     virtual bool addPlayer(uint32_t playerid, const std::string& level="")=0;
     bool removePlayer(uint32_t playerid);
+    bool isInRoom(uint32_t playerid) const;
     void endGame();
     uint32_t getWinnerID() { return _player[_winner];}
     uint32_t getLoserID() { return _player[_loser];}

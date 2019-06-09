@@ -41,6 +41,7 @@ private:
     Room* _getRoom(RoomMode mode, uint32_t id);
     int _getRoomIndex(RoomMode mode, uint32_t id);
     bool _isInRoom(uint32_t playerID);
+    bool _destoryRoom(Room* room);
     std::string _getRandomString(RoomMode mode);
     std::string _getNonRepeatRandomRoomName(RoomMode mode);
 };

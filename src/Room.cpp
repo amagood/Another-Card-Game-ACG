@@ -49,6 +49,13 @@ bool Room::removePlayer(uint32_t playerid)
     }
     return false;
 }
+bool Room::isInRoom(uint32_t playerid) const
+{
+    for(int i=0;i<_player.size();i+=1)
+        if(_player[i]==playerid)
+            return true;
+    return false;
+}
 Room* Room::createRoom(uint32_t player, RoomMode mode, uint32_t id, const std::string& name, const std::string& password, const std::string& level)
 {
     switch(mode)
