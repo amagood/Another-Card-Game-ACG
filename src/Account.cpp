@@ -142,29 +142,32 @@ void Account::lose() {
 }
 void Account::ladderWin() {
     exp += 30;
-    ladderPoint_ += 30;
+    ladderPoint_ += 20;
     ladder_win_ += 1;
     win_ += 1;
     updateLevel();
 }
 void Account::ladderLose() {
     exp += 20;
-    ladderPoint_ -= 20;
+    ladderPoint_ -= 15;
+    if (ladderPoint_ < 0) {
+        ladderPoint_ = 0;
+    }
     ladder_lose_ += 1;
     lose_ += 1;
     updateLevel();
 }
 
 void Account::updateLevel() {
-    if(exp<100) {
+    if(exp< 30) {
         level = 0;
-    } else if (exp < 200) {
+    } else if (exp < 50) {
         level = 1;
-    } else if (exp < 500) {
+    } else if (exp < 100) {
         level = 2;
-    } else if (exp < 1000) {
+    } else if (exp < 200) {
         level = 3;
-    } else if (exp < 2000) {
+    } else if (exp < 300) {
         level = 4;
     } else {
         level = 5;
