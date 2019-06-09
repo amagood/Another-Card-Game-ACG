@@ -50,12 +50,12 @@ nlohmann::json ArenaController::run(nlohmann::json &json)
             }break;
             case ENTER_ROOM:{
                 bool success = arena.enterRoom(json["userId"], mode, json["roomId"], json["roomPassword"]);
+                data["roomId"] = roomid;
                 data["result"] = (int)success;
                 error("ENTER_ROOM");
             }break;
             case ENTER_ROOM_RANDOM:{
                 uint32_t roomid = arena.enterRoomRandom(json["userId"], mode);
-                data["userId"] = json["userId"];
                 data["roomId"] = roomid;
                 data["result"] = (int)(roomid>0);
                 error("ENTER_ROOM_RANDOM");
