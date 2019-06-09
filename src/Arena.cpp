@@ -6,7 +6,6 @@
 #include <nlohmann/json.hpp>
 
 #include "AccountSystem.h"
-#include "ACGFunctions.h"
 #include "Room.h"
 #include "Arena.h"
 #include "roommode.h"
