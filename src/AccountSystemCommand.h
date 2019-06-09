@@ -220,6 +220,7 @@ public:
             data["returnValue"]["deck"] = accountSystem->getDeck(params[0]);
             data["returnValue"]["amounts"] = accountSystem->getCards(params[0]).size();
             data["returnValue"]["cards"] = accountSystem->getCards(params[0]);
+            return true;
         }
         return false;
     }
