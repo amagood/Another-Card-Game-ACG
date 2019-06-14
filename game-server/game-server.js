@@ -182,7 +182,7 @@ class Logger {
   }
 
   warn(str) {
-    this.console.warn(`${`WARN`.inverse} ${str.toString()}`.error.bold);
+    this.console.warn(`${`WARN`.inverse} ${str.toString()}`.warn.bold);
   }
 
   error(str) {
@@ -382,6 +382,7 @@ class ClientSide {
     this.socketIoPort = options.port;
     this.ioServer = null;
     this.clientPacketHandler = null;
+    this.clientDisconnectHandler = null;
 
     // create socket.io server
     const io = socketIo(this.socketIoPort);
@@ -396,6 +397,11 @@ class ClientSide {
         if (this.clientPacketHandler)
           this.clientPacketHandler(data, client.id);
         //logger.debug(`[ClientSide]: data from '${client.id}':\n>>>${JSON.stringify(data, null, 2)}<<<`);
+      });
+
+      // client disconnect
+      client.on('disconnect', () => {
+        this.clientDisconnectHandler(client.id);
       });
     });
 
@@ -414,9 +420,13 @@ class ClientSide {
     this.clientPacketHandler = handler;
   }
 
+  onDisconnect(handler) {
+    this.clientDisconnectHandler = handler;
+  }
+
   send(id, data) {
     this.ioServer.to(id).emit('dataToClient', data);
-    logger.debug(`to client ${id}:\n${JSON.stringify(data, null, 2)}`);
+    logger.debug(`to client ${id}:\n${JSON.stringify(data)}`);
   }
 
   broadcast(data) {

@@ -39,8 +39,13 @@ class ConnectionManager {
           send(packet);
         } else if (packet.data.function === 'createAccount') {
           send(packet, packet.connectionId);
+        } else if (packet.data.function === 'logout') {
+          if (packet.data.returnValue.success) {
+            send(packet);
+            this.unregisterUser(packet.userId);
+          }
         } else {
-          this.logger.debug(`login faild:${packet.userId}:\n${JSON.stringify(packet, null, 2)}`);
+          //this.logger.debug(`login faild:${packet.userId}:\n${JSON.stringify(packet, null, 2)}`);
           send(packet);
         }
       },
@@ -55,6 +60,8 @@ class ConnectionManager {
     // register handlers
     this.clientPacketHandler = this.clientPacketHandler.bind(this);
     this.clientSide.onData(this.clientPacketHandler);
+    this.clientDisconnectHandler = this.clientDisconnectHandler.bind(this);
+    this.clientSide.onDisconnect(this.clientDisconnectHandler);
     this.serverPacketHandler = this.serverPacketHandler.bind(this);
     this.serverSide.onData(this.serverPacketHandler);
   }
@@ -66,6 +73,9 @@ class ConnectionManager {
     const userId = this.toUserId(connectionId);
     if (packet.userId !== userId)
       return;
+      
+    // update last active time
+    this.activeUser(userId);
 
     // Game Logic Engine message
     if (packet.type === 'gameLogicEngineMessage') {
@@ -79,9 +89,6 @@ class ConnectionManager {
     } else if (packet.type === 'chat') {
       this.chatHandler(packet);
     }
-      
-    // update last active time
-    this.activeUser(userId);
   }
 
   serverPacketHandler(packet) {
@@ -90,7 +97,7 @@ class ConnectionManager {
     const handler = this.serverPacketHandlers[packet.data.eventType] || this.serverPacketHandlers['default'];
     handler(packet, (newPacket, connectionId=undefined) => {
       connectionId = connectionId || this.toConnectionId(newPacket.userId);
-      this.logger.debug(`userId:${newPacket.userId} connectionId:${connectionId}\n${JSON.stringify(newPacket, null, 2)}`);
+      this.logger.debug(`to client userId:${newPacket.userId} connectionId:${connectionId}\n${JSON.stringify(newPacket)}`);
       if (connectionId.length) {
         this.clientSide.send(connectionId, newPacket);
       }
@@ -120,6 +127,26 @@ class ConnectionManager {
     );
   }
 
+  clientDisconnectHandler(connectionId) {
+    const userId = this.toUserId(connectionId);
+    if (!userId)
+      return;
+    this.sendLogoutToServer(userId);
+  }
+
+  sendLogoutToServer(userId) {
+    this.serverSide.send({
+      time: Date.now(),
+      type: 'gameLogicEngineMessage',
+      userId: userId,
+      data: {
+        eventType: 'accountSystem',
+        function: 'logout',
+        params: [userId]
+      }
+    });
+  }
+
   registerUser(userId, connectionId) {
     this.userInfo[userId] = {};
     this.userInfo[userId].connectionId = connectionId;
@@ -129,6 +156,7 @@ class ConnectionManager {
 
   unregisterUser(userId) {
     delete this.userInfo[userId];
+    this.logger.debug(`unregister user: ${userId}`);
   }
 
   activeUser(userId) {
@@ -143,7 +171,8 @@ class ConnectionManager {
       clearTimeout(info.logoutTimeoutTimer);
     info.lastActiveTime = Date.now();
     info.logoutTimeoutTimer = setTimeout(() => {
-      this.unregisterUser(userId);
+      this.logger.debug(`user timeout: ${userId}`);
+      this.sendLogoutToServer(userId);
     }, 1800 * 1000); // 30min
   }
 
@@ -151,7 +180,7 @@ class ConnectionManager {
     // lookup userInfo to find
     for (const userId in this.userInfo) {
       if (this.userInfo[userId].connectionId === connectionId)
-        return userId;
+        return parseInt(userId, 10);
     }
 
     // cannot find user

@@ -1,0 +1,19 @@
+{
+  "name": "acg-game-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "game-server.js",
+  "dependencies": {
+    "colors": "^1.3.3",
+    "printf": "^0.5.1",
+    "socket.io": "^2.2.0"
+  },
+  "devDependencies": {
+    "eslint": "^5.16.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
