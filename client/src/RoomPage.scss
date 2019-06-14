@@ -1,0 +1,79 @@
+@import './variable';
+
+#room-page {
+  @extend %page;
+
+  #room-page-select-mode {
+    @extend %round-box;
+    background: $light-blue-alpha;
+    margin: 1rem auto;
+    width: 30rem;
+
+    button {
+      width: 9rem;
+      height: 1.5rem;
+      display: inline-block;
+      margin: .5rem 3rem;
+    }
+  }
+
+  .content-window {
+    @extend %round-box;
+    position: relative;
+    margin: 1rem auto;
+    width: 30rem;
+    height: 10rem;
+
+    &>ul {
+      @extend %round-box;
+      position: relative;
+      display: block;
+      overflow-y: auto;
+      width: 100%;
+      height: 100%;
+      background: #f00;
+      padding: .5rem 1rem;
+
+      &>li {
+        @extend %round-box;
+        margin: .2rem 0;
+        border-bottom: $line-width solid #333;
+        background: $light-blue-alpha;
+        padding: .2rem .5rem;
+
+        &:first-child {
+          button {
+            margin: .2rem 1rem;
+          }
+        }
+
+        &>span {
+          display: inline-block;
+          border-left: $line-width solid #333;
+          padding: 0 .5rem;
+          word-break: break-all;
+
+          &:first-child {
+            border-left: none;
+          }
+        }
+
+        .room-id {
+          width: 2rem;
+        }
+
+        .room-name {
+          width: 16rem;
+        }
+
+        .room-level {
+          width: 5rem;
+        }
+
+        .room-player {
+          width: 3rem;
+        }
+      }
+    }
+  }
+}

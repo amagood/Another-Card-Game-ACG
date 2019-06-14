@@ -1,0 +1,21 @@
+@import './variable';
+
+#lobby-page {
+  @extend %page;
+  
+  &>.button-container {
+    @extend %round-box;
+    margin: 2rem auto;
+    width: 20rem;
+    background: $light-blue-alpha;
+    padding: .5rem;
+
+    &>button {
+      margin: 1rem auto;
+      display: block;
+      width: 16rem;
+      height: 2rem;
+      font-size: $title-font-size;
+    }
+  }
+}
