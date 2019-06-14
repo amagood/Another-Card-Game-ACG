@@ -1,0 +1,20 @@
+@import './variable';
+
+#room-waiting-page {
+  @extend %page;
+
+  .button-container {
+    @extend %round-box;
+    background: $light-blue-alpha;
+    margin: 1rem auto;
+    width: 30rem;
+    padding: .5rem;
+
+    button {
+      width: 9rem;
+      height: 1.5rem;
+      display: block;
+      margin: 0 auto;
+    }
+  }
+}

@@ -1,0 +1,54 @@
+@import './variable';
+
+.dialog {
+  @extend %box-shadow;
+  position: absolute;
+  left: 8rem;
+  right: 8rem;
+  top: 4rem;
+  bottom: 4rem;
+  border-radius: .5rem;
+  background: #fff;
+  padding: .5rem;
+  text-align: center;
+  color: #333;
+
+  .dialog-title {
+    font-size: $title-font-size;
+    font-weight: bold;
+  }
+
+  hr {
+    border: none;
+    border-top: $line-width solid #666;
+  }
+
+  .dialog-message {
+    margin: .5rem;
+    height: 4.5rem;
+    overflow-y: auto;
+    font-size: $normal-font-size;
+    white-space: pre-wrap;
+    text-align: start;
+  }
+
+  .button-container {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: .5rem;
+
+    button {
+      display: inline-block;
+    }
+  }
+}
+
+.dialog-container {
+  @extend %full-size;
+  background: rgba($color: #000, $alpha: .75);
+}
+
+#dialog-controller {
+  @extend %full-size;
+}

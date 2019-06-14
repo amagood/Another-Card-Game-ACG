@@ -1,0 +1,23 @@
+@import './variable';
+
+#card-pool-page {
+  @extend %page;
+
+  .button-container {
+    @extend %round-box;
+    position: absolute;
+    top: 3rem;
+    left: 3rem;
+    width: 26rem;
+    height: 12rem;
+    background: $light-blue-alpha;
+
+    button {
+      margin: 1rem auto;
+      display: block;
+      width: 14rem;
+      height: 4rem;
+      font-size: $title-font-size;
+    }
+  }
+}

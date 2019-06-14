@@ -1,0 +1,17 @@
+@import './variable';
+
+#go-back-button-container {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 2rem;
+  height: 1rem;
+
+  button {
+    @extend %full-size;
+    overflow: hidden;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+}

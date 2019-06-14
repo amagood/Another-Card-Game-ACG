@@ -1,0 +1,35 @@
+@import './variable';
+
+#modify-cards-page {
+  @extend %page;
+
+  .content-container {
+    @extend %round-box;
+    position: absolute;
+    top: 3rem;
+    left: 3rem;
+    width: 26rem;
+    height: 12rem;
+    background: $light-blue-alpha;
+
+    .cards-info {
+      height: 8rem;
+      overflow-y: auto;
+
+      p {
+        margin: .5rem 0;
+      }
+    }
+
+    .button-container {
+      height: 3rem;
+
+      button {
+        display: block;
+        margin: 1rem auto;
+        width: 8rem;
+        height: 2rem;
+      }
+    }
+  }
+}

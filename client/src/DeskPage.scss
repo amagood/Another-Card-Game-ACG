@@ -1,0 +1,27 @@
+@import './variable';
+
+#desk-page {
+  @extend %page;
+
+  .input-container {
+    position: relative;
+    width: 30rem;
+    height: 6rem;
+
+    textarea {
+      display: inline-block;
+      width: 26rem;
+      height: 5rem;
+    }
+  }
+
+  .output-window {
+    margin: 1rem 1rem;
+    width: 30rem;
+    height: 9rem;
+    overflow: auto;
+    background: #000;
+    white-space: pre;
+    color: #fff;
+  }
+}

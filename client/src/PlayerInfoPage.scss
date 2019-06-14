@@ -1,0 +1,32 @@
+@import './variable';
+
+#player-info-page {
+  @extend %page;
+
+  &>div {
+    position: absolute;
+    top: 2rem;
+    bottom: 2rem;
+    background: $light-blue-alpha;
+    padding: 1rem .5rem;
+  }
+
+  .get-money-container {
+    left: 2rem;
+    width: 13rem;
+
+    button {
+      margin: 1rem 2rem;
+      display: block;
+      width: 8rem;
+      height: 3rem;
+      font-size: $title-font-size;
+      text-align: center;
+    }
+  }
+
+  .info-container {
+    right: 2rem;
+    width: 13rem;
+  }
+}

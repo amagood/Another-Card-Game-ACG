@@ -1,0 +1,38 @@
+$theme-color: #0e1736;
+$light-blue: #60b9f5;
+$light-blue-alpha: rgba($color: $light-blue, $alpha: .6);
+$default-font-family: 'Noto Sans TC', sans-serif;
+$normal-font-size: .8rem;
+$title-font-size: 1rem;
+$line-width: .05rem;
+
+%full-size {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  margin: 0;
+  display: block;
+  box-sizing: border-box;
+}
+
+%page {
+  @extend %full-size;
+  background: $theme-color;
+  font-size: $normal-font-size;
+}
+
+%round-box {
+  border-radius: .25rem;
+}
+
+%button {
+  @extend %round-box;
+  border: none;
+  background-color: #60b9f5;
+}
+
+%box-shadow {
+  box-shadow: 0 0 .25rem 0 #000;
+}
