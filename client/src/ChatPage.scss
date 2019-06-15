@@ -1,0 +1,13 @@
+@import './variable';
+
+#chat-page {
+  @extend %page;
+
+  .content-container {
+    @extend %round-box;
+    margin: 5rem auto;
+    width: 20rem;
+    background: $light-blue-alpha;
+    padding: .5rem;
+  }
+}

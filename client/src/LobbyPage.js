@@ -3,6 +3,7 @@ import RoomPage from './RoomPage';
 import CardPoolPage from './CardPoolPage';
 import ModifyCardsPage from './ModifyCardsPage';
 import PlayerInfoPage from './PlayerInfoPage';
+import ChatPage from './ChatPage';
 
 class LobbyPage extends React.Component {
   constructor(props) {
@@ -13,6 +14,14 @@ class LobbyPage extends React.Component {
 
     this.goBackThisPage = this.goBackThisPage.bind(this);
     this.props.appUtils.setGoBackHandler(this.props.goBackPrevPage);
+
+    // chat prompt
+    this.props.appUtils.serverSide.addListener('chat', (packet) => {
+      if (packet.type === 'chat') {
+        const message = `【聊天室訊息】\n來自(userId): ${packet.data.from}\n訊息: ${packet.data.message}`;
+        this.props.appUtils.promptDialog('info', message);
+      }
+    });
 
     // play bgm
     this.props.appUtils.playBgm('bgmNormal');
@@ -36,6 +45,8 @@ class LobbyPage extends React.Component {
       nextPage = <ModifyCardsPage appUtils={this.props.appUtils} goBackPrevPage={this.goBackThisPage}  />;
     } else if (this.state.nextPage === 'player-info') {
       nextPage = <PlayerInfoPage appUtils={this.props.appUtils} goBackPrevPage={this.goBackThisPage}  />;
+    } else if (this.state.nextPage === 'chat') {
+      nextPage = <ChatPage appUtils={this.props.appUtils} goBackPrevPage={this.goBackThisPage}  />;
     } else {
       thisPageStyle = undefined;
     }
@@ -48,6 +59,7 @@ class LobbyPage extends React.Component {
             <button key={2} className="clickable" onClick={() => {this.setState((state) => Object.assign(state, {nextPage: 'card-pool'}));}}>卡池</button>
             <button key={3} className="clickable" onClick={() => {this.setState((state) => Object.assign(state, {nextPage: 'modify-cards'}));}}>修改排組</button>
             <button key={4} className="clickable" onClick={() => {this.setState((state) => Object.assign(state, {nextPage: 'player-info'}));}}>玩家資訊</button>
+            <button key={5} className="clickable" onClick={() => {this.setState((state) => Object.assign(state, {nextPage: 'chat'}));}}>聊天室</button>
           </div>
         </div>
         {nextPage}
